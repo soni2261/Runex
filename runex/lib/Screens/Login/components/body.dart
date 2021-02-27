@@ -3,9 +3,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:runex/Screens/Login/components/background.dart';
 import 'package:runex/Screens/SignUp/signup_screen.dart';
 import 'package:runex/components/already_have_an_account_check.dart';
-import 'package:runex/components/rounded_button.dart';
+import 'package:runex/components/rounded_text_button.dart';
 import 'package:runex/components/rounded_input_field.dart';
 import 'package:runex/components/rounded_password_field.dart';
+
+import 'package:runex/Screens/Profil/profil.dart';
 
 class Body extends StatelessWidget {
   const Body({
@@ -44,7 +46,11 @@ class Body extends StatelessWidget {
             ),
             RoundedButton(
               text: "LOGIN",
-              press: () {},
+              press: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return Profil();
+                }));
+              },
             ),
             SizedBox(
               height: size.height * 0.03,

@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:runex/Screens/Login/login_screen.dart';
 import 'package:runex/Screens/SignUp/signup_screen.dart';
 import 'package:runex/Screens/Welcome/components/background.dart';
-import 'package:runex/components/rounded_button.dart';
+import 'package:runex/components/rounded_text_button.dart';
 import 'package:runex/constants.dart';
 
 class Body extends StatelessWidget {
