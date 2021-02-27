@@ -14,47 +14,7 @@ class _CreerObjectifState extends State<CreerObjectif> {
         body: Container(
           child: Column(
             children: [
-              Card(
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Checkbox(
-                          value: veutObjectifTemps,
-                          onChanged: (bool value) {
-                            setState(() {
-                              veutObjectifTemps = value;
-                            });
-                          },
-                        ),
-                        Text('objectif de temps'),
-                      ],
-                    ),
-                    Visibility(
-                      child: Row(
-                        children: [
-                          ElevatedButton(
-                            onPressed: () {},
-                            child: Icon(Icons.add),
-                          ),
-                          Text('ajouter un sport'),
-                        ],
-                      ),
-                      visible: veutObjectifTemps, //veutObjectifTemps,
-                    ),
-                    Visibility(
-                      child: Container(
-                        height: 200,
-                        child: _buildListView(),
-                      ),
-                      visible: veutObjectifTemps,
-                    ),
-                  ],
-                ),
-              ),
-              // Container(
-
-              // ),
+              _buildCarteObjectif(),
             ],
           ),
         ));
@@ -79,4 +39,45 @@ class _CreerObjectifState extends State<CreerObjectif> {
   //     value
   //   );
   // }
+
+  Widget _buildCarteObjectif() {
+    return Card(
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Checkbox(
+                value: veutObjectifTemps,
+                onChanged: (bool value) {
+                  setState(() {
+                    veutObjectifTemps = value;
+                  });
+                },
+              ),
+              Text('objectif de temps'),
+            ],
+          ),
+          Visibility(
+            child: Row(
+              children: [
+                ElevatedButton(
+                  onPressed: () {},
+                  child: Icon(Icons.add),
+                ),
+                Text('ajouter un sport'),
+              ],
+            ),
+            visible: veutObjectifTemps, //veutObjectifTemps,
+          ),
+          Visibility(
+            child: Container(
+              height: 200,
+              child: _buildListView(),
+            ),
+            visible: veutObjectifTemps,
+          ),
+        ],
+      ),
+    );
+  }
 }

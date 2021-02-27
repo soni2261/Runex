@@ -21,8 +21,8 @@ class IconButton extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 10),
       width: size.width * 0.7,
       child: IconButton(
-        //onPressed: (){},
         icon: icon,
+        //onPressed: press, //??
         color: color,
       ),
     );
