@@ -7,8 +7,6 @@ import 'package:runex/components/rounded_button.dart';
 import 'package:runex/components/rounded_input_field.dart';
 import 'package:runex/components/rounded_password_field.dart';
 
-import 'package:runex/Screens/Profil/profil.dart';
-
 class Body extends StatelessWidget {
   const Body({
     Key key,
@@ -44,11 +42,10 @@ class Body extends StatelessWidget {
             RoundedPasswordField(
               onChanged: (value) {},
             ),
-            RoundedButton(text: "LOGIN", press: () {
-              // Navigator.push(context, MaterialPageRoute(builder: (context) {
-              //     return Profil();
-              //   }));
-            }),
+            RoundedButton(
+              text: "LOGIN",
+              press: () {},
+            ),
             SizedBox(
               height: size.height * 0.03,
             ),
