@@ -7,6 +7,7 @@ import 'package:runex/components/already_have_an_account_check.dart';
 import 'package:runex/components/rounded_text_button.dart';
 import 'package:runex/components/rounded_input_field.dart';
 import 'package:runex/components/rounded_password_field.dart';
+import 'package:runex/navigation_bar.dart';
 import 'or_divider.dart';
 
 class Body extends StatelessWidget {
@@ -61,7 +62,13 @@ class Body extends StatelessWidget {
             ),
             RoundedButton(
               text: "SIGN UP",
-              press: () {},
+              press: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) {
+                    return Nav();
+                  },
+                ));
+              },
             ),
             SizedBox(
               height: size.height * 0.03,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:runex/Screens/Profil/profil.dart';
 
 import 'constants.dart';
 
@@ -8,7 +9,7 @@ class Nav extends StatefulWidget {
 }
 
 class _NavState extends State<Nav> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 2;
   void onNavTap(index) {
     setState(() {
       _selectedIndex = index;
@@ -19,16 +20,16 @@ class _NavState extends State<Nav> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.purple[50],
-      body: Text('Home'),
+      body: Profil(),
       bottomNavigationBar: BottomNavigationBar(
         onTap: onNavTap,
         currentIndex: _selectedIndex,
         selectedItemColor: kPrimaryColor,
         elevation: 0,
         items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
           BottomNavigationBarItem(icon: Icon(Icons.people), label: 'Community'),
           BottomNavigationBarItem(icon: Icon(Icons.map), label: 'Map'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
       ),
     );
