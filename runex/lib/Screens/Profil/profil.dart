@@ -4,12 +4,18 @@ import 'package:flutter/material.dart';
 import 'Onglets/Statistiques/statistiques.dart';
 import 'Onglets/Objectifs/objectifs.dart';
 import 'Onglets/Historique/historique.dart';
+import 'package:runex/constants.dart';
 
 class Profil extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+       theme: ThemeData(
+          primaryColor: kPrimaryColor,
+          scaffoldBackgroundColor: Colors.white,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
       home: DefaultTabController(
         length: 3,
         child: Scaffold(
