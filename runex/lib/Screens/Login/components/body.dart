@@ -4,11 +4,13 @@ import 'package:runex/Screens/Login/components/background.dart';
 import 'package:runex/Screens/Login/components/social_icon.dart';
 import 'package:runex/Screens/SignUp/signup_screen.dart';
 import 'package:runex/components/already_have_an_account_check.dart';
-import 'package:runex/components/rounded_button.dart';
+import 'package:runex/components/rounded_text_button.dart';
 import 'package:runex/components/rounded_input_field.dart';
 import 'package:runex/components/rounded_password_field.dart';
 import 'package:runex/navigation_bar.dart';
 import 'or_divider.dart';
+
+import 'package:runex/Screens/Profil/profil.dart';
 
 class Body extends StatelessWidget {
   const Body({
