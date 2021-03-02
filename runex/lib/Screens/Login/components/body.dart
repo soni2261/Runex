@@ -10,8 +10,6 @@ import 'package:runex/components/rounded_password_field.dart';
 import 'package:runex/navigation_bar.dart';
 import 'or_divider.dart';
 
-import 'package:runex/Screens/Profil/profil.dart';
-
 class Body extends StatelessWidget {
   const Body({
     Key key,
@@ -44,15 +42,19 @@ class Body extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 SocialIcon(
-                  imageSrc: "assets/icons/google-plus.svg",
-                  press: () {},
+                  imageSrc: "assets/icons/google.svg",
+                  press: () {
+                    print("Google pressed");
+                  },
                 ),
                 SizedBox(
                   width: 10,
                 ),
                 SocialIcon(
                   imageSrc: "assets/icons/facebook.svg",
-                  press: () {},
+                  press: () {
+                    print("Facebook pressed");
+                  },
                 ),
               ],
             ),

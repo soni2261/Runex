@@ -40,7 +40,7 @@ class Body extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 SocialIcon(
-                  imageSrc: "assets/icons/google-plus.svg",
+                  imageSrc: "assets/icons/google.svg",
                   press: () {},
                 ),
                 SizedBox(
