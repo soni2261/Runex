@@ -1,6 +1,5 @@
-
-
 import 'package:flutter/material.dart';
+import 'package:runex/constants.dart';
 import 'Onglets/Statistiques/statistiques.dart';
 import 'Onglets/Objectifs/objectifs.dart';
 import 'Onglets/Historique/historique.dart';
@@ -28,6 +27,7 @@ class Profil extends StatelessWidget {
               ],
             ),
             title: Text('Profil'),
+            backgroundColor: kPrimaryColor,
           ),
           body: TabBarView(
             children: <Widget>[

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:runex/Screens/Welcome/welcome_screen.dart';
 import 'package:runex/constants.dart';
 
-import 'package:runex/Screens/Profil/profil.dart';
-
 void main() {
   runApp(MyApp());
 }
@@ -20,6 +18,6 @@ class MyApp extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: WelcomeScreen());
-        //home: Profil()); //DECOMMENTER QUAND ON VEUT TESTER PROFIL SEULEMENT
+    //home: Profil()); //DECOMMENTER QUAND ON VEUT TESTER PROFIL SEULEMENT
   }
 }
