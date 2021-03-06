@@ -20,19 +20,7 @@ class _CreerObjectifState extends State<CreerObjectif> {
         ));
   }
 
-  ListView _buildListView() {
-    return ListView.builder(
-      itemCount: nbListeSport,
-      itemBuilder: (_, index) {
-        return ListTile(
-          title: Text('The list item #$index'),
-          leading: Icon(Icons.delete_outline),
-        );
-      }, //context, which we dont need to specify, and index
-    );
-  }
-
-  // Widget _buildDropDownList(){
+  // Widget _buildDropDownList() {
   //   String dropdownValue = 'Three';
 
   //   return DropDownButton<String>(
@@ -58,23 +46,29 @@ class _CreerObjectifState extends State<CreerObjectif> {
             ],
           ),
           Visibility(
-            child: Row(
+            child: Column(
               children: [
-                ElevatedButton(
-                  onPressed: () {},
-                  child: Icon(Icons.add),
+                Row(
+                  children: [
+                    Icon(Icons.directions_bike),
+                    Text('3h30'),
+                  ],
                 ),
-                Text('ajouter un sport'),
+                Row(
+                  children: [
+                    Icon(Icons.directions_run),
+                    Text('2h40'),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Icon(Icons.directions_walk),
+                    Text('2h40'),
+                  ],
+                ),
               ],
             ),
             visible: veutObjectifTemps, //veutObjectifTemps,
-          ),
-          Visibility(
-            child: Container(
-              height: 200,
-              child: _buildListView(),
-            ),
-            visible: veutObjectifTemps,
           ),
         ],
       ),
