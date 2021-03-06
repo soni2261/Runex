@@ -12,9 +12,9 @@ class _CreerObjectifState extends State<CreerObjectif> {
   String typeObjectif;
   String uniteObjectif;
 
-  double _firstCurrentDoubleValue = 3.0;
-  double _secondCurrentDoubleValue = 2.0;
-  double _thirdCurrentDoubleValue = 4.0;
+  double _firstCurrentDoubleValue = 0.0;
+  double _secondCurrentDoubleValue = 0.0;
+  double _thirdCurrentDoubleValue = 0.0;
 
   int currentButton = 1;
 
