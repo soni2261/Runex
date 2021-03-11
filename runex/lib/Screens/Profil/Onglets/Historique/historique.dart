@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:runex/Screens/Profil/Onglets/Historique/components/event_card.dart';
+import 'package:runex/Screens/Profil/Onglets/Historique/components/solo_run_card.dart';
 
 class Historique extends StatefulWidget {
   Historique({Key key}) : super(key: key);
@@ -8,41 +10,41 @@ class Historique extends StatefulWidget {
 }
 
 class _HistoriqueState extends State<Historique> {
-  Widget idToCard(id) {
-    return Card(
-      margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
-      child: InkWell(
-        onTap: () {},
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Text(
-                "Evenement",
-                style: TextStyle(color: Colors.grey[850], fontSize: 22),
-              ),
-              Text(
-                "En cours",
-                style: TextStyle(
-                    color: Colors.green[700],
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+  Widget idToCard(map) {
+    if (map['isEvent']) {
+      return EventCard(map);
+    } else {
+      return SoloRunCard(map);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    List<String> listeID = ["123456", "654321", "AliIsTheBest"];
+    List<Map> listeMap = [
+      {
+        'id': '123456',
+        'name': 'First Workout',
+        'isEvent': true,
+        'isFinished': false
+      },
+      {
+        'id': '654321',
+        'name': 'Second Workout',
+        'isEvent': false,
+      },
+      {
+        'id': 'aliisthebest',
+        'name': 'Third Workout',
+        'isEvent': true,
+        'isFinished': true
+      },
+    ];
 
-    return Container(
-      child: Column(
-        children: listeID.map((id) => idToCard(id)).toList(),
+    return SingleChildScrollView(
+      child: Container(
+        child: Column(
+          children: listeMap.map((id) => idToCard(id)).toList(),
+        ),
       ),
     );
   }
