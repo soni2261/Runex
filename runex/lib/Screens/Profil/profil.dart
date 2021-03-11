@@ -10,11 +10,11 @@ class Profil extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-       theme: ThemeData(
-          primaryColor: kPrimaryColor,
-          scaffoldBackgroundColor: Colors.white,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
+      theme: ThemeData(
+        primaryColor: kPrimaryColor,
+        scaffoldBackgroundColor: Colors.white,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
       home: DefaultTabController(
         length: 3,
         child: Scaffold(
@@ -28,6 +28,13 @@ class Profil extends StatelessWidget {
             ),
             title: Text('Profil'),
             backgroundColor: kPrimaryColor,
+            actions: [
+              IconButton(
+                  icon: Icon(Icons.settings),
+                  onPressed: () {
+                    print("Settings button pressed");
+                  })
+            ],
           ),
           body: TabBarView(
             children: <Widget>[

@@ -25,7 +25,6 @@ class _NavState extends State<Nav> {
         onTap: onNavTap,
         currentIndex: _selectedIndex,
         selectedItemColor: kPrimaryColor,
-        elevation: 0,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.people), label: 'Community'),
           BottomNavigationBarItem(icon: Icon(Icons.map), label: 'Map'),
