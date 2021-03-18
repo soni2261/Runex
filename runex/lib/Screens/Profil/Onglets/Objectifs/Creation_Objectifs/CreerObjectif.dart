@@ -7,22 +7,21 @@ class CreerObjectif extends StatefulWidget {
 }
 
 class _CreerObjectifState extends State<CreerObjectif> {
-  bool _veutObjectifTemps = false;
-  bool _veutObjectifDistance = false;
-  String _typeObjectif = "";
+  bool veutObjectifTemps = false;
+  bool veutObjectifDistance = false;
+  String typeObjectif;
+  String uniteObjectif;
 
-  bool premiereCarte = true;
-  int _numeroBouton = 0;
+  double _firstCurrentDoubleValue = 0.0;
+  double _secondCurrentDoubleValue = 0.0;
+  double _thirdCurrentDoubleValue = 0.0;
 
-  //initialisation du data a 0
-  List<double> _timeValues = [0.0, 0.0, 0.0];
-  List<double> _distanceValues = [0.0, 0.0, 0.0];
-
+  int currentButton = 1;
 
   NumberPicker decimalNumberPicker;
 
   Widget build(BuildContext context) {
-    _initializeNumberPickers(_typeObjectif, _numeroBouton);
+    _initializeNumberPickers();
     return Scaffold(
         appBar: AppBar(title: Text('Modification des objectifs')),
         body: Container(
@@ -35,22 +34,25 @@ class _CreerObjectifState extends State<CreerObjectif> {
         ));
   }
 
-  void _initializeNumberPickers(String _typeObjectif, int _numeroBouton) {
+  // Widget _buildDropDownList() {
+  //   String dropdownValue = 'Three';
+
+  //   return DropDownButton<String>(
+  //     value
+  //   );
+  // }
+
+  void _initializeNumberPickers() {
     decimalNumberPicker = new NumberPicker.decimal(
-        initialValue: 0.0,
-        minValue: 0,
-        maxValue: 12,
-        decimalPlaces: 2,
-        onChanged: (value) {
-          if (_typeObjectif == "temps") {
-            setState(() => _timeValues[_numeroBouton] = value);
-          } else if (_typeObjectif == "distance") {
-            setState(() => _distanceValues[_numeroBouton] = value);
-          }
-        });
+      initialValue: _firstCurrentDoubleValue,
+      minValue: 0,
+      maxValue: 12,
+      decimalPlaces: 2,
+      onChanged: (value) => setState(() => _firstCurrentDoubleValue = value),
+    );
   }
 
-  Future _showDoubleDialog(String _typeObjectif, int _numeroBouton) async {
+  Future _showDoubleDialog(int currentButton) async {
     await showDialog<double>(
       context: context,
       builder: (BuildContext context) {
@@ -58,22 +60,24 @@ class _CreerObjectifState extends State<CreerObjectif> {
           minValue: 0,
           maxValue: 12,
           decimalPlaces: 2,
-          initialDoubleValue: 0.0,
-          title: new Text("$_typeObjectif de l'entrainement"),
+          initialDoubleValue: _firstCurrentDoubleValue,
+          title: new Text("Duree de l'entrainement"),
         );
       },
     ).then((num value) {
       if (value != null) {
-        if (_typeObjectif == "temps") {
-          setState(() => _timeValues[_numeroBouton] = value);
-        } else if (_typeObjectif == "distance") {
-          setState(() => _distanceValues[_numeroBouton] = value);
+        if (currentButton == 1) {
+          setState(() => _firstCurrentDoubleValue = value);
+        } else if (currentButton == 2) {
+          setState(() => _secondCurrentDoubleValue = value);
+        } else if (currentButton == 3) {
+          setState(() => _thirdCurrentDoubleValue = value);
         }
       }
     });
   }
 
-  Widget _buildCarteObjectif(String _typeObjectif) {
+  Widget _buildCarteObjectif(String typeObjectif) {
     return Card(
       child: Column(
         children: [
@@ -81,18 +85,18 @@ class _CreerObjectifState extends State<CreerObjectif> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Checkbox(
-                value: veutObjectif(_typeObjectif),
+                value: veutObjectif(typeObjectif),
                 onChanged: (bool value) {
                   setState(() {
-                    if (_typeObjectif == "temps") {
-                      _veutObjectifTemps = value;
-                    } else if (_typeObjectif == "distance") {
-                      _veutObjectifDistance = value;
+                    if (typeObjectif == "temps") {
+                      veutObjectifTemps = value;
+                    } else if (typeObjectif == "distance") {
+                      veutObjectifDistance = value;
                     }
                   });
                 },
               ),
-              Text('objectif de $_typeObjectif'),
+              Text('objectif de $typeObjectif'),
             ],
           ),
           Visibility(
@@ -102,17 +106,10 @@ class _CreerObjectifState extends State<CreerObjectif> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Icon(Icons.directions_bike),
-                    Text("$_typeObjectif de l'entrainement: "),
+                    Text("durée de l'entrainement: "),
                     RaisedButton(
-                      onPressed: () {
-                        _numeroBouton = 0;
-                        _showDoubleDialog(_typeObjectif, _numeroBouton);
-                      },
-                      child: Visibility(
-                        child: Text(_timeValues.elementAt(0).toString()),
-                        visible:
-                            premiereCarte, //seul probleme: l'affichage des textes car j'utilise la liste timeValues seulement
-                      ),
+                      onPressed: () => _showDoubleDialog(1),
+                      child: Text("$_firstCurrentDoubleValue h"),
                     ),
                   ],
                 ),
@@ -120,13 +117,10 @@ class _CreerObjectifState extends State<CreerObjectif> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Icon(Icons.directions_run),
-                    Text("$_typeObjectif de l'entrainement: "),
+                    Text("durée de l'entrainement: "),
                     RaisedButton(
-                      onPressed: () {
-                        _numeroBouton = 1;
-                        _showDoubleDialog(_typeObjectif, _numeroBouton);
-                      },
-                      child: Text(_timeValues.elementAt(1).toString()),
+                      onPressed: () => _showDoubleDialog(2),
+                      child: Text("$_secondCurrentDoubleValue h"),
                     ),
                   ],
                 ),
@@ -134,32 +128,39 @@ class _CreerObjectifState extends State<CreerObjectif> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Icon(Icons.directions_walk),
-                    Text("$_typeObjectif de l'entrainement: "),
+                    Text("durée de l'entrainement: "),
                     RaisedButton(
-                      onPressed: () {
-                        _numeroBouton = 2;
-                        _showDoubleDialog(_typeObjectif, _numeroBouton);
-                      },
-                      child: Text(_timeValues.elementAt(2).toString()),
+                      onPressed: () => _showDoubleDialog(3),
+                      child: Text("$_thirdCurrentDoubleValue h"),
                     ),
                   ],
                 ),
               ],
             ),
-            visible: veutObjectif(_typeObjectif), //_veutObjectifTemps,
+            visible: veutObjectif(typeObjectif), //veutObjectifTemps,
           ),
         ],
       ),
     );
   }
 
-  bool veutObjectif(String _typeObjectif) {
-    if (_typeObjectif == "temps") {
-      return _veutObjectifTemps;
-    } else if (_typeObjectif == "distance") {
-      return _veutObjectifDistance;
+  bool veutObjectif(String typeObjectif) {
+    if (typeObjectif == "temps") {
+      return veutObjectifTemps;
+    } else if (typeObjectif == "distance") {
+      return veutObjectifDistance;
     } else {
       return false;
+    }
+  }
+
+  String uniteDeObjectif(String typeObjectif){
+    if (typeObjectif == "temps") {
+      return "h";
+    } else if (typeObjectif == "distance") {
+      return "km";
+    } else {
+      return "h";
     }
   }
 }
