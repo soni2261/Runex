@@ -4,6 +4,7 @@ import 'package:runex/Screens/Profil/profil.dart';
 import 'constants.dart';
 
 class Nav extends StatefulWidget {
+  const Nav();
   @override
   _NavState createState() => _NavState();
 }

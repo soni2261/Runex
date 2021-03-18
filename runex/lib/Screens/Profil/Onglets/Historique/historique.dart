@@ -25,18 +25,21 @@ class _HistoriqueState extends State<Historique> {
         'id': '123456',
         'name': 'First Workout',
         'isEvent': true,
-        'isFinished': false
+        'isFinished': false,
+        'sport': 'run'
       },
       {
         'id': '654321',
         'name': 'Second Workout',
         'isEvent': false,
+        'sport': 'walk'
       },
       {
         'id': 'aliisthebest',
         'name': 'Third Workout',
         'isEvent': true,
-        'isFinished': true
+        'isFinished': true,
+        'sport': 'cycling'
       },
     ];
 

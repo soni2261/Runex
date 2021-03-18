@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "229747944074",
+    "project_id": "runex-5f43d",
+    "storage_bucket": "runex-5f43d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:229747944074:android:c1c06e86ff0e580fef9b73",
+        "android_client_info": {
+          "package_name": "com.example.runex"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "229747944074-tvec7n6lu0drjo2fok3arhrrkarh1klh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.runex",
+            "certificate_hash": "d694edaf100e12016576ed6dda9a8b6ed57363bd"
+          }
+        },
+        {
+          "client_id": "229747944074-32nighv3q244pf7vpq4g0cfcd5nb0pvi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5PaaHAb3qIjqpnw29ax6Pcs-mb456KkU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "229747944074-32nighv3q244pf7vpq4g0cfcd5nb0pvi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
