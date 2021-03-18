@@ -3,7 +3,7 @@ import 'package:runex/constants.dart';
 import 'Onglets/Statistiques/statistiques.dart';
 import 'Onglets/Objectifs/objectifs.dart';
 import 'Onglets/Historique/historique.dart';
-import 'package:runex/constants.dart';
+//import 'package:runex/constants.dart';
 
 class Profil extends StatelessWidget {
   @override
