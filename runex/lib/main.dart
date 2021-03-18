@@ -30,4 +30,3 @@ class MyApp extends StatelessWidget {
     //home: Profil()); //DECOMMENTER QUAND ON VEUT TESTER PROFIL SEULEMENT
   }
 }
-
