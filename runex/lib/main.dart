@@ -1,33 +1,23 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:runex/services/auth.dart';
-import 'package:runex/wrapper.dart';
-import 'models/user.dart';
+import 'package:runex/Screens/Welcome/welcome_screen.dart';
+import 'package:runex/constants.dart';
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<Utilisateur>.value(
-      value: AuthService().utilisateur,
-      child: MaterialApp(
+    return MaterialApp(
         title: 'Runex Login',
         debugShowCheckedModeBanner: false,
-        // theme: ThemeData(
-        //   primaryColor: kPrimaryColor,
-        //   scaffoldBackgroundColor: Colors.white,
-        //   visualDensity: VisualDensity.adaptivePlatformDensity,
-        // ),
-        home: Wrapper(),
-      ),
-    );
+        theme: ThemeData(
+          primaryColor: kPrimaryColor,
+          scaffoldBackgroundColor: Colors.white,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        home: WelcomeScreen());
     //home: Profil()); //DECOMMENTER QUAND ON VEUT TESTER PROFIL SEULEMENT
   }
 }
-

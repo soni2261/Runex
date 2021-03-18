@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:runex/constants.dart';
 
 class SoloRunCard extends StatelessWidget {
   final Map map;
@@ -10,21 +9,6 @@ class SoloRunCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Icon icon;
-    if (map['sport'] == 'run') {
-      icon = Icon(
-        Icons.directions_run,
-      );
-    } else if (map['sport'] == 'walk') {
-      icon = Icon(
-        Icons.directions_walk,
-      );
-    } else {
-      icon = Icon(
-        Icons.directions_bike,
-      );
-    }
-
     return Card(
       margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
       child: InkWell(
@@ -35,7 +19,9 @@ class SoloRunCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Row(children: <Widget>[
-                icon,
+                Icon(
+                  Icons.person,
+                ),
                 SizedBox(
                   width: 10,
                 ),
@@ -45,11 +31,11 @@ class SoloRunCard extends StatelessWidget {
                 ),
               ]),
               Text(
-                "Solo",
+                "En cours",
                 style: TextStyle(
-                    color: Colors.grey[600],
+                    color: Colors.green[700],
                     fontSize: 16,
-                    fontWeight: FontWeight.normal),
+                    fontWeight: FontWeight.bold),
               ),
             ],
           ),
