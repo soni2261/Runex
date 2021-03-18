@@ -9,20 +9,6 @@ class EventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Icon icon;
-    if (map['sport'] == 'run') {
-      icon = Icon(
-        Icons.directions_run,
-      );
-    } else if (map['sport'] == 'walk') {
-      icon = Icon(
-        Icons.directions_walk,
-      );
-    } else {
-      icon = Icon(
-        Icons.directions_bike,
-      );
-    }
     return Card(
       margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
       child: InkWell(
@@ -33,7 +19,7 @@ class EventCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Row(children: <Widget>[
-                icon,
+                Icon(Icons.people),
                 SizedBox(
                   width: 10,
                 ),
@@ -42,27 +28,15 @@ class EventCard extends StatelessWidget {
                   style: TextStyle(color: Colors.grey[850], fontSize: 22),
                 ),
               ]),
-              SizedBox(
-                height: 3,
+              Text(
+                map['isFinished'] ? "Termine" : "En cours",
+                style: TextStyle(
+                    color: map['isFinished']
+                        ? Colors.grey[600]
+                        : Colors.green[700],
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold),
               ),
-              Row(children: <Widget>[
-                Text(
-                  "Événement • ",
-                  style: TextStyle(
-                      color: Colors.grey[600],
-                      fontSize: 16,
-                      fontWeight: FontWeight.normal),
-                ),
-                Text(
-                  map['isFinished'] ? "Terminé" : "En cours",
-                  style: TextStyle(
-                      color: map['isFinished']
-                          ? Colors.grey[600]
-                          : Colors.green[700],
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold),
-                ),
-              ]),
             ],
           ),
         ),

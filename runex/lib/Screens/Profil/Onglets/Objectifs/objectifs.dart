@@ -12,6 +12,17 @@ class Objectifs extends StatefulWidget {
 class _ObjectifsState extends State<Objectifs> {
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
+    return Center(
+      child: ElevatedButton(
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(
+            //builder: (context) => CreerObjectif(),
+            builder: (context) => CreerObjectif(),
+          ));
+        },
+        child: Text('Créer un objectif'),
+=======
     return Column(children: [
       Align(
         alignment: Alignment.centerRight,
@@ -34,6 +45,7 @@ class _ObjectifsState extends State<Objectifs> {
             ),
           ),
         ),
+>>>>>>> parent of 8a64055 (Revert "Merge branch 'main' of https://github.com/soni2261/Runex into main")
       ),
     ]);
   }

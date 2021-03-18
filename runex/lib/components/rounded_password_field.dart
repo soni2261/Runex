@@ -4,19 +4,16 @@ import 'package:runex/constants.dart';
 
 class RoundedPasswordField extends StatelessWidget {
   final ValueChanged<String> onChanged;
-  final String validationText;
 
   const RoundedPasswordField({
     Key key,
     this.onChanged,
-    this.validationText
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFieldContainer(
-      child: TextFormField(
-        validator: (val) => val.length < 6 ? validationText : null,
+      child: TextField(
         onChanged: onChanged,
         obscureText: true,
         decoration: InputDecoration(
