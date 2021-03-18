@@ -13,7 +13,9 @@ class SocialIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: press,
+      onTap: () {
+        print(imageSrc);
+      },
       child: Container(
         padding: EdgeInsets.all(15),
         decoration: BoxDecoration(border: Border.all(), shape: BoxShape.circle),
