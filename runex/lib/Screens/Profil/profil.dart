@@ -3,9 +3,11 @@ import 'package:runex/constants.dart';
 import 'Onglets/Statistiques/statistiques.dart';
 import 'Onglets/Objectifs/objectifs.dart';
 import 'Onglets/Historique/historique.dart';
+import 'package:runex/services/auth.dart';
 //import 'package:runex/constants.dart';
 
 class Profil extends StatelessWidget {
+  AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -31,8 +33,9 @@ class Profil extends StatelessWidget {
             actions: [
               IconButton(
                   icon: Icon(Icons.settings),
-                  onPressed: () {
-                    print("Settings button pressed");
+                  onPressed: () async {
+                    //_auth.signOutGoogle();
+                    await _auth.signOut();
                   })
             ],
           ),
