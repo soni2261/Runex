@@ -45,6 +45,7 @@ class AuthService {
 
   // auth change user stream
   Stream<Utilisateur> get utilisateur {
+    _auth.authStateChanges();
     return _auth
         .authStateChanges()
         .map((User user) => _userFromFirebaseUser(user));
@@ -55,7 +56,9 @@ class AuthService {
     try {
       UserCredential result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
+
       User user = result.user;
+      print(user.displayName);
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());
@@ -82,12 +85,20 @@ class AuthService {
   }
 
   // sign out
-  Future signOut() async {
+  Future signOutEmailAndPassword() async {
     try {
       return await _auth.signOut();
     } catch (e) {
       print(e.toString());
       return null;
+    }
+  }
+
+  Future signOut() async {
+    if (_auth.currentUser == null) {
+      await signOutGoogle();
+    } else {
+      await signOutEmailAndPassword();
     }
   }
 }

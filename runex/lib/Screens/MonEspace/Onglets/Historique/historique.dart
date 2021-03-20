@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:runex/Screens/Profil/Onglets/Historique/components/event_card.dart';
-import 'package:runex/Screens/Profil/Onglets/Historique/components/solo_run_card.dart';
+import 'package:runex/Screens/MonEspace/Onglets/Historique/components/event_card.dart';
+import 'package:runex/Screens/MonEspace/Onglets/Historique/components/solo_run_card.dart';
 
 class Historique extends StatefulWidget {
   Historique({Key key}) : super(key: key);

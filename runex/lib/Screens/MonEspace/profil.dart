@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:runex/Screens/Welcome/welcome_screen.dart';
 import 'package:runex/constants.dart';
 import 'Onglets/Statistiques/statistiques.dart';
 import 'Onglets/Objectifs/objectifs.dart';
@@ -34,8 +35,15 @@ class Profil extends StatelessWidget {
               IconButton(
                   icon: Icon(Icons.settings),
                   onPressed: () async {
-                    //_auth.signOutGoogle();
+                    // await _auth.signOutGoogle();
+                    // await _auth.signOut();
                     await _auth.signOut();
+                    Navigator.of(context).popUntil((route) => route.isFirst);
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                WelcomeScreen()));
                   })
             ],
           ),

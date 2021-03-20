@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:runex/Screens/Login/login_screen.dart';
 import 'package:runex/Screens/SignUp/components/background.dart';
 import 'package:runex/Screens/SignUp/components/social_icon.dart';
@@ -8,6 +9,8 @@ import 'package:runex/components/loading.dart';
 import 'package:runex/components/rounded_text_button.dart';
 import 'package:runex/components/rounded_input_field.dart';
 import 'package:runex/components/rounded_password_field.dart';
+import 'package:runex/models/user.dart';
+import 'package:runex/navigation_bar.dart';
 import 'package:runex/services/auth.dart';
 import 'or_divider.dart';
 
@@ -34,107 +37,113 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final utilisateur = Provider.of<Utilisateur>(context);
+
     return loading
         ? Loading()
-        : Background(
-            child: SingleChildScrollView(
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      "SIGN UP",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(
-                      height: size.height * 0.03,
-                    ),
-                    SvgPicture.asset(
-                      "assets/icons/signup.svg",
-                      height: size.height * .3,
-                    ),
-                    SizedBox(
-                      height: size.height * 0.03,
-                    ),
-                    Row(
+        : utilisateur != null
+            ? Nav()
+            : Background(
+                child: SingleChildScrollView(
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        SocialIcon(
-                          imageSrc: "assets/icons/google.svg",
-                          press: () {
-                            _authService.signInWithGoogle().then((user) {
-                              if (user != null) {
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (context) => Nav()));
-                              }
+                        Text(
+                          "SIGN UP",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          height: size.height * 0.03,
+                        ),
+                        SvgPicture.asset(
+                          "assets/icons/signup.svg",
+                          height: size.height * .3,
+                        ),
+                        SizedBox(
+                          height: size.height * 0.03,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            SocialIcon(
+                              imageSrc: "assets/icons/google.svg",
+                              press: () {
+                                _authService.signInWithGoogle().then((user) {
+                                  if (user != null) {
+                                    // Navigator.push(
+                                    //     context,
+                                    //     MaterialPageRoute(
+                                    //         builder: (context) => Nav()));
+                                  }
+                                });
+                              },
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            SocialIcon(
+                              imageSrc: "assets/icons/facebook.svg",
+                              press: () {},
+                            ),
+                          ],
+                        ),
+                        OrDivider(),
+                        RoundedInputField(
+                          hintText: "Enter your email",
+                          onChanged: (value) {
+                            setState(() {
+                              email = value;
                             });
+                          },
+                          validationText: 'Enter an email',
+                        ),
+                        RoundedPasswordField(
+                          onChanged: (value) {
+                            setState(() {
+                              password = value;
+                            });
+                          },
+                          validationText:
+                              'Enter a password longer than 6 characters',
+                        ),
+                        RoundedButton(
+                          text: "SIGN UP",
+                          press: () async {
+                            if (_formKey.currentState.validate()) {
+                              setState(() {
+                                loading = true;
+                              });
+
+                              dynamic result = await _authService
+                                  .registerWithEmailAndPassword(email, password);
+                              if (result == null) {
+                                  error =
+                                      'Could not sign in with those credentials';
+                              }
+                              setState(() {
+                                loading = false;
+                              });
+                            }
                           },
                         ),
                         SizedBox(
-                          width: 10,
+                          height: size.height * 0.03,
                         ),
-                        SocialIcon(
-                          imageSrc: "assets/icons/facebook.svg",
-                          press: () {},
+                        AlreadyHaveAnAccountCheck(
+                          login: false,
+                          press: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return LoginScreen();
+                            }));
+                          },
                         ),
                       ],
                     ),
-                    OrDivider(),
-                    RoundedInputField(
-                      hintText: "Enter your email",
-                      onChanged: (value) {
-                        setState(() {
-                          email = value;
-                        });
-                      },
-                      validationText: 'Enter an email',
-                    ),
-                    RoundedPasswordField(
-                      onChanged: (value) {
-                        setState(() {
-                          password = value;
-                        });
-                      },
-                      validationText:
-                          'Enter a password longer than 6 characters',
-                    ),
-                    RoundedButton(
-                      text: "SIGN UP",
-                      press: () async {
-                        if (_formKey.currentState.validate()) {
-                          setState(() {
-                            loading = true;
-                          });
-                          dynamic result = await _authService
-                              .registerWithEmailAndPassword(email, password);
-                          if (result == null) {
-                            setState(() {
-                              error = 'Please enter a valid email and password';
-                              loading = false;
-                            });
-                          }
-                        }
-                      },
-                    ),
-                    SizedBox(
-                      height: size.height * 0.03,
-                    ),
-                    AlreadyHaveAnAccountCheck(
-                      login: false,
-                      press: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return LoginScreen();
-                        }));
-                      },
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
-          );
+              );
   }
 }

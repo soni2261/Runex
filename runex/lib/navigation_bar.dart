@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:runex/Screens/Profil/profil.dart';
+import 'package:runex/Screens/MonEspace/profil.dart';
 
 import 'constants.dart';
 
@@ -27,9 +27,11 @@ class _NavState extends State<Nav> {
         currentIndex: _selectedIndex,
         selectedItemColor: kPrimaryColor,
         items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.people), label: 'Community'),
-          BottomNavigationBarItem(icon: Icon(Icons.map), label: 'Map'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.people), label: 'Communauté'),
+          BottomNavigationBarItem(icon: Icon(Icons.map), label: 'Carte'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person), label: 'Mon Espace'),
         ],
       ),
     );

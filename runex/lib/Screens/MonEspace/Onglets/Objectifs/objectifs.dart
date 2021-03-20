@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:runex/Screens/Profil/Onglets/Objectifs/Creation_Objectifs/CreerObjectif.dart';
+import 'package:runex/Screens/MonEspace/Onglets/Objectifs/Creation_Objectifs/CreerObjectif.dart';
 
 class Objectifs extends StatefulWidget {
   Objectifs({Key key}) : super(key: key);
