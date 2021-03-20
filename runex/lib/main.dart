@@ -15,6 +15,13 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    /*
+
+    return ChangeNotifierProvider
+    */
+
+
     return StreamProvider<Utilisateur>.value(
       value: AuthService().utilisateur,
       child: MaterialApp(
@@ -31,4 +38,3 @@ class MyApp extends StatelessWidget {
     //home: Profil()); //DECOMMENTER QUAND ON VEUT TESTER PROFIL SEULEMENT
   }
 }
-

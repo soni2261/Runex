@@ -30,7 +30,7 @@ dependencies:
   flutter_spinkit:
   firebase_auth: 
   cloud_firestore: 
-  provider: 
+  provider:
   firebase_core:
   google_sign_in:
 
