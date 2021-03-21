@@ -16,16 +16,15 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
-
     return StreamProvider<Utilisateur>.value(
       value: AuthService().utilisateur,
       child: MaterialApp(
+        
         title: 'Runex Login',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primaryColor: kPrimaryColor,
-          scaffoldBackgroundColor: Colors.white,
+          //scaffoldBackgroundColor: Colors.white,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: Wrapper(),

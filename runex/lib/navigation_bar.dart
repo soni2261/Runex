@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:runex/Screens/Communaute/communaute.dart';
 import 'package:runex/Screens/MonEspace/profil.dart';
 
 import 'constants.dart';
@@ -19,9 +20,10 @@ class _NavState extends State<Nav> {
 
   @override
   Widget build(BuildContext context) {
+    List listePages = [Communaute(), Communaute(), Profil()];
     return Scaffold(
       backgroundColor: Colors.purple[50],
-      body: Profil(),
+      body: listePages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         onTap: onNavTap,
         currentIndex: _selectedIndex,

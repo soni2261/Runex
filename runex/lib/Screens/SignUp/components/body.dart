@@ -71,21 +71,9 @@ class _BodyState extends State<Body> {
                               imageSrc: "assets/icons/google.svg",
                               press: () {
                                 _authService.signInWithGoogle().then((user) {
-                                  if (user != null) {
-                                    // Navigator.push(
-                                    //     context,
-                                    //     MaterialPageRoute(
-                                    //         builder: (context) => Nav()));
-                                  }
+                                  if (user != null) {}
                                 });
                               },
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            SocialIcon(
-                              imageSrc: "assets/icons/facebook.svg",
-                              press: () {},
                             ),
                           ],
                         ),
@@ -117,10 +105,11 @@ class _BodyState extends State<Body> {
                               });
 
                               dynamic result = await _authService
-                                  .registerWithEmailAndPassword(email, password);
+                                  .registerWithEmailAndPassword(
+                                      email, password);
                               if (result == null) {
-                                  error =
-                                      'Could not sign in with those credentials';
+                                error =
+                                    'Could not sign in with those credentials';
                               }
                               setState(() {
                                 loading = false;
@@ -134,6 +123,7 @@ class _BodyState extends State<Body> {
                         AlreadyHaveAnAccountCheck(
                           login: false,
                           press: () {
+                            Navigator.pop(context);
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
                               return LoginScreen();

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:runex/Screens/Welcome/welcome_screen.dart';
+import 'package:runex/Screens/MonEspace/Onglets/Parametres/Parametres.dart';
 import 'package:runex/constants.dart';
 import 'Onglets/Statistiques/statistiques.dart';
 import 'Onglets/Objectifs/objectifs.dart';
 import 'Onglets/Historique/historique.dart';
 import 'package:runex/services/auth.dart';
-//import 'package:runex/constants.dart';
 
 class Profil extends StatelessWidget {
   AuthService _auth = AuthService();
@@ -37,13 +36,10 @@ class Profil extends StatelessWidget {
                   onPressed: () async {
                     // await _auth.signOutGoogle();
                     // await _auth.signOut();
-                    await _auth.signOut();
-                    Navigator.of(context).popUntil((route) => route.isFirst);
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                WelcomeScreen()));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Parametres()),
+                    );
                   })
             ],
           ),

@@ -85,15 +85,6 @@ class _BodyState extends State<Body> {
                                 });
                               },
                             ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            SocialIcon(
-                              imageSrc: "assets/icons/facebook.svg",
-                              press: () {
-                                print("Facebook pressed");
-                              },
-                            ),
                           ],
                         ),
                         OrDivider(),
@@ -140,6 +131,7 @@ class _BodyState extends State<Body> {
                         ),
                         AlreadyHaveAnAccountCheck(
                           press: () {
+                            Navigator.pop(context);
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
                               return SignUpScreen();
