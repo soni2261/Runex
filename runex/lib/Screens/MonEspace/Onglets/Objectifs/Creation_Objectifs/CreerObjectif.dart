@@ -34,14 +34,6 @@ class _CreerObjectifState extends State<CreerObjectif> {
         ));
   }
 
-  // Widget _buildDropDownList() {
-  //   String dropdownValue = 'Three';
-
-  //   return DropDownButton<String>(
-  //     value
-  //   );
-  // }
-
   void _initializeNumberPickers() {
     decimalNumberPicker = new NumberPicker.decimal(
       initialValue: _firstCurrentDoubleValue,
