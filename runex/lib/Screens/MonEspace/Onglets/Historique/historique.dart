@@ -45,8 +45,10 @@ class _HistoriqueState extends State<Historique> {
 
     return SingleChildScrollView(
       child: Container(
-        child: Column(
-          children: listeMap.map((id) => idToCard(id)).toList(),
+        child: SingleChildScrollView(
+          child: Column(
+            children: listeMap.map((id) => idToCard(id)).toList(),
+          ),
         ),
       ),
     );

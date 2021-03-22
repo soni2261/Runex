@@ -19,7 +19,6 @@ class MyApp extends StatelessWidget {
     return StreamProvider<Utilisateur>.value(
       value: AuthService().utilisateur,
       child: MaterialApp(
-        
         title: 'Runex Login',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class EventCard extends StatelessWidget {
   final Map map;
@@ -9,59 +10,66 @@ class EventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Icon icon;
+    SvgPicture pic;
     if (map['sport'] == 'run') {
-      icon = Icon(
-        Icons.directions_run,
+      pic = SvgPicture.asset(
+        "assets/icons/run_icon_2.svg",
+        height: 100,
       );
     } else if (map['sport'] == 'walk') {
-      icon = Icon(
-        Icons.directions_walk,
+      pic = SvgPicture.asset(
+        "assets/icons/walk_icon.svg",
+        height: 100,
       );
     } else {
-      icon = Icon(
-        Icons.directions_bike,
+      pic = SvgPicture.asset(
+        "assets/icons/velo_icon.svg",
+        height: 100,
       );
     }
     return Card(
       margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
+      elevation: 2,
       child: InkWell(
         onTap: () {},
         child: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Row(children: <Widget>[
-                icon,
+                pic,
+                //icon,
                 SizedBox(
-                  width: 10,
+                  width: 20,
                 ),
-                Text(
-                  map['name'],
-                  style: TextStyle(color: Colors.grey[850], fontSize: 22),
-                ),
-              ]),
-              SizedBox(
-                height: 3,
-              ),
-              Row(children: <Widget>[
-                Text(
-                  "Événement • ",
-                  style: TextStyle(
-                      color: Colors.grey[600],
-                      fontSize: 16,
-                      fontWeight: FontWeight.normal),
-                ),
-                Text(
-                  map['isFinished'] ? "Terminé" : "En cours",
-                  style: TextStyle(
-                      color: map['isFinished']
-                          ? Colors.grey[600]
-                          : Colors.green[700],
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold),
-                ),
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Text(
+                    map['name'],
+                    style: TextStyle(color: Colors.grey[850], fontSize: 22),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(children: <Widget>[
+                    Text(
+                      "Événement • ",
+                      style: TextStyle(
+                          color: Colors.grey[600],
+                          fontSize: 16,
+                          fontWeight: FontWeight.normal),
+                    ),
+                    Text(
+                      map['isFinished'] ? "Terminé" : "En cours",
+                      style: TextStyle(
+                          color: map['isFinished']
+                              ? Colors.grey[600]
+                              : Colors.green[700],
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ]),
+                ]),
               ]),
             ],
           ),
