@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:runex/constants.dart';
-import 'Creation_Objectifs/CreerObjectif.dart';
+import 'Creation_Objectifs/creer_objectif.dart';
 
 class Objectifs extends StatefulWidget {
   Objectifs({Key key}) : super(key: key);
