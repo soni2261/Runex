@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
+import 'package:runex/components/theme.dart';
 
 class EventCard extends StatelessWidget {
   final Map map;
@@ -10,6 +12,7 @@ class EventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeChanger>(context);
     SvgPicture pic;
     if (map['sport'] == 'run') {
       pic = SvgPicture.asset(
@@ -31,7 +34,13 @@ class EventCard extends StatelessWidget {
       margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
       elevation: 2,
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          if (theme.getTheme() == ThemeData.dark()) {
+            theme.setTheme(ThemeData.light());
+          } else {
+            theme.setTheme(ThemeData.dark());
+          }
+        },
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -46,7 +55,7 @@ class EventCard extends StatelessWidget {
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Text(
                     map['name'],
-                    style: TextStyle(color: Colors.grey[850], fontSize: 22),
+                    style: TextStyle(/*color: Colors.grey[850],*/ fontSize: 22),
                   ),
                   SizedBox(
                     height: 10,
