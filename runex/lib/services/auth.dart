@@ -58,7 +58,6 @@ class AuthService {
           email: email, password: password);
 
       User user = result.user;
-      print(user.displayName);
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());
@@ -76,11 +75,30 @@ class AuthService {
       String name = email.substring(0, index);
 
       // create a new document for the user with the uid
-      await DatabaseService(uid: user.uid)
-          .updateUser(name: name, email: email, password: password);
+      await DatabaseService(uid: user.uid).updateUser(
+        name: name,
+        email: email,
+        objectifs: {
+          'hasobjDistance': false,
+          'hasobjTemps': false,
+          'objDistance': {'marche': 0, 'course': 0, 'velo': 0},
+          'objTemps': {'marche': 0, 'course': 0, 'velo': 0},
+        },
+      );
       return _userFromFirebaseUser(user);
     } catch (e) {
       return null;
+    }
+  }
+
+  Future<bool> changePassword(String password) async {
+    User user = _auth.currentUser;
+    try {
+      await user.updatePassword(password);
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return false;
     }
   }
 

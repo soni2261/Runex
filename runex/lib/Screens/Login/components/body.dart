@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -113,7 +114,6 @@ class _BodyState extends State<Body> {
                               setState(() {
                                 loading = true;
                               });
-
                               dynamic result = await _authService
                                   .signInWithEmailAndPassword(email, password);
                               if (result == null) {
