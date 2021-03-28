@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:runex/Screens/Communaute/communaute.dart';
 import 'package:runex/Screens/MonEspace/profil.dart';
+import 'package:runex/Screens/Carte/carte.dart';
 
 import 'constants.dart';
 
@@ -14,13 +15,19 @@ class _NavState extends State<Nav> {
   int _selectedIndex = 2;
   void onNavTap(index) {
     setState(() {
-      _selectedIndex = index;
+      if (index != 1) {
+        _selectedIndex = index;
+      } else {
+       Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => Carte(),
+                ));
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    List listePages = [Communaute(), Communaute(), Profil()];
+    List listePages = [Communaute(), Carte(), Profil()];
     return Scaffold(
       backgroundColor: Colors.purple[50],
       body: listePages[_selectedIndex],

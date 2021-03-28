@@ -22,6 +22,7 @@ class _CommunauteState extends State<Communaute> {
         'name': 'Evenement #1',
         'isFinished': false,
         'sport': 'walk',
+        'nbPersonnes': 5,
         'time': 3.78
       },
       {
@@ -29,6 +30,7 @@ class _CommunauteState extends State<Communaute> {
         'name': 'Evenement #2',
         'isFinished': false,
         'sport': 'bike',
+        'nbPersonnes': 3,
         'time': 6.28
       },
       {
@@ -36,6 +38,7 @@ class _CommunauteState extends State<Communaute> {
         'name': 'Evenement #3',
         'isFinished': false,
         'sport': 'run',
+        'nbPersonnes': 6,
         'time': 4.25
       },
     ];
