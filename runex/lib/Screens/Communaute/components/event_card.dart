@@ -39,7 +39,7 @@ class EventCard extends StatelessWidget {
                 ),
                 Text(
                   map['name'],
-                  style: TextStyle(color: Colors.grey[850], fontSize: 22),
+                  style: TextStyle(fontSize: 22),
                 ),
                 SizedBox(
                   width: 80,
@@ -47,20 +47,19 @@ class EventCard extends StatelessWidget {
                 Container(
                   alignment: Alignment.centerRight,
                   child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.green, // background
-                    onPrimary: Colors.white, // foreground
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.green, // background
+                      onPrimary: Colors.white, // foreground
+                    ),
+                    child: Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: Text(
+                          'join',
+                          style: TextStyle(color: Colors.white, fontSize: 22),
+                        )),
+                    onPressed: () {},
                   ),
-                  child: Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: Text(
-                        'join',
-                        style: TextStyle(color: Colors.white, fontSize: 22),
-                      )),
-                  onPressed: () {},
                 ),
-                ),
-                
               ]),
               SizedBox(
                 height: 3,

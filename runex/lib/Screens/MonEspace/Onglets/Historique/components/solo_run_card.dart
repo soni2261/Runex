@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
+import 'package:runex/components/theme.dart';
 
 class SoloRunCard extends StatelessWidget {
   final Map map;
@@ -10,6 +12,8 @@ class SoloRunCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeChanger>(context);
+    Color subTextColor = theme.isDark() ? Colors.grey[400] : Colors.grey[600];
     SvgPicture pic;
     if (map['sport'] == 'run') {
       pic = SvgPicture.asset(
@@ -46,7 +50,7 @@ class SoloRunCard extends StatelessWidget {
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Text(
                     map['name'],
-                    style: TextStyle(color: Colors.grey[850], fontSize: 22),
+                    style: TextStyle(fontSize: 22),
                   ),
                   SizedBox(
                     height: 10,
@@ -54,7 +58,7 @@ class SoloRunCard extends StatelessWidget {
                   Text(
                     "Solo Workout",
                     style: TextStyle(
-                        color: Colors.grey[600],
+                        color: subTextColor,
                         fontSize: 16,
                         fontWeight: FontWeight.normal),
                   ),

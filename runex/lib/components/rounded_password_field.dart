@@ -20,16 +20,19 @@ class _RoundedPasswordFieldState extends State<RoundedPasswordField> {
 
   @override
   Widget build(BuildContext context) {
+    Color textColor = Color.fromRGBO(96, 92, 102, 1);
     String hintText = widget.hintText == "" || widget.hintText == null
         ? "Password"
         : widget.hintText;
     return TextFieldContainer(
       child: TextFormField(
+        style: TextStyle(color: textColor),
         validator: (val) => val.length < 6 ? widget.validationText : null,
         onChanged: widget.onChanged,
         obscureText: isObscure,
         decoration: InputDecoration(
             errorMaxLines: 2,
+            hintStyle: TextStyle(color: textColor),
             hintText: hintText,
             border: InputBorder.none,
             icon: Icon(

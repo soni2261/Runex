@@ -40,26 +40,17 @@ class _CommunauteState extends State<Communaute> {
       },
     ];
 
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primaryColor: kPrimaryColor,
-          scaffoldBackgroundColor: Colors.white,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
-
-        home:Scaffold(
-          appBar: AppBar( 
-            title: Text('Communaute'),
-            backgroundColor: kPrimaryColor,
-          ),
-          body: SingleChildScrollView(
-          child: Container(
-            child: Column(
-              children: listeMap.map((id) => idToCard(id)).toList(),
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Communaute'),
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          child: Column(
+            children: listeMap.map((id) => idToCard(id)).toList(),
           ),
         ),
-        ));
+      ),
+    );
   }
 }

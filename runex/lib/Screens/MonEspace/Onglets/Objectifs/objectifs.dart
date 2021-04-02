@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:runex/components/theme.dart';
 import 'package:runex/constants.dart';
 import 'Creation_Objectifs/creer_objectif.dart';
 
@@ -12,14 +14,17 @@ class Objectifs extends StatefulWidget {
 class _ObjectifsState extends State<Objectifs> {
   @override
   Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeChanger>(context);
     return Column(children: [
       Align(
         alignment: Alignment.centerRight,
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Ink(
-            decoration: const ShapeDecoration(
-              color: kPrimaryColor,
+            decoration: ShapeDecoration(
+              color: theme.isDark()
+                  ? Color.fromRGBO(40, 35, 55, 1)
+                  : kPrimaryColor,
               shape: CircleBorder(),
             ),
             child: IconButton(

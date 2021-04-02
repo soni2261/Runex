@@ -9,11 +9,17 @@ class DatabaseService {
   final CollectionReference userCollection =
       FirebaseFirestore.instance.collection('users');
 
-  Future updateUser({String email, String name, Map objectifs}) async {
+  Future updateUser({
+    String email,
+    String name,
+    Map objectifs,
+    bool usesDarkTheme,
+  }) async {
     return await userCollection.doc(uid).set({
       'name': name,
       'email': email,
       'objectifs': objectifs,
+      'usesDarkTheme': usesDarkTheme,
     });
   }
 
@@ -24,6 +30,7 @@ class DatabaseService {
       email: snapshot.data()['email'],
       password: snapshot.data()['password'],
       objectifs: snapshot.data()['objectifs'],
+      usesDarkTheme: snapshot.data()['usesDarkTheme'],
     );
   }
 

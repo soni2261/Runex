@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:runex/Screens/MonEspace/Onglets/Parametres/pages/changePassword.dart';
+import 'package:runex/Screens/MonEspace/Onglets/Parametres/pages/changeTheme.dart';
 import 'package:runex/Screens/MonEspace/Onglets/Parametres/parametreItem.dart';
 import 'package:runex/Screens/Welcome/welcome_screen.dart';
+import 'package:runex/constants.dart';
 import 'package:runex/services/auth.dart';
 
 class Parametres extends StatefulWidget {
@@ -15,13 +17,31 @@ class _ParametresState extends State<Parametres> {
     AuthService _auth = AuthService();
     List elements = [
       ParametreItem(
-          title: "Changer le mot de passe",
-          icon: Icon(Icons.assignment_ind_outlined),
+          title: "Changer le avatar",
+          icon: Icon(Icons.image_outlined),
           press: () {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => ChangePassword()),
             );
+          }),
+      ParametreItem(
+          title: "Changer le mot de passe",
+          icon: Icon(Icons.lock),
+          press: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ChangePassword()),
+            );
+          }),
+      ParametreItem(
+          title: "Changer le theme",
+          icon: Icon(Icons.wb_sunny_outlined),
+          press: () async {
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (BuildContext context) => ChangeTheme()));
           }),
       ParametreItem(
           title: "Déconnexion",
@@ -33,7 +53,7 @@ class _ParametresState extends State<Parametres> {
                 context,
                 MaterialPageRoute(
                     builder: (BuildContext context) => WelcomeScreen()));
-          })
+          }),
     ];
 
     return Scaffold(

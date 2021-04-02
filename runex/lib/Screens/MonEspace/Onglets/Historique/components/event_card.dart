@@ -13,6 +13,8 @@ class EventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeChanger>(context);
+    Color enCoursColor = theme.isDark() ? Colors.green[300] : Colors.green[700];
+    Color subTextColor = theme.isDark() ? Colors.grey[400] : Colors.grey[600];
     SvgPicture pic;
     if (map['sport'] == 'run') {
       pic = SvgPicture.asset(
@@ -35,11 +37,7 @@ class EventCard extends StatelessWidget {
       elevation: 2,
       child: InkWell(
         onTap: () {
-          if (theme.getTheme() == ThemeData.dark()) {
-            theme.setTheme(ThemeData.light());
-          } else {
-            theme.setTheme(ThemeData.dark());
-          }
+          
         },
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -64,16 +62,15 @@ class EventCard extends StatelessWidget {
                     Text(
                       "Événement • ",
                       style: TextStyle(
-                          color: Colors.grey[600],
+                          color: subTextColor,
                           fontSize: 16,
                           fontWeight: FontWeight.normal),
                     ),
                     Text(
                       map['isFinished'] ? "Terminé" : "En cours",
                       style: TextStyle(
-                          color: map['isFinished']
-                              ? Colors.grey[600]
-                              : Colors.green[700],
+                          color:
+                              map['isFinished'] ? subTextColor : enCoursColor,
                           fontSize: 16,
                           fontWeight: FontWeight.bold),
                     ),

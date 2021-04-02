@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:runex/components/loading.dart';
+import 'package:runex/components/theme.dart';
 import 'package:runex/constants.dart';
 import 'package:runex/models/user.dart';
 import 'package:runex/services/database.dart';
@@ -14,6 +15,12 @@ class CarteObjectifDistance extends StatefulWidget {
 class _CarteObjectifDistanceState extends State<CarteObjectifDistance> {
   @override
   Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeChanger>(context);
+    Color buttonColor = theme.isDark() ? kPrimaryColor : kPrimaryLightColor;
+    Color activeCheckBoxColor =
+        theme.isDark() ? kPrimaryLightColor : kPrimaryColor;
+    Color checkColor = theme.isDark() ? kPrimaryColor : kPrimaryLightColor;
+
     Utilisateur utilisateur = Provider.of<Utilisateur>(context);
     return StreamBuilder<Utilisateur>(
         stream: DatabaseService(uid: utilisateur.uid).userData,
@@ -23,10 +30,14 @@ class _CarteObjectifDistanceState extends State<CarteObjectifDistance> {
             return Card(
               child: Column(
                 children: <Widget>[
+                  SizedBox(
+                    height: 10,
+                  ),
                   Row(
                     children: <Widget>[
                       Checkbox(
-                        activeColor: kPrimaryColor,
+                        activeColor: activeCheckBoxColor,
+                        checkColor: checkColor,
                         value: utilisateur.objectifs['hasobjDistance'],
                         onChanged: (val) {
                           setState(() {
@@ -41,6 +52,7 @@ class _CarteObjectifDistanceState extends State<CarteObjectifDistance> {
                                     utilisateur.objectifs['objDistance'],
                                 'objTemps': utilisateur.objectifs['objTemps'],
                               },
+                              
                             );
                           });
                         },
@@ -59,7 +71,7 @@ class _CarteObjectifDistanceState extends State<CarteObjectifDistance> {
                             ButtonTheme(
                               minWidth: 100,
                               child: RaisedButton(
-                                color: kPrimaryLightColor,
+                                color: buttonColor,
                                 onPressed: () => _creePaneauxObjectifs('velo'),
                                 child: Text(
                                     "${utilisateur.objectifs['objDistance']['velo']} km"),
@@ -75,7 +87,7 @@ class _CarteObjectifDistanceState extends State<CarteObjectifDistance> {
                             ButtonTheme(
                                 minWidth: 100,
                                 child: RaisedButton(
-                                  color: kPrimaryLightColor,
+                                  color: buttonColor,
                                   onPressed: () =>
                                       _creePaneauxObjectifs('course'),
                                   child: Text(
@@ -92,7 +104,7 @@ class _CarteObjectifDistanceState extends State<CarteObjectifDistance> {
                             ButtonTheme(
                                 minWidth: 100,
                                 child: RaisedButton(
-                                  color: kPrimaryLightColor,
+                                  color: buttonColor,
                                   onPressed: () =>
                                       _creePaneauxObjectifs('marche'),
                                   child: Text(
@@ -103,6 +115,9 @@ class _CarteObjectifDistanceState extends State<CarteObjectifDistance> {
                       ],
                     ),
                     visible: utilisateur.objectifs['hasobjDistance'],
+                  ),
+                  SizedBox(
+                    height: 10,
                   ),
                 ],
               ),
