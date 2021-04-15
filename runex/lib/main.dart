@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:runex/components/theme.dart';
 import 'package:runex/services/auth.dart';
 import 'package:runex/wrapper.dart';
-import 'constants.dart';
 import 'models/user.dart';
 
 Future<void> main() async {
@@ -18,7 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<ThemeChanger>(
-      create: (_) => ThemeChanger(ThemeData.light()),
+      create: (_) => ThemeChanger(),
       child: MaterialAppWithTheme(),
     );
     //home: Profil()); //DECOMMENTER QUAND ON VEUT TESTER PROFIL SEULEMENT
@@ -34,12 +33,7 @@ class MaterialAppWithTheme extends StatelessWidget {
       child: MaterialApp(
         title: 'Runex Login',
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primaryColor: kPrimaryColor,
-          scaffoldBackgroundColor: Colors.white,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
-        //theme: theme.getTheme(),
+        theme: theme.getTheme(),
         home: Wrapper(),
       ),
     );

@@ -43,7 +43,7 @@ class _FormObjectifTempsState extends State<FormObjectifTemps> {
                   }),
                 ),
                 SizedBox(height: 20),
-                Text('Heures: '),
+                Text('Minutes: '),
                 SizedBox(height: 20),
                 Slider(
                   value: (_currentMinutes ??
@@ -69,8 +69,16 @@ class _FormObjectifTempsState extends State<FormObjectifTemps> {
                     ),
                     onPressed: () async {
                       Map newObj = utilisateur.objectifs;
-                      newObj['objTemps'][widget.sport] =
-                          (_currentHour ?? 0) * 60 + (_currentMinutes ?? 0);
+
+                      newObj['objTemps'][widget.sport] = (_currentHour ??
+                                  (utilisateur.objectifs['objTemps']
+                                              [widget.sport] /
+                                          60)
+                                      .floor()) *
+                              60 +
+                          (_currentMinutes ??
+                              (utilisateur.objectifs['objTemps'][widget.sport] %
+                                  60));
                       await DatabaseService(uid: utilisateur.uid).updateUser(
                           email: utilisateur.email,
                           name: utilisateur.name,

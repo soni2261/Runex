@@ -84,6 +84,7 @@ class AuthService {
           'objDistance': {'marche': 0, 'course': 0, 'velo': 0},
           'objTemps': {'marche': 0, 'course': 0, 'velo': 0},
         },
+        usesDarkTheme: false,
       );
       return _userFromFirebaseUser(user);
     } catch (e) {
@@ -97,6 +98,7 @@ class AuthService {
       await user.updatePassword(password);
       return true;
     } catch (e) {
+      print("<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>");
       print(e.toString());
       return false;
     }

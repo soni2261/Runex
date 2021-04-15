@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:runex/Screens/Communaute/communaute.dart';
 import 'package:runex/Screens/MonEspace/profil.dart';
 import 'package:runex/Screens/Carte/carte.dart';
 
+import 'components/theme.dart';
 import 'constants.dart';
 
 class Nav extends StatefulWidget {
@@ -18,9 +20,9 @@ class _NavState extends State<Nav> {
       if (index != 1) {
         _selectedIndex = index;
       } else {
-       Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => Carte(),
-                ));
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => Carte(),
+        ));
       }
     });
   }
@@ -28,13 +30,26 @@ class _NavState extends State<Nav> {
   @override
   Widget build(BuildContext context) {
     List listePages = [Communaute(), Carte(), Profil()];
+
+    final theme = Provider.of<ThemeChanger>(context);
+    Color selectedItemColor =
+        theme.isDark() ? kPrimaryLightColor : kPrimaryColor;
+    Color unSelectedItemColor = theme.isDark()
+        ? Color.fromRGBO(191, 189, 195, 1)
+        : Color.fromRGBO(115, 115, 115, 1);
+    Color navBackgroundColor = theme.isDark()
+        ? Color.fromRGBO(40, 35, 55, 1)
+        : Color.fromRGBO(250, 250, 250, 1);
+
     return Scaffold(
       backgroundColor: Colors.purple[50],
       body: listePages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: navBackgroundColor,
         onTap: onNavTap,
         currentIndex: _selectedIndex,
-        selectedItemColor: kPrimaryColor,
+        selectedItemColor: selectedItemColor,
+        unselectedItemColor: unSelectedItemColor,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
               icon: Icon(Icons.people), label: 'Communauté'),

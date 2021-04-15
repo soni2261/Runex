@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:runex/Screens/MonEspace/Onglets/Objectifs/Creation_Objectifs/carte_objectif_temps.dart';
+import 'package:runex/constants.dart';
 import 'package:runex/models/user.dart';
 import 'carte_objectif_distance.dart';
 
@@ -14,7 +15,10 @@ class _CreerObjectifState extends State<CreerObjectif> {
   Widget build(BuildContext context) {
     Utilisateur utilisateur = Provider.of<Utilisateur>(context);
     return Scaffold(
-      appBar: AppBar(title: Text('Modification des objectifs')),
+      appBar: AppBar(
+        title: Text('Modification des objectifs'),
+        backgroundColor: kPrimaryColor,
+      ),
       body: Column(
         children: <Widget>[
           CarteObjectifDistance(),
