@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/gestures.dart';
 import 'package:provider/provider.dart';
 import 'package:runex/components/loading.dart';
+import 'package:runex/components/theme.dart';
 import 'package:runex/models/user.dart';
 import 'package:runex/services/database.dart';
 
@@ -14,15 +15,16 @@ class Diagramme extends StatefulWidget {
   const Diagramme({Key key, this.typeObjectif});
 
   @override
-  State<StatefulWidget> createState() => DiagrammeState();
+  _DiagrammeState createState() => _DiagrammeState();
 }
 
-class DiagrammeState extends State<Diagramme> {
+class _DiagrammeState extends State<Diagramme> {
   int touchedIndex;
 
   @override
   Widget build(BuildContext context) {
     Utilisateur utilisateur = Provider.of<Utilisateur>(context);
+    final theme = Provider.of<ThemeChanger>(context);
 
     return StreamBuilder<Utilisateur>(
       stream: DatabaseService(uid: utilisateur.uid).userData,
@@ -46,12 +48,12 @@ class DiagrammeState extends State<Diagramme> {
 
           Map data = getData(widget.typeObjectif, utilisateur);
 
-          if (widget.typeObjectif == "objTemps" && data.isEmpty) {
+          if (widget.typeObjectif == "objTemps" && data == null) {
             return Text(
               "Pas d'objectif de temps choisi!",
               style: TextStyle(fontSize: 22, color: Colors.grey),
             );
-          } else if (widget.typeObjectif == "objDistance" && data.isEmpty) {
+          } else if (widget.typeObjectif == "objDistance" && data == null) {
             return Text(
               "Pas d'objectif de distance choisi!",
               style: TextStyle(fontSize: 22, color: Colors.grey),
@@ -82,7 +84,7 @@ class DiagrammeState extends State<Diagramme> {
                   ),
                   sectionsSpace: 0,
                   centerSpaceRadius: 0,
-                  sections: showingSections(data),
+                  sections: showingSections(data, theme),
                 ),
               ),
             ),
@@ -94,7 +96,7 @@ class DiagrammeState extends State<Diagramme> {
     );
   }
 
-  List<PieChartSectionData> showingSections(Map data) {
+  List<PieChartSectionData> showingSections(Map data, ThemeChanger theme) {
     int dataLength = data.length;
     List keyList = data.keys.toList();
 
@@ -109,7 +111,9 @@ class DiagrammeState extends State<Diagramme> {
             ? "${data["marche"] ~/ 60}H ${data["marche"] % 60}M"
             : "${data["marche"]} KM";
         return PieChartSectionData(
-          color: const Color.fromRGBO(255, 90, 90, 1),
+          color: theme.isDark()
+              ? Color.fromRGBO(255, 90, 90, 1)
+              : Color.fromRGBO(250, 65, 65, 1),
           value: data["marche"].toDouble(),
           title: title,
           radius: radius,
@@ -130,7 +134,9 @@ class DiagrammeState extends State<Diagramme> {
             ? "${data["velo"] ~/ 60}H ${data["velo"] % 60}M"
             : "${data["velo"]} KM";
         return PieChartSectionData(
-          color: const Color.fromRGBO(19, 211, 142, 1),
+          color: theme.isDark()
+              ? Color.fromRGBO(19, 211, 142, 1)
+              : Color.fromRGBO(15, 200, 120, 1),
           value: data["velo"].toDouble(),
           title: title,
           radius: radius,
@@ -151,7 +157,10 @@ class DiagrammeState extends State<Diagramme> {
             ? "${data["course"] ~/ 60}H ${data["course"] % 60}M"
             : "${data["course"]} KM";
         return PieChartSectionData(
-          color: const Color.fromRGBO(87, 163, 184, 1),
+          color: theme.isDark()
+              ? Color.fromRGBO(87, 163, 184, 1)
+              : Color.fromRGBO(75, 140, 155, 1),
+          // color: const Color.fromRGBO(87, 163, 184, 1),
           value: data["course"].toDouble(),
           title: title,
           radius: radius,

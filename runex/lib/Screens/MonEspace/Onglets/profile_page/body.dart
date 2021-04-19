@@ -44,8 +44,9 @@ class Body extends StatelessWidget {
                                   ? Color.fromRGBO(65, 55, 85, 1)
                                   : Colors.white),
                           image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: AssetImage("assets/images/vangogh.png")),
+                            fit: BoxFit.cover,
+                            image: AssetImage("assets/images/vangogh.png"),
+                          ),
                         ),
                       ),
                       Text(
