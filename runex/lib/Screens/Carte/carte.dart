@@ -26,8 +26,6 @@ class _CarteState extends State<Carte> {
 
   int _index = 0;
 
-  
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -167,8 +165,8 @@ class _CarteState extends State<Carte> {
 
   void changeSport() {
     setState(() {
-        _sportType = _sportTypes[_index%3];
-        _index++;
+      _sportType = _sportTypes[_index % 3];
+      _index++;
     });
   }
 }
