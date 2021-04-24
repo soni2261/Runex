@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:runex/Screens/Communaute/communaute.dart';
+import 'package:runex/Screens/Communaute/challenges.dart';
 import 'package:runex/Screens/MonEspace/profil.dart';
 import 'package:runex/Screens/Carte/carte.dart';
 
@@ -29,7 +29,7 @@ class _NavState extends State<Nav> {
 
   @override
   Widget build(BuildContext context) {
-    List listePages = [Communaute(), Carte(), Profil()];
+    List listePages = [Challenges(), Carte(), Profil()];
 
     final theme = Provider.of<ThemeChanger>(context);
     Color selectedItemColor =

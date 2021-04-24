@@ -55,7 +55,9 @@ class _FormObjectifDistanceState extends State<FormObjectifDistance> {
                       await DatabaseService(uid: utilisateur.uid).updateUser(
                           email: utilisateur.email,
                           name: utilisateur.name,
-                          objectifs: newObj);
+                          objectifs: newObj,
+                          profilePicURL: utilisateur.profilePicURL,
+                          usesDarkTheme: utilisateur.usesDarkTheme);
                       Navigator.pop(context);
                     }),
               ],
