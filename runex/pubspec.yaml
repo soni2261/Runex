@@ -25,21 +25,22 @@ dependencies:
     sdk: flutter
 
   flutter_svg:
-
-  numberpicker:
   flutter_spinkit:
-  firebase_auth: 
+  firebase_auth:
   cloud_firestore: 
   provider:
   firebase_core:
   google_sign_in:
-
   google_maps_flutter:
   geocoder:
   geolocator:
   search_map_place:
-
   fl_chart:
+  firebase_storage:
+  image_picker:
+  permission_handler:
+  http:
+  google_maps_webservice:
 
   uuid:
   http: 

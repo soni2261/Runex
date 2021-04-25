@@ -53,7 +53,7 @@ class _ObjectifsState extends State<Objectifs> {
             typeObjectif: "objDistance",
           ),
           SizedBox(
-            height: 18,
+            height: 22,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -63,7 +63,7 @@ class _ObjectifsState extends State<Objectifs> {
             ),
           ),
           SizedBox(
-            height: 18,
+            height: 22,
           ),
           Text(
             "Objectifs de temps",

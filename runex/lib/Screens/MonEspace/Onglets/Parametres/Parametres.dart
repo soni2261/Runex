@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:runex/Screens/MonEspace/Onglets/Parametres/pages/changeAvatar.dart';
 import 'package:runex/Screens/MonEspace/Onglets/Parametres/pages/changePassword.dart';
 import 'package:runex/Screens/MonEspace/Onglets/Parametres/pages/changeTheme.dart';
 import 'package:runex/Screens/MonEspace/Onglets/Parametres/parametreItem.dart';
@@ -17,12 +18,12 @@ class _ParametresState extends State<Parametres> {
     AuthService _auth = AuthService();
     List elements = [
       ParametreItem(
-          title: "Changer le avatar",
+          title: "Changer l'image du profil",
           icon: Icon(Icons.image_outlined),
           press: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => ChangePassword()),
+              MaterialPageRoute(builder: (context) => ChangeAvatar()),
             );
           }),
       ParametreItem(

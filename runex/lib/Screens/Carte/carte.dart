@@ -80,9 +80,11 @@ class _CarteState extends State<Carte> {
 
   int _index = 0;
 
+
   // int _visibleDestinations = 1;
 
   bool itineraryIsVisible = false;
+
 
   @override
   Widget build(BuildContext context) {

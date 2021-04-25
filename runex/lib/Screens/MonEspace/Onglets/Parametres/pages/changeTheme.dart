@@ -39,6 +39,7 @@ class _ChangeThemeState extends State<ChangeTheme> {
                                   name: utilisateur.name,
                                   email: utilisateur.email,
                                   objectifs: utilisateur.objectifs,
+                                  profilePicURL: utilisateur.profilePicURL,
                                   usesDarkTheme: false);
                           theme.setTheme(theme.lightTheme);
                         });
@@ -81,6 +82,7 @@ class _ChangeThemeState extends State<ChangeTheme> {
                             name: utilisateur.name,
                             email: utilisateur.email,
                             objectifs: utilisateur.objectifs,
+                            profilePicURL: utilisateur.profilePicURL,
                             usesDarkTheme: true,
                           );
                           theme.setTheme(theme.darkTheme);

@@ -5,6 +5,7 @@ class Utilisateur {
   final String password;
   final Map objectifs;
   final bool usesDarkTheme;
+  final String profilePicURL;
 
   Utilisateur({
     this.usesDarkTheme,
@@ -13,5 +14,6 @@ class Utilisateur {
     this.uid,
     this.name,
     this.objectifs,
+    this.profilePicURL,
   });
 }

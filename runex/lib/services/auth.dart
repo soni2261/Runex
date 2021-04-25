@@ -85,6 +85,7 @@ class AuthService {
           'objTemps': {'marche': 0, 'course': 0, 'velo': 0},
         },
         usesDarkTheme: false,
+        profilePicURL: "",
       );
       return _userFromFirebaseUser(user);
     } catch (e) {
