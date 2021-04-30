@@ -121,7 +121,7 @@ class Itineraire {
   // create an itinary with a combination of points
   void createRoute(String encondedPoly) {
     print('ON CRÉER LE POLYLINE');
-    polyLines.add(Polyline( 
+    polyLines.add(Polyline(
         polylineId: PolylineId(_lastPosition.toString()),
         width: 5,
         points: convertToLatLng(decodePoly(encondedPoly)),
