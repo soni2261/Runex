@@ -7,7 +7,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class Itineraire {
-  double temps;
+  int temps;
   double distanceTot = 0;
   double elevation;
   double speedInMps;
@@ -121,7 +121,7 @@ class Itineraire {
   // create an itinary with a combination of points
   void createRoute(String encondedPoly) {
     print('ON CRÉER LE POLYLINE');
-    polyLines.add(Polyline( 
+    polyLines.add(Polyline(
         polylineId: PolylineId(_lastPosition.toString()),
         width: 5,
         points: convertToLatLng(decodePoly(encondedPoly)),
@@ -132,7 +132,7 @@ class Itineraire {
     //print('lélevation init est $elevation');
   }
 
-  // get the current location of the user
+// get the current location of the user
   Future<void> getCurrentLocation() async {
     print("GET USER METHOD RUNNING =========");
     Position position = await Geolocator()
@@ -183,6 +183,7 @@ class Itineraire {
 
   void stopsTopWatch() {
     stopispressed = true;
-    temps; // commande qui va arrêter le swatch et donner la valeur à cette variable
+    temps = swatch
+        .elapsedMicroseconds; // commande qui va arrêter le swatch et donner la valeur à cette variable
   }
 }
