@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:runex/constants.dart';
-import 'package:search_map_place/search_map_place.dart';
+
+import 'package:runex/components/rounded_text_button.dart';
+
+//-----------------------------
+import 'package:runex/Screens/Carte/components/address_search.dart';
+import 'package:runex/Screens/Carte/components/place_service.dart';
+import 'package:uuid/uuid.dart';
 
 class Carte extends StatefulWidget {
-  Carte({Key key}) : super(key: key);
+  Carte({Key key, this.title}) : super(key: key);
+
+  final String title;
 
   @override
   _CarteState createState() => _CarteState();
@@ -12,6 +20,17 @@ class Carte extends StatefulWidget {
 
 class _CarteState extends State<Carte> {
   GoogleMapController mapController;
+
+  final _destinationController = TextEditingController();
+
+
+  @override
+  void dispose() {
+    _destinationController.dispose();
+    super.dispose();
+  }
+
+  int nbDestinationsAjoutees = 0;
 
   bool _isVisible = true;
   Icon _visibility = Icon(Icons.visibility);
@@ -26,8 +45,19 @@ class _CarteState extends State<Carte> {
 
   int _index = 0;
 
+  bool itineraryIsVisible = false;
+
+  bool editEnabled = true;
+
+  bool widgetVisible = true;
+
+  //int _visibleDestinations = 1;
+
   @override
   Widget build(BuildContext context) {
+
+    List<String> destinations = ['${_destinationController.text}']; // -- liste des adresses
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       resizeToAvoidBottomPadding: false,
@@ -43,53 +73,148 @@ class _CarteState extends State<Carte> {
               })
         ],
       ),
-      body: Container(
-        child: Column(
-          children: [
-            searchBar(),
-            SizedBox(
-              height: 500,
+      body: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                flex: 1,
+                child: Container(),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Ink(
+                  decoration: const ShapeDecoration(
+                    color: kPrimaryColor,
+                    shape: CircleBorder(),
+                  ),
+                  child: IconButton(
+                    icon: Icon(Icons.list_rounded),
+                    color: kPrimaryLightColor,
+                    onPressed: () {
+                      _onModifyItiniraryPressed();
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Visibility(
+            visible: itineraryIsVisible,
+            child: Container(
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                child: Column(
+                  children: [
+                    AddressInput(
+                      iconData: Icons.gps_fixed,
+                      hintText: "Point de depart",
+                      enabled: false,
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    Visibility(
+                      visible: widgetVisible,
+                      child: Row(
+                        children: [
+                          AddressInput(
+                            controller: _destinationController,
+                            iconData: Icons.place_sharp,
+                            hintText: "Entrez une destination",
+                            onTap: _search,
+                            enabled: editEnabled,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              setState(() {
+                                _destinationController.text = '';
+                                widgetVisible = false;
+                              });
+                            },
+                            child: Icon(
+                              Icons.delete_outline,
+                              color: Colors.black,
+                              size: 28,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    FloatingActionButton(
+                      backgroundColor: kPrimaryColor,
+                      onPressed: () {
+                        setState(() {
+                          if (!widgetVisible) {
+                            editEnabled = true;
+                          }
+                          widgetVisible = true;
+                        });
+                      },
+                      tooltip: 'Increment',
+                      child: Icon(Icons.add),
+                    ),
+                  ],
+                ),
+              ),
             ),
-            Row(
-              children: [
-                SizedBox(
-                  width: 10,
-                ),
-                visibilityButton(),
-                SizedBox(
-                  width: 20,
-                ),
-                startButton(),
-                SizedBox(
-                  width: 20,
-                ),
-                sportsButton(),
-                SizedBox(
-                  width: 10,
-                )
-              ],
-            ),
-          ],
-        ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Container(),
+          ),
+          Row(
+            children: [
+              SizedBox(
+                width: 1,
+              ),
+              sportsButton(),
+              SizedBox(
+                width: 20,
+              ),
+              startButton(),
+              SizedBox(
+                width: 20,
+              ),
+              recenterButton(),
+              SizedBox(
+                width: 10,
+              )
+            ],
+          ),
+          SizedBox(
+            height: 30,
+          ),
+        ],
       ),
     );
   }
 
-  Widget searchBar() {
-    return SearchMapPlaceWidget(
-      hasClearButton: true,
-      placeType: PlaceType.address,
-      placeholder: 'Rechercher',
-      apiKey:
-          'AIzaSyA8lscKN2eiAjCcBO4xg0AFmySvAMzYfms', //enable Places for Google Maps
-      onSelected: (Place place) async {
-        Geolocation geolocation = await place.geolocation;
-        mapController
-            .animateCamera(CameraUpdate.newLatLng(geolocation.coordinates));
-        mapController
-            .animateCamera(CameraUpdate.newLatLngBounds(geolocation.bounds, 0));
-      },
-    );
+  _search() async {
+    final sessionToken = Uuid().v4();
+    final Suggestion result = await showSearch(
+        context: context, delegate: AddressSearch(sessionToken));
+    if (result != null) {
+      setState(() {
+        _destinationController.text = result.description;
+        //destinations.add(_destinationController.text);
+        editEnabled = false;
+      });
+    }
+  }
+
+  void _onModifyItiniraryPressed() {
+    setState(() {
+      if (itineraryIsVisible == false) {
+        itineraryIsVisible = true;
+      } else {
+        itineraryIsVisible = false;
+      }
+    });
   }
 
   Widget visibilityButton() {
@@ -112,6 +237,12 @@ class _CarteState extends State<Carte> {
   }
 
   Widget startButton() {
+    // return RoundedButton(
+    //   text: "Start",
+    //   press: () {
+    //     setState(() {});
+    //   },
+    // );
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.all(0.0),
@@ -151,6 +282,39 @@ class _CarteState extends State<Carte> {
     );
   }
 
+  Widget recenterButton() {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Ink(
+        decoration: const ShapeDecoration(
+          color: kPrimaryColor,
+          shape: CircleBorder(),
+        ),
+        child: IconButton(
+          onPressed: () {},
+          icon: Icon(Icons.location_searching),
+          color: Colors.black,
+        ),
+      ),
+    );
+  }
+
+  bool setItineraryVisible(bool itineraryIsVisible) {
+    if (itineraryIsVisible) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  bool setVisibleDestination(int _visibleDestinations, int _destinationNumber) {
+    if (_visibleDestinations >= _destinationNumber) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   void changeVisibility() {
     setState(() {
       if (_isVisible) {
@@ -168,5 +332,55 @@ class _CarteState extends State<Carte> {
       _sportType = _sportTypes[_index % 3];
       _index++;
     });
+  }
+}
+
+class AddressInput extends StatelessWidget {
+  final IconData iconData;
+  final TextEditingController controller;
+  final String hintText;
+  final Function onTap;
+  final bool enabled;
+
+  const AddressInput({
+    Key key,
+    this.iconData,
+    this.controller,
+    this.hintText,
+    this.onTap,
+    this.enabled,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(
+          this.iconData,
+          size: 18,
+          color: Colors.black,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: Container(
+            height: 35.0,
+            width: MediaQuery.of(context).size.width / 1.4,
+            alignment: Alignment.center,
+            padding: EdgeInsets.only(left: 10.0),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5.0),
+                color: Colors.grey[100]),
+            child: TextField(
+              controller: controller,
+              onTap: onTap,
+              enabled: enabled,
+              decoration: InputDecoration.collapsed(
+                hintText: hintText,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
