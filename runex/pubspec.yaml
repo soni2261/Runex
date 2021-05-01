@@ -41,6 +41,7 @@ dependencies:
   permission_handler:
   http:
   google_maps_webservice:
+  geocoding:
 
   uuid: ^2.0.4
 

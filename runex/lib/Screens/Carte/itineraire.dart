@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:runex/requests/google_maps_requests.dart';
+import 'package:geocoder/services/base.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:runex/requests/google_maps_requests.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class Itineraire {
@@ -121,7 +123,7 @@ class Itineraire {
   // create an itinary with a combination of points
   void createRoute(String encondedPoly) {
     print('ON CRÉER LE POLYLINE');
-    polyLines.add(Polyline( 
+    polyLines.add(Polyline(
         polylineId: PolylineId(_lastPosition.toString()),
         width: 5,
         points: convertToLatLng(decodePoly(encondedPoly)),
@@ -135,10 +137,10 @@ class Itineraire {
   // get the current location of the user
   Future<void> getCurrentLocation() async {
     print("GET USER METHOD RUNNING =========");
-    Position position = await Geolocator()
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    List<Placemark> placemark = await Geolocator()
-        .placemarkFromCoordinates(position.latitude, position.longitude);
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    List<Placemark> placemark =
+        await placemarkFromCoordinates(position.latitude, position.longitude);
     this._initialPosition = LatLng(position.latitude, position.longitude);
     print(
         "the latitude is: ${position.latitude} and th longitude is: ${position.longitude} ");
@@ -157,10 +159,12 @@ class Itineraire {
   }
 
   void getCurrentSpeed() {
-    var options =
-        LocationOptions(accuracy: LocationAccuracy.high, distanceFilter: 10);
+    // var options =
+    //     LocationOptions(accuracy: LocationAccuracy.high, distanceFilter: 10);
 
-    Geolocator().getPositionStream(options).listen((position) {
+    Geolocator.getPositionStream(
+            desiredAccuracy: LocationAccuracy.high, distanceFilter: 10)
+        .listen((position) {
       speedInMps = position.speed; // this is your speed
       print('la vitesse est $speedInMps');
     });

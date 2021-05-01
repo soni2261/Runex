@@ -33,8 +33,8 @@ class _BodyState extends State<Body> {
 
             if (utilisateur.profilePicURL == null ||
                 utilisateur.profilePicURL == "") {
-              imageUrl =
-                  "https://firebasestorage.googleapis.com/v0/b/runex-5f43d.appspot.com/o/Profile%20pictures%2Fdefault-avatar?alt=media&token=95aeda3d-bd70-4c9c-876c-655ea10b66d2";
+              // imageUrl =
+              //     "https://firebasestorage.googleapis.com/v0/b/runex-5f43d.appspot.com/o/Profile%20pictures%2Fdefault-avatar?alt=media&token=95aeda3d-bd70-4c9c-876c-655ea10b66d2";
             } else {
               imageUrl = utilisateur.profilePicURL;
             }
