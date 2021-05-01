@@ -3,8 +3,6 @@ import 'dart:io';
 
 import 'package:http/http.dart';
 
-
-
 // For storing our result
 class Suggestion {
   final String placeId;
@@ -25,11 +23,14 @@ class PlaceApiProvider {
 
   final sessionToken;
 
+  //AIzaSyA8lscKN2eiAjCcBO4xg0AFmySvAMzYfms
+
   static final String androidKey = 'AIzaSyA8lscKN2eiAjCcBO4xg0AFmySvAMzYfms';
-  static final String iosKey = 'AIzaSyA8lscKN2eiAjCcBO4xg0AFmySvAMzYfms'; //no ios key for now
+  static final String iosKey =
+      'AIzaSyA8lscKN2eiAjCcBO4xg0AFmySvAMzYfms'; //no ios key for now
   final apiKey = Platform.isAndroid ? androidKey : iosKey;
 
-  Future<List<Suggestion>> fetchSuggestions(String input,) async {
+  Future<List<Suggestion>> fetchSuggestions(String input) async {
     final request =
         'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$input&types=address&language=fr-CA&components=country:ca&key=$apiKey&sessiontoken=$sessionToken';
     final response = await client.get(request);
@@ -41,8 +42,10 @@ class PlaceApiProvider {
         return result['predictions']
             .map<Suggestion>((p) => Suggestion(p['place_id'], p['description']))
             .toList();
+
       }
       if (result['status'] == 'ZERO_RESULTS') {
+        print('AUCUNE VALEUR');
         return [];
       }
       throw Exception(result['error_message']);
@@ -50,6 +53,4 @@ class PlaceApiProvider {
       throw Exception('Failed to fetch suggestion');
     }
   }
-
-
 }

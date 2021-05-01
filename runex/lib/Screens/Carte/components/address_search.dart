@@ -26,7 +26,9 @@ class AddressSearch extends SearchDelegate<Suggestion> {
       icon: Icon(
         Icons.arrow_back,
       ),
-      onPressed: () {},
+      onPressed: () {
+        Navigator.pop(context);
+      },
     );
   }
 
@@ -47,7 +49,10 @@ class AddressSearch extends SearchDelegate<Suggestion> {
                 ? ListView.builder(
                     itemBuilder: (context, i) => ListTile(
                       title: Text((snapshot.data[i] as Suggestion).description),
-                      onTap: () {},
+                      onTap: () {
+                        print((snapshot.data[i] as Suggestion).placeId);
+                        close(context, snapshot.data[i]);
+                      },
                     ),
                     itemCount: snapshot.data.length,
                   )

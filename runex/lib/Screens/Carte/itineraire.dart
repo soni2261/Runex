@@ -9,7 +9,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class Itineraire {
-  double temps;
+  int temps;
   double distanceTot = 0;
   double elevation;
   double speedInMps;
@@ -134,7 +134,7 @@ class Itineraire {
     //print('lélevation init est $elevation');
   }
 
-  // get the current location of the user
+// get the current location of the user
   Future<void> getCurrentLocation() async {
     print("GET USER METHOD RUNNING =========");
     Position position = await Geolocator.getCurrentPosition(
@@ -187,6 +187,7 @@ class Itineraire {
 
   void stopsTopWatch() {
     stopispressed = true;
-    temps; // commande qui va arrêter le swatch et donner la valeur à cette variable
+    temps = swatch
+        .elapsedMicroseconds; // commande qui va arrêter le swatch et donner la valeur à cette variable
   }
 }
