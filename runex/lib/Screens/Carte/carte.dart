@@ -63,7 +63,7 @@ class _CarteState extends State<Carte> {
       // resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text('Carte'),
-        backgroundColor: Colors.transparent,
+        backgroundColor: kPrimaryColor,
         actions: [
           IconButton(
               icon: Icon(Icons.close),

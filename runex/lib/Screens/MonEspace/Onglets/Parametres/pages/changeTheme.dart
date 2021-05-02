@@ -36,6 +36,7 @@ class _ChangeThemeState extends State<ChangeTheme> {
                         WidgetsBinding.instance.addPostFrameCallback((_) async {
                           await DatabaseService(uid: utilisateur.uid)
                               .updateUser(
+                                  utilisateur: utilisateur,
                                   name: utilisateur.name,
                                   email: utilisateur.email,
                                   objectifs: utilisateur.objectifs,
@@ -79,6 +80,7 @@ class _ChangeThemeState extends State<ChangeTheme> {
                         WidgetsBinding.instance.addPostFrameCallback((_) async {
                           await DatabaseService(uid: utilisateur.uid)
                               .updateUser(
+                            utilisateur: utilisateur,
                             name: utilisateur.name,
                             email: utilisateur.email,
                             objectifs: utilisateur.objectifs,

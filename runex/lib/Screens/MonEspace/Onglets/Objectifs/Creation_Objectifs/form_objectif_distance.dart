@@ -53,10 +53,11 @@ class _FormObjectifDistanceState extends State<FormObjectifDistance> {
                       Map newObj = utilisateur.objectifs;
                       newObj['objDistance'][widget.sport] = _currentDistance;
                       await DatabaseService(uid: utilisateur.uid).updateUser(
+                          utilisateur: utilisateur,
                           email: utilisateur.email,
                           name: utilisateur.name,
                           objectifs: newObj,
-                          profilePicURL: utilisateur.profilePicURL,
+                          // profilePicURL: utilisateur.profilePicURL,
                           usesDarkTheme: utilisateur.usesDarkTheme);
                       Navigator.pop(context);
                     }),

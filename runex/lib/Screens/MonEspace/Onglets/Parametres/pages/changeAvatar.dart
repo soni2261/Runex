@@ -117,6 +117,7 @@ class _ChangeAvatarState extends State<ChangeAvatar> {
 
         setState(() async {
           await DatabaseService(uid: utilisateur.uid).updateUser(
+            utilisateur: utilisateur,
             name: utilisateur.name,
             email: utilisateur.email,
             objectifs: utilisateur.objectifs,

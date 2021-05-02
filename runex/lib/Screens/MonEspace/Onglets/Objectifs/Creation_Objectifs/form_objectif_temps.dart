@@ -80,6 +80,7 @@ class _FormObjectifTempsState extends State<FormObjectifTemps> {
                               (utilisateur.objectifs['objTemps'][widget.sport] %
                                   60));
                       await DatabaseService(uid: utilisateur.uid).updateUser(
+                        utilisateur: utilisateur,
                           email: utilisateur.email,
                           name: utilisateur.name,
                           objectifs: newObj,
