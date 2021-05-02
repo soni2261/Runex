@@ -4,6 +4,7 @@ class Utilisateur {
   final String email;
   final String password;
   final Map objectifs;
+  final List historique;
   final Map statistiques;
   final bool usesDarkTheme;
   final String profilePicURL;
@@ -14,6 +15,7 @@ class Utilisateur {
     this.password,
     this.uid,
     this.name,
+    this.historique,
     this.objectifs,
     this.statistiques,
     this.profilePicURL,

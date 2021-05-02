@@ -18,6 +18,7 @@ class DatabaseService {
       String name,
       Map objectifs,
       Map statistiques,
+      List historique,
       bool usesDarkTheme,
       String profilePicURL}) async {
     if (utilisateur != null) {
@@ -27,6 +28,8 @@ class DatabaseService {
         objectifs = utilisateur.objectifs;
       if (statistiques == null || statistiques == {})
         statistiques = utilisateur.statistiques;
+      if (historique == null || historique == [])
+        historique = utilisateur.historique;
       if (usesDarkTheme == null) usesDarkTheme = utilisateur.usesDarkTheme;
       if (profilePicURL == null) profilePicURL = utilisateur.profilePicURL;
     }
@@ -34,7 +37,8 @@ class DatabaseService {
       'name': name,
       'email': email,
       'objectifs': objectifs,
-      'statistiques' : statistiques,
+      'statistiques': statistiques,
+      'historique': historique,
       'usesDarkTheme': usesDarkTheme,
       'profilePicURL': profilePicURL
     });
@@ -48,6 +52,7 @@ class DatabaseService {
       password: snapshot.data()['password'],
       objectifs: snapshot.data()['objectifs'],
       statistiques: snapshot.data()['statistiques'],
+      historique: snapshot.data()['historique'],
       usesDarkTheme: snapshot.data()['usesDarkTheme'],
       profilePicURL: snapshot.data()['profilePicURL'],
     );

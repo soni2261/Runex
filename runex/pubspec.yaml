@@ -42,7 +42,6 @@ dependencies:
   http:
   google_maps_webservice:
   geocoding:
-  timeago:
 
   uuid: ^2.0.4
 
