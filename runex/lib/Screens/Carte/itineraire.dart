@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:geocoder/services/base.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:runex/requests/google_maps_requests.dart';
 import 'package:geocoding/geocoding.dart';
@@ -38,10 +37,12 @@ class Itineraire {
     LatLng(45.5600, -73.5630)
   ];
 
+  static Geolocator geolocator = new Geolocator();
+
   bool stopispressed = false;
   bool startispressed = false;
   var swatch = Stopwatch();
-  final dur = const Duration(seconds: 5);
+  final dur = const Duration(seconds: 10);
 
   Itineraire();
 
@@ -137,8 +138,7 @@ class Itineraire {
 // get the current location of the user
   Future<void> getCurrentLocation() async {
     print("GET USER METHOD RUNNING =========");
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
+    Position position = await Geolocator().getCurrentPosition();
     List<Placemark> placemark =
         await placemarkFromCoordinates(position.latitude, position.longitude);
     this._initialPosition = LatLng(position.latitude, position.longitude);
@@ -159,12 +159,9 @@ class Itineraire {
   }
 
   void getCurrentSpeed() {
-    // var options =
-    //     LocationOptions(accuracy: LocationAccuracy.high, distanceFilter: 10);
+    //var options = LocationOptions(accuracy: LocationAccuracy.high, distanceFilter: 10);
 
-    Geolocator.getPositionStream(
-            desiredAccuracy: LocationAccuracy.high, distanceFilter: 10)
-        .listen((position) {
+    Geolocator().getPositionStream().listen((position) {
       speedInMps = position.speed; // this is your speed
       print('la vitesse est $speedInMps');
     });

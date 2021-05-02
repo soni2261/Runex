@@ -23,7 +23,6 @@ class _CarteState extends State<Carte> {
 
   final _destinationController = TextEditingController();
 
-
   @override
   void dispose() {
     _destinationController.dispose();
@@ -55,12 +54,13 @@ class _CarteState extends State<Carte> {
 
   @override
   Widget build(BuildContext context) {
-
-    List<String> destinations = ['${_destinationController.text}']; // -- liste des adresses
+    List<String> destinations = [
+      '${_destinationController.text}'
+    ]; // -- liste des adresses
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      resizeToAvoidBottomPadding: false,
+      // resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text('Carte'),
         backgroundColor: Colors.transparent,

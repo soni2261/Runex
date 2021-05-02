@@ -23,7 +23,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+    
+  geolocator:
   flutter_svg:
   flutter_spinkit:
   firebase_auth:
@@ -33,7 +34,6 @@ dependencies:
   google_sign_in:
   google_maps_flutter:
   geocoder:
-  geolocator:
   search_map_place:
   fl_chart:
   firebase_storage:
@@ -42,7 +42,6 @@ dependencies:
   http:
   google_maps_webservice:
   geocoding:
-
   uuid: ^2.0.4
 
   # The following adds the Cupertino Icons font to your application.
