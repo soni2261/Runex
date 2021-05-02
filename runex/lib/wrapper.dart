@@ -29,6 +29,7 @@ class Wrapper extends StatelessWidget {
               });
               return Nav();
             } else {
+              print(utilisateur.uid);
               return Loading();
             }
           });

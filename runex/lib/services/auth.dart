@@ -2,6 +2,7 @@ import 'package:runex/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'database.dart';
+import 'package:timeago/timeago.dart';
 
 class AuthService {
   FirebaseAuth _auth = FirebaseAuth.instance;
@@ -73,9 +74,19 @@ class AuthService {
       User user = result.user;
       int index = email.indexOf('@');
       String name = email.substring(0, index);
+      var now = new DateTime.now();
+      now = new DateTime(now.year, now.month, now.day, 0, 0, 0);
+      var debut;
 
+      if (now.weekday == DateTime.monday) {
+        debut = now;
+      } else {
+        int daysSinceMonday = now.weekday - 1;
+        debut = now.subtract(new Duration(days: daysSinceMonday));
+      }
       // create a new document for the user with the uid
       await DatabaseService(uid: user.uid).updateUser(
+        utilisateur: null,
         name: name,
         email: email,
         objectifs: {
@@ -83,6 +94,12 @@ class AuthService {
           'hasobjTemps': false,
           'objDistance': {'marche': 0, 'course': 0, 'velo': 0},
           'objTemps': {'marche': 0, 'course': 0, 'velo': 0},
+        },
+        statistiques: {
+          'debut': debut,
+          'hasstatistiques': false,
+          'statsDistance': {'marche': 0, 'course': 0, 'velo': 0},
+          'statsTemps': {'marche': 0, 'course': 0, 'velo': 0},
         },
         usesDarkTheme: false,
         profilePicURL: "",

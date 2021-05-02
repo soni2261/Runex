@@ -45,6 +45,7 @@ class _CarteObjectifTempsState extends State<CarteObjectifTemps> {
                         onChanged: (val) {
                           setState(() {
                             DatabaseService(uid: utilisateur.uid).updateUser(
+                              utilisateur: utilisateur,
                               email: utilisateur.email,
                               name: utilisateur.name,
                               objectifs: {
