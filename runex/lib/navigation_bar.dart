@@ -4,6 +4,7 @@ import 'package:runex/Screens/Communaute/challenges.dart';
 import 'package:runex/Screens/MonEspace/profil.dart';
 import 'package:runex/Screens/Carte/carte.dart';
 
+import 'Screens/Carte/map.dart';
 import 'components/theme.dart';
 import 'constants.dart';
 
@@ -21,7 +22,7 @@ class _NavState extends State<Nav> {
         _selectedIndex = index;
       } else {
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => Carte(),
+          builder: (context) => MapGoogle(),
         ));
       }
     });

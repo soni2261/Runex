@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:runex/requests/google_maps_requests.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class Itineraire {
@@ -139,8 +138,8 @@ class Itineraire {
   Future<void> getCurrentLocation() async {
     print("GET USER METHOD RUNNING =========");
     Position position = await Geolocator().getCurrentPosition();
-    List<Placemark> placemark =
-        await placemarkFromCoordinates(position.latitude, position.longitude);
+    List<Placemark> placemark = await Geolocator()
+        .placemarkFromCoordinates(position.latitude, position.longitude);
     this._initialPosition = LatLng(position.latitude, position.longitude);
     print(
         "the latitude is: ${position.latitude} and th longitude is: ${position.longitude} ");
