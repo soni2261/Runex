@@ -32,16 +32,14 @@ dependencies:
   firebase_core:
   google_sign_in:
   google_maps_flutter:
-  geocoder:
-  geolocator:
+  geolocator: ^4.0.0
   search_map_place:
   fl_chart:
   firebase_storage:
   image_picker:
-  permission_handler:
+  permission_handler: ^5.0.1
   http:
   google_maps_webservice:
-  geocoding:
 
   uuid: ^2.0.4
 
