@@ -36,10 +36,12 @@ class Itineraire {
     LatLng(45.5600, -73.5630)
   ];
 
+  static Geolocator geolocator = new Geolocator();
+
   bool stopispressed = false;
   bool startispressed = false;
   var swatch = Stopwatch();
-  final dur = const Duration(seconds: 5);
+  final dur = const Duration(seconds: 10);
 
   Itineraire();
 
@@ -135,8 +137,10 @@ class Itineraire {
 // get the current location of the user
   Future<void> getCurrentLocation() async {
     print("GET USER METHOD RUNNING =========");
+
     Position position = await Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+
     List<Placemark> placemark = await Geolocator()
         .placemarkFromCoordinates(position.latitude, position.longitude);
     this._initialPosition = LatLng(position.latitude, position.longitude);
@@ -157,10 +161,12 @@ class Itineraire {
   }
 
   void getCurrentSpeed() {
+
     var options =
         LocationOptions(accuracy: LocationAccuracy.high, distanceFilter: 10);
 
     Geolocator().getPositionStream(options).listen((position) {
+
       speedInMps = position.speed; // this is your speed
       print('la vitesse est $speedInMps');
     });

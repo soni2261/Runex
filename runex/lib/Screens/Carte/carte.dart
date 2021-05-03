@@ -60,7 +60,7 @@ class _CarteState extends State<Carte> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      resizeToAvoidBottomPadding: false,
+      // resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text('Carte'),
         backgroundColor: kPrimaryColor,
