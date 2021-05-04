@@ -23,7 +23,7 @@ class _MapGoogleState extends State<MapGoogle> {
     if (instance.initialPosition == null || instance.polyLines == null) {
       updateValues();
     }
-    if (instance.initialPosition == null || instance.polyLines == null) {
+    if (instance.initialPosition == null) {
       return Scaffold(
         backgroundColor: Colors.blue,
         body: Center(
