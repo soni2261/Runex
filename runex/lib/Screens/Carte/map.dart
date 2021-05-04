@@ -16,13 +16,14 @@ class _MapGoogleState extends State<MapGoogle> {
   initState() {
     super.initState();
     instance = Itineraire();
-    //setupItinerary();
+    setupItinerary();
   }
 
   Widget build(BuildContext context) {
-    setupItinerary();
-
-    if (instance.initialPosition == null) {
+    if (instance.initialPosition == null || instance.polyLines == null) {
+      updateValues();
+    }
+    if (instance.initialPosition == null || instance.polyLines == null) {
       return Scaffold(
         backgroundColor: Colors.blue,
         body: Center(
