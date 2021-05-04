@@ -157,8 +157,10 @@ class Itineraire {
   // get the current location of the user
   Future<void> getCurrentLocation() async {
     print("GET USER METHOD RUNNING =========");
+
     Position position = await Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+
     List<Placemark> placemark = await Geolocator()
         .placemarkFromCoordinates(position.latitude, position.longitude);
     if (!commence) {
@@ -187,6 +189,7 @@ class Itineraire {
 
     Geolocator().getPositionStream(options).listen((position) {
       speedTemp = position.speed; // this is your speed
+
       print('la vitesse est $speedInMps');
     });
     speedInMps.add(speedTemp);
