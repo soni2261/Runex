@@ -21,9 +21,10 @@ class _NavState extends State<Nav> {
       if (index != 1) {
         _selectedIndex = index;
       } else {
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => MapGoogle(),
-        ));
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => MapGoogle()),
+        );
       }
     });
   }

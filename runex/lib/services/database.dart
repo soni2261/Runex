@@ -44,6 +44,50 @@ class DatabaseService {
     });
   }
 
+  Future addHistorique({
+    @required Map historiqueItem,
+    @required Utilisateur utilisateur,
+  }) async {
+    List historique = utilisateur.historique;
+    historique.add(historiqueItem);
+
+    return await userCollection.doc(uid).set({
+      'name': utilisateur.name,
+      'email': utilisateur.email,
+      'objectifs': utilisateur.objectifs,
+      'statistiques': utilisateur.statistiques,
+      'historique': historique,
+      'usesDarkTheme': utilisateur.usesDarkTheme,
+      'profilePicURL': utilisateur.profilePicURL
+    });
+  }
+
+  Future checkStatsWeek(Utilisateur utilisateur) async {
+    dynamic now = new DateTime.now();
+    now = new DateTime(now.year, now.month, now.day, 0, 0, 0);
+    dynamic currentDebut;
+
+    if (now.weekday == DateTime.monday) {
+      currentDebut = now;
+    } else {
+      int daysSinceMonday = now.weekday - 1;
+      currentDebut = now.subtract(new Duration(days: daysSinceMonday));
+    }
+    dynamic databaseDebut = DateTime.fromMicrosecondsSinceEpoch(
+        utilisateur.statistiques['debut'].microsecondsSinceEpoch);
+
+    Map newStats;
+    if (currentDebut.isAtSameMomentAs(databaseDebut)) {
+      return;
+    }
+    newStats = utilisateur.statistiques;
+    newStats['debut'] = currentDebut;
+    await updateUser(
+      utilisateur: utilisateur,
+      statistiques: newStats,
+    );
+  }
+
   Utilisateur _userDataFromSnapshot(DocumentSnapshot snapshot) {
     return Utilisateur(
       uid: uid,

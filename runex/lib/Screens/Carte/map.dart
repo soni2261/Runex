@@ -55,6 +55,23 @@ class _MapGoogleState extends State<MapGoogle> {
 
             // onCameraMove: onCameraMove,
           ),
+          Positioned(
+              left: 2,
+              top: 15,
+              child: RawMaterialButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                elevation: 2.0,
+                fillColor: Colors.white,
+                child: Icon(
+                  Icons.arrow_back,
+                  size: 35.0,
+                  color: Colors.grey[700],
+                ),
+                padding: EdgeInsets.all(7.0),
+                shape: CircleBorder(),
+              ))
         ],
       );
     }
