@@ -7,32 +7,26 @@ class Loading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return SingleChildScrollView(
-      child: LoadingBackground(
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          SvgPicture.asset(
-            "assets/images/loading.svg",
-            width: size.width * 0.8,
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          SpinKitPumpingHeart(
-            color: Colors.pinkAccent[700],
-            size: 70,
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          Text(
-            "LOADING...",
-            style: TextStyle(
-              fontSize: 24,
-              fontFamily: 'Caveat',
+    return Center(
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SpinKitPumpingHeart(
+              color: Colors.pinkAccent[700],
+              size: 70,
             ),
-          )
-        ]),
-      ),
+            SizedBox(
+              height: 30,
+            ),
+            Text(
+              "LOADING...",
+              style: TextStyle(
+                fontSize: 24,
+                fontFamily: 'Caveat',
+              ),
+            )
+          ]),
     );
   }
 }

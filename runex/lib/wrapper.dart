@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:runex/navigation_bar.dart';
 import 'package:runex/services/database.dart';
-
 import 'components/loading.dart';
 import 'components/theme.dart';
 
@@ -27,6 +26,7 @@ class Wrapper extends StatelessWidget {
                     ? theme.setTheme(theme.darkTheme)
                     : theme.setTheme(theme.lightTheme);
               });
+
 
               return Nav();
             } else {

@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
-import 'package:runex/Screens/MonEspace/Onglets/Objectifs/objectifs.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:runex/models/user.dart';
 
 class DatabaseService {
@@ -80,8 +79,12 @@ class DatabaseService {
     if (currentDebut.isAtSameMomentAs(databaseDebut)) {
       return;
     }
-    newStats = utilisateur.statistiques;
-    newStats['debut'] = currentDebut;
+    newStats = {
+      'debut': currentDebut,
+      'hasstatistiques': false,
+      'statsDistance': {'marche': 0, 'course': 0, 'velo': 0},
+      'statsTemps': {'marche': 0, 'course': 0, 'velo': 0},
+    };
     await updateUser(
       utilisateur: utilisateur,
       statistiques: newStats,

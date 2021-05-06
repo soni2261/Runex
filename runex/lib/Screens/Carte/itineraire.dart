@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:runex/requests/google_maps_requests.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:runex/services/database.dart';
 
 class Itineraire {
   int temps;
@@ -239,5 +240,16 @@ class Itineraire {
   }
 
   //Pour faire la transition à l'historique et mettre les données dans la firebase
-  void archiverEntrainement() {}
+  void archiverEntrainement() {
+    Map historiqueItem = {
+      'sport': 'velo',
+      'temps': temps,
+      'distance': distanceTot,
+      'elevation': elevation,
+      'vitesse': speedInMps
+    };
+
+    DatabaseService()
+        .addHistorique(historiqueItem: historiqueItem, utilisateur: null);
+  }
 }

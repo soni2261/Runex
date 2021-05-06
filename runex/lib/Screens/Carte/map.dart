@@ -66,7 +66,7 @@ class _MapGoogleState extends State<MapGoogle> {
                 fillColor: Colors.white,
                 child: Icon(
                   Icons.arrow_back,
-                  size: 35.0,
+                  size: 30.0,
                   color: Colors.grey[700],
                 ),
                 padding: EdgeInsets.all(7.0),

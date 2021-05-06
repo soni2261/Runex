@@ -37,6 +37,7 @@ dependencies:
   fl_chart:
   firebase_storage:
   image_picker:
+  geocoding:
   permission_handler: ^5.0.1
   http:
   google_maps_webservice:

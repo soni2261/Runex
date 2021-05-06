@@ -21,15 +21,14 @@ class _StatistiquesState extends State<Statistiques> {
           if (snapshot.hasData) {
             utilisateur = snapshot.data;
 
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              setState(() async {
-                await DatabaseService(uid: utilisateur.uid)
-                    .checkStatsWeek(utilisateur);
-              });
+            WidgetsBinding.instance.addPostFrameCallback((_) async {
+              await DatabaseService(uid: utilisateur.uid)
+                  .checkStatsWeek(utilisateur);
+              if (this.mounted) setState(() {});
             });
             return Container(
               child: Text(
-                'Statistiques',
+                utilisateur.statistiques['debut'].toString(),
                 style: TextStyle(fontSize: 48.0),
               ),
             );
