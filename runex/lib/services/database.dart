@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:runex/models/user.dart';
 
 class DatabaseService {
@@ -17,7 +16,7 @@ class DatabaseService {
       String name,
       Map objectifs,
       Map statistiques,
-      List historique,
+      List<Map> historique,
       bool usesDarkTheme,
       String profilePicURL}) async {
     if (utilisateur != null) {
@@ -32,6 +31,7 @@ class DatabaseService {
       if (usesDarkTheme == null) usesDarkTheme = utilisateur.usesDarkTheme;
       if (profilePicURL == null) profilePicURL = utilisateur.profilePicURL;
     }
+
     return await userCollection.doc(uid).set({
       'name': name,
       'email': email,
@@ -47,18 +47,25 @@ class DatabaseService {
     @required Map historiqueItem,
     @required Utilisateur utilisateur,
   }) async {
-    List historique = utilisateur.historique;
+    if (utilisateur == null) return;
+    List<Map> historique = [];
+    if (utilisateur.historique != null && utilisateur.historique != []) {
+      utilisateur.historique.forEach((element) {
+        historique.add(element);
+      });
+    }
     historique.add(historiqueItem);
+    await updateUser(utilisateur: utilisateur, historique: historique);
 
-    return await userCollection.doc(uid).set({
-      'name': utilisateur.name,
-      'email': utilisateur.email,
-      'objectifs': utilisateur.objectifs,
-      'statistiques': utilisateur.statistiques,
-      'historique': historique,
-      'usesDarkTheme': utilisateur.usesDarkTheme,
-      'profilePicURL': utilisateur.profilePicURL
-    });
+    // await userCollection.doc(uid).set({
+    //   'name': utilisateur.name,
+    //   'email': utilisateur.email,
+    //   'objectifs': utilisateur.objectifs,
+    //   'statistiques': utilisateur.statistiques,
+    //   'historique': historique,
+    //   'usesDarkTheme': utilisateur.usesDarkTheme,
+    //   'profilePicURL': utilisateur.profilePicURL
+    // });
   }
 
   Future checkStatsWeek(Utilisateur utilisateur) async {

@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:provider/provider.dart';
+import 'package:runex/models/user.dart';
 import 'package:runex/requests/google_maps_requests.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:runex/services/database.dart';
@@ -222,13 +224,13 @@ class Itineraire {
   }
 
 //lorsque l'on appuie sur le bouton STOP
-  void stopsTopWatch() {
+  Future stopsTopWatch() async {
     termine = true;
     swatch.stop();
     temps = swatch
         .elapsedMicroseconds; // commande qui va arrêter le swatch et donner la valeur à cette variable
 
-    archiverEntrainement();
+    // await archiverEntrainement();
   }
 
   Future<void> getCurrentElevation() async {
@@ -240,7 +242,7 @@ class Itineraire {
   }
 
   //Pour faire la transition à l'historique et mettre les données dans la firebase
-  void archiverEntrainement() {
+  Map archiverEntrainement() {
     Map historiqueItem = {
       'sport': 'velo',
       'temps': temps,
@@ -248,8 +250,7 @@ class Itineraire {
       'elevation': elevation,
       'vitesse': speedInMps
     };
-
-    DatabaseService()
-        .addHistorique(historiqueItem: historiqueItem, utilisateur: null);
+    return historiqueItem;
+    
   }
 }

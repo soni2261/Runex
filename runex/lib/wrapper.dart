@@ -26,8 +26,6 @@ class Wrapper extends StatelessWidget {
                     ? theme.setTheme(theme.darkTheme)
                     : theme.setTheme(theme.lightTheme);
               });
-
-
               return Nav();
             } else {
               print(utilisateur.uid);

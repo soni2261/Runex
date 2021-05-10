@@ -84,7 +84,7 @@ class AuthService {
         debut = now.subtract(new Duration(days: daysSinceMonday));
       }
 
-      List historique = [];
+      List<Map> historique = [];
       // create a new document for the user with the uid
       await DatabaseService(uid: user.uid).updateUser(
         utilisateur: null,
