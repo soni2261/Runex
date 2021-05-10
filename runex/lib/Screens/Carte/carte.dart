@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geocoder/geocoder.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:runex/constants.dart';
 
@@ -8,6 +9,8 @@ import 'package:runex/components/rounded_text_button.dart';
 import 'package:runex/Screens/Carte/components/address_search.dart';
 import 'package:runex/Screens/Carte/components/place_service.dart';
 import 'package:uuid/uuid.dart';
+
+import 'package:geolocator/geolocator.dart';
 
 class Carte extends StatefulWidget {
   Carte({Key key, this.title}) : super(key: key);
@@ -52,18 +55,18 @@ class _CarteState extends State<Carte> {
 
   //int _visibleDestinations = 1;
 
+  List<String> destinations = [];
+
+  List<Coordinates> endroits = [];
+
   @override
   Widget build(BuildContext context) {
-    List<String> destinations = [
-      '${_destinationController.text}'
-    ]; // -- liste des adresses
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      // resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text('Carte'),
-        backgroundColor: kPrimaryColor,
+        backgroundColor: Colors.transparent,
         actions: [
           IconButton(
               icon: Icon(Icons.close),
@@ -194,6 +197,17 @@ class _CarteState extends State<Carte> {
     );
   }
 
+  Future<void> convertirAdresseLatLng() async {
+    for (int i = 0; i < destinations.length; i++) {
+      final query = destinations[i];
+      var addresses = await Geocoder.local.findAddressesFromQuery(query);
+      var first = addresses.first;
+      endroits.add(first.coordinates);
+
+      print(endroits[0]);
+    }
+  }
+
   _search() async {
     final sessionToken = Uuid().v4();
     final Suggestion result = await showSearch(
@@ -201,8 +215,12 @@ class _CarteState extends State<Carte> {
     if (result != null) {
       setState(() {
         _destinationController.text = result.description;
-        //destinations.add(_destinationController.text);
         editEnabled = false;
+        destinations.add(_destinationController.text);
+
+        //print(destinations[0]);
+
+        convertirAdresseLatLng();
       });
     }
   }

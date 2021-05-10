@@ -42,7 +42,6 @@ class PlaceApiProvider {
         return result['predictions']
             .map<Suggestion>((p) => Suggestion(p['place_id'], p['description']))
             .toList();
-
       }
       if (result['status'] == 'ZERO_RESULTS') {
         print('AUCUNE VALEUR');
