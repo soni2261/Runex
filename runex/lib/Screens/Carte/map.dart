@@ -1,3 +1,4 @@
+import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -21,7 +22,7 @@ class _MapGoogleState extends State<MapGoogle> {
   Color buttonColor = Colors.green[400];
   String buttonText = "START";
   var swatch = Stopwatch();
-  int temps;
+  int duree;
   DateTime startTime;
   DateTime endTime;
   double distanceTot = 0;
@@ -126,6 +127,7 @@ class _MapGoogleState extends State<MapGoogle> {
                             // Itineraire().startTopWatch();
                             commence = true;
                             termine = false;
+                            startTime = DateTime.now();
                             swatch.start();
                             setState(() {
                               buttonText = "STOP";
@@ -134,12 +136,12 @@ class _MapGoogleState extends State<MapGoogle> {
                           } else {
                             commence = false;
                             termine = true;
-
+                            endTime = DateTime.now();
                             swatch.stop();
-                            int temps = swatch.elapsedMicroseconds;
+                            duree = swatch.elapsedMicroseconds;
                             Map historiqueItem = archiverEntrainement();
                             saveData(utilisateur, historiqueItem);
-                            print("<<<<<<<<$temps>>>>>>>>");
+                            print("<<<<<<<<$duree>>>>>>>>");
                             // swatch.reset();
 
                             setState(() {
@@ -375,7 +377,7 @@ class _MapGoogleState extends State<MapGoogle> {
   Future stopsTopWatch() async {
     termine = true;
     swatch.stop();
-    temps = swatch
+    duree = swatch
         .elapsedMicroseconds; // commande qui va arrêter le swatch et donner la valeur à cette variable
 
     // await archiverEntrainement();
@@ -391,9 +393,32 @@ class _MapGoogleState extends State<MapGoogle> {
 
   //Pour faire la transition à l'historique et mettre les données dans la firebase
   Map archiverEntrainement() {
+    String name;
+    if (endTime.day == 12 || endTime.day == 13) {
+      name = formatDate(endTime, [M, ' ', endTime.day.toString(), 'th, ', yyyy])
+          .toString();
+    } else if (endTime.day % 10 == 1) {
+      name = formatDate(endTime, [M, ' ', endTime.day.toString(), 'st, ', yyyy])
+          .toString();
+    } else if (endTime.day % 10 == 2) {
+      name = formatDate(endTime, [M, ' ', endTime.day.toString(), 'nd, ', yyyy])
+          .toString();
+    } else if (endTime.day % 10 == 3) {
+      name = formatDate(endTime, [M, ' ', endTime.day.toString(), 'rd, ', yyyy])
+          .toString();
+    } else {
+      name = formatDate(endTime, [M, ' ', endTime.day.toString(), 'th, ', yyyy])
+          .toString();
+    }
+
     Map historiqueItem = {
+      'name': name,
       'sport': 'velo',
-      'temps': temps,
+      'duree': duree,
+      'startTime': formatDate(
+          startTime, [yyyy, '-', mm, '-', dd, ' à ', HH, ':', nn, ':', ss]),
+      'endTime': formatDate(
+          endTime, [yyyy, '-', mm, '-', dd, ' à ', HH, ':', nn, ':', ss]),
       'distance': distanceTot,
       'elevation': elevation,
       'vitesse': speedInMps,
