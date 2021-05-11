@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:geocoder/geocoder.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:runex/constants.dart';
 
@@ -9,8 +8,6 @@ import 'package:runex/components/rounded_text_button.dart';
 import 'package:runex/Screens/Carte/components/address_search.dart';
 import 'package:runex/Screens/Carte/components/place_service.dart';
 import 'package:uuid/uuid.dart';
-
-import 'package:geolocator/geolocator.dart';
 
 class Carte extends StatefulWidget {
   Carte({Key key, this.title}) : super(key: key);
@@ -40,7 +37,9 @@ class _CarteState extends State<Carte> {
   Icon _sportType = Icon(Icons.directions_run);
 
   List<Icon> _sportTypes = [
-    Icon(Icons.directions_run),
+    Icon(
+      Icons.directions_run,
+    ),
     Icon(Icons.directions_walk),
     Icon(Icons.directions_bike)
   ];
@@ -55,18 +54,18 @@ class _CarteState extends State<Carte> {
 
   //int _visibleDestinations = 1;
 
-  List<String> destinations = [];
-
-  List<Coordinates> endroits = [];
-
   @override
   Widget build(BuildContext context) {
+    List<String> destinations = [
+      '${_destinationController.text}'
+    ]; // -- liste des adresses
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      resizeToAvoidBottomPadding: false,
+      // resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text('Carte'),
-        backgroundColor: Colors.transparent,
+        backgroundColor: kPrimaryColor,
         actions: [
           IconButton(
               icon: Icon(Icons.close),
@@ -85,19 +84,16 @@ class _CarteState extends State<Carte> {
                 child: Container(),
               ),
               Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Ink(
-                  decoration: const ShapeDecoration(
-                    color: kPrimaryColor,
-                    shape: CircleBorder(),
-                  ),
-                  child: IconButton(
-                    icon: Icon(Icons.list_rounded),
-                    color: kPrimaryLightColor,
-                    onPressed: () {
-                      _onModifyItiniraryPressed();
-                    },
-                  ),
+                padding: const EdgeInsets.all(20.0),
+                child: RawMaterialButton(
+                  onPressed: () {
+                    _onModifyItiniraryPressed();
+                  },
+                  elevation: 2.0,
+                  fillColor: Colors.white,
+                  child: Icon(Icons.list_rounded),
+                  padding: EdgeInsets.all(7.0),
+                  shape: CircleBorder(),
                 ),
               ),
             ],
@@ -179,10 +175,14 @@ class _CarteState extends State<Carte> {
               SizedBox(
                 width: 20,
               ),
-              startButton(),
-              SizedBox(
-                width: 20,
+              Expanded(
+                flex: 1,
+                child: Container(),
               ),
+              // startButton(),
+              // SizedBox(
+              //   width: 20,
+              // ),
               recenterButton(),
               SizedBox(
                 width: 10,
@@ -197,17 +197,6 @@ class _CarteState extends State<Carte> {
     );
   }
 
-  Future<void> convertirAdresseLatLng() async {
-    for (int i = 0; i < destinations.length; i++) {
-      final query = destinations[i];
-      var addresses = await Geocoder.local.findAddressesFromQuery(query);
-      var first = addresses.first;
-      endroits.add(first.coordinates);
-
-      print(endroits[0]);
-    }
-  }
-
   _search() async {
     final sessionToken = Uuid().v4();
     final Suggestion result = await showSearch(
@@ -215,12 +204,8 @@ class _CarteState extends State<Carte> {
     if (result != null) {
       setState(() {
         _destinationController.text = result.description;
+        //destinations.add(_destinationController.text);
         editEnabled = false;
-        destinations.add(_destinationController.text);
-
-        //print(destinations[0]);
-
-        convertirAdresseLatLng();
       });
     }
   }
@@ -282,39 +267,65 @@ class _CarteState extends State<Carte> {
   }
 
   Widget sportsButton() {
+    // return Padding(
+    //   padding: const EdgeInsets.all(10.0),
+    //   child: Ink(
+    //     decoration: const ShapeDecoration(
+    //       color: kPrimaryColor,
+    //       shape: CircleBorder(),
+    //     ),
+    //     child: IconButton(
+    //       onPressed: () {
+    //         changeSport();
+    //       },
+    //       icon: _sportType,
+    //       color: Colors.black,
+    //     ),
+    //   ),
+    // );
+
     return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Ink(
-        decoration: const ShapeDecoration(
-          color: kPrimaryColor,
-          shape: CircleBorder(),
-        ),
-        child: IconButton(
-          onPressed: () {
-            changeSport();
-          },
-          icon: _sportType,
-          color: Colors.black,
-        ),
+      padding: const EdgeInsets.all(8.0),
+      child: RawMaterialButton(
+        onPressed: () {
+          changeSport();
+        },
+        elevation: 2.0,
+        fillColor: Colors.white,
+        child: _sportType,
+        padding: EdgeInsets.all(7.0),
+        shape: CircleBorder(),
       ),
     );
   }
 
   Widget recenterButton() {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Ink(
-        decoration: const ShapeDecoration(
-          color: kPrimaryColor,
-          shape: CircleBorder(),
-        ),
-        child: IconButton(
-          onPressed: () {},
-          icon: Icon(Icons.location_searching),
-          color: Colors.black,
-        ),
+      padding: const EdgeInsets.all(8.0),
+      child: RawMaterialButton(
+        onPressed: () {},
+        elevation: 2.0,
+        fillColor: Colors.white,
+        child: Icon(Icons.location_searching),
+        padding: EdgeInsets.all(7.0),
+        shape: CircleBorder(),
       ),
     );
+
+    // return Padding(
+    //   padding: const EdgeInsets.all(10.0),
+    //   child: Ink(
+    //     decoration: const ShapeDecoration(
+    //       color: kPrimaryColor,
+    //       shape: CircleBorder(),
+    //     ),
+    //     child: IconButton(
+    //       onPressed: () {},
+    //       icon: Icon(Icons.location_searching),
+    //       color: Colors.black,
+    //     ),
+    //   ),
+    // );
   }
 
   bool setItineraryVisible(bool itineraryIsVisible) {

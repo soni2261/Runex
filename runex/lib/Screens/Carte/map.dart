@@ -9,6 +9,7 @@ import 'package:runex/services/database.dart';
 import 'dart:async';
 import 'package:geolocator/geolocator.dart';
 import 'package:runex/requests/google_maps_requests.dart';
+import 'package:runex/Screens/Carte/carte.dart';
 
 class MapGoogle extends StatefulWidget {
   _MapGoogleState createState() => _MapGoogleState();
@@ -117,6 +118,7 @@ class _MapGoogleState extends State<MapGoogle> {
                       padding: EdgeInsets.all(7.0),
                       shape: CircleBorder(),
                     )),
+                    Carte(),
                 Container(
                   margin: EdgeInsets.only(bottom: 15),
                   child: Align(
