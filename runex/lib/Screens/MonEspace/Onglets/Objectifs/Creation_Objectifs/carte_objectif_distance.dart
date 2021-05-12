@@ -39,7 +39,7 @@ class _CarteObjectifDistanceState extends State<CarteObjectifDistance> {
                         activeColor: activeCheckBoxColor,
                         checkColor: checkColor,
                         value: utilisateur.objectifs['hasobjDistance'],
-                        onChanged: (val) {
+                        onChanged: (bool val) {
                           setState(() {
                             DatabaseService(uid: utilisateur.uid).updateUser(
                               utilisateur: utilisateur,
@@ -53,7 +53,6 @@ class _CarteObjectifDistanceState extends State<CarteObjectifDistance> {
                                     utilisateur.objectifs['objDistance'],
                                 'objTemps': utilisateur.objectifs['objTemps'],
                               },
-                              
                             );
                           });
                         },

@@ -10,26 +10,46 @@ class DatabaseService {
   final CollectionReference userCollection =
       FirebaseFirestore.instance.collection('users');
 
-  Future updateUser(
-      {@required Utilisateur utilisateur,
-      String email,
-      String name,
-      Map objectifs,
-      Map statistiques,
-      List<Map> historique,
-      bool usesDarkTheme,
-      String profilePicURL}) async {
+  Future updateUser({
+    @required Utilisateur utilisateur,
+    String email,
+    String name,
+    Map objectifs,
+    Map statistiques,
+    List historique,
+    bool usesDarkTheme,
+    String profilePicURL,
+  }) async {
+    print(historique);
     if (utilisateur != null) {
-      if (email == null || email == "") email = utilisateur.email;
-      if (name == null || name == "") name = utilisateur.name;
-      if (objectifs == null || objectifs == {})
+      if (email == null || email == "") {
+        email = utilisateur.email;
+      }
+      if (name == null || name == "") {
+        name = utilisateur.name;
+      }
+
+      if (objectifs == null || objectifs == {}) {
         objectifs = utilisateur.objectifs;
-      if (statistiques == null || statistiques == {})
+      }
+
+      if (statistiques == null || statistiques == {}) {
+        
         statistiques = utilisateur.statistiques;
-      if (historique == null || historique == [])
+      }
+
+      if (historique == null) {
         historique = utilisateur.historique;
-      if (usesDarkTheme == null) usesDarkTheme = utilisateur.usesDarkTheme;
-      if (profilePicURL == null) profilePicURL = utilisateur.profilePicURL;
+        
+      }
+
+      if (usesDarkTheme == null) {
+        usesDarkTheme = utilisateur.usesDarkTheme;
+      }
+
+      if (profilePicURL == null || profilePicURL == '') {
+        profilePicURL = utilisateur.profilePicURL;
+      }
     }
 
     return await userCollection.doc(uid).set({
@@ -56,16 +76,6 @@ class DatabaseService {
     }
     historique.add(historiqueItem);
     await updateUser(utilisateur: utilisateur, historique: historique);
-
-    // await userCollection.doc(uid).set({
-    //   'name': utilisateur.name,
-    //   'email': utilisateur.email,
-    //   'objectifs': utilisateur.objectifs,
-    //   'statistiques': utilisateur.statistiques,
-    //   'historique': historique,
-    //   'usesDarkTheme': utilisateur.usesDarkTheme,
-    //   'profilePicURL': utilisateur.profilePicURL
-    // });
   }
 
   Future checkStatsWeek(Utilisateur utilisateur) async {
