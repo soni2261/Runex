@@ -9,7 +9,7 @@ import 'package:runex/services/database.dart';
 import 'dart:async';
 import 'package:geolocator/geolocator.dart';
 import 'package:runex/requests/google_maps_requests.dart';
-import 'package:runex/Screens/Carte/carte.dart';
+// import 'package:runex/Screens/Carte/carte.dart';
 
 class MapGoogle extends StatefulWidget {
   _MapGoogleState createState() => _MapGoogleState();
@@ -17,7 +17,7 @@ class MapGoogle extends StatefulWidget {
 
 class _MapGoogleState extends State<MapGoogle> {
   bool creerItineraire = false;
-  // Itineraire instance;
+  Utilisateur utilisateur;
   bool commence = false;
   bool termine = false;
   Color buttonColor = Colors.green[400];
@@ -63,8 +63,8 @@ class _MapGoogleState extends State<MapGoogle> {
   }
 
   Widget build(BuildContext context) {
-    Utilisateur utilisateur = Provider.of<Utilisateur>(context);
-    if (initialPosition == null || polyLines == null) {
+    utilisateur = Provider.of<Utilisateur>(context);
+    if (initialPosition == null && polyLines == null) {
       updateValues();
     }
     return StreamBuilder<Utilisateur>(
@@ -118,7 +118,7 @@ class _MapGoogleState extends State<MapGoogle> {
                       padding: EdgeInsets.all(7.0),
                       shape: CircleBorder(),
                     )),
-                    Carte(),
+                // Carte(),
                 Container(
                   margin: EdgeInsets.only(bottom: 15),
                   child: Align(
@@ -126,30 +126,9 @@ class _MapGoogleState extends State<MapGoogle> {
                       child: RawMaterialButton(
                         onPressed: () {
                           if (!commence) {
-                            // Itineraire().startTopWatch();
-                            commence = true;
-                            termine = false;
-                            startTime = DateTime.now();
-                            swatch.start();
-                            setState(() {
-                              buttonText = "STOP";
-                              buttonColor = Colors.red;
-                            });
+                            startTopWatch();
                           } else {
-                            commence = false;
-                            termine = true;
-                            endTime = DateTime.now();
-                            swatch.stop();
-                            duree = swatch.elapsedMicroseconds;
-                            Map historiqueItem = archiverEntrainement();
-                            saveData(utilisateur, historiqueItem);
-                            print("<<<<<<<<$duree>>>>>>>>");
-                            // swatch.reset();
-
-                            setState(() {
-                              buttonText = "START";
-                              buttonColor = Colors.green[400];
-                            });
+                            stopsTopWatch();
                           }
                         },
                         elevation: 2.0,
@@ -371,16 +350,31 @@ class _MapGoogleState extends State<MapGoogle> {
   //lorsque l'on appuie sur le bouton START
   void startTopWatch() {
     commence = true;
+    termine = false;
+    startTime = DateTime.now();
     swatch.start();
+    setState(() {
+      buttonText = "STOP";
+      buttonColor = Colors.red;
+    });
     startTimer();
   }
 
 //lorsque l'on appuie sur le bouton STOP
   Future stopsTopWatch() async {
+    commence = false;
     termine = true;
+    endTime = DateTime.now();
     swatch.stop();
-    duree = swatch
-        .elapsedMicroseconds; // commande qui va arrêter le swatch et donner la valeur à cette variable
+    duree = swatch.elapsedMilliseconds;
+    Map historiqueItem = archiverEntrainement();
+    saveData(utilisateur, historiqueItem);
+    // swatch.reset();
+
+    setState(() {
+      buttonText = "START";
+      buttonColor = Colors.green[400];
+    }); // commande qui va arrêter le swatch et donner la valeur à cette variable
 
     // await archiverEntrainement();
   }

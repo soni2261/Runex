@@ -3,6 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:runex/components/theme.dart';
 
+import 'details_entrainement.dart';
+
 class EventCard extends StatelessWidget {
   final Map map;
   const EventCard(
@@ -37,7 +39,10 @@ class EventCard extends StatelessWidget {
       elevation: 2,
       child: InkWell(
         onTap: () {
-          
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => DetailsEntrainement()),
+          );
         },
         child: Padding(
           padding: const EdgeInsets.all(16.0),

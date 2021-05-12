@@ -1,0 +1,273 @@
+import 'package:flutter/material.dart';
+import 'package:runex/constants.dart';
+
+//this class if for home screen
+//lets continue
+
+class DetailsEntrainement extends StatefulWidget {
+  @override
+  _DetailsEntrainementState createState() => _DetailsEntrainementState();
+}
+
+class _DetailsEntrainementState extends State<DetailsEntrainement> {
+  @override
+  Widget build(BuildContext context) {
+    Map map = {
+      "nom": "Ali",
+      'distance': 21403,
+      'duree': 18473,
+      'sport': 'velo',
+      'vitesse': [18, 3, 24, 16],
+    };
+    double sum = 0;
+
+    for (int i = 0; i < map['vitesse'].length; i++) {
+      sum = sum + map['vitesse'][i];
+    }
+    String vitesseMoyenne = (sum / map['vitesse'].length).toStringAsFixed(1);
+
+    String distance = (map['distance'] / 1000).toStringAsFixed(2);
+
+    return Scaffold(
+      appBar: AppBar(
+        // backgroundColor: Colors.white,
+        title: Text(map['nom']),
+        centerTitle: true,
+        elevation: 0.0,
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Date et Temps"),
+                Text(
+                  "February 07, 2021",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(5, 0, 10, 5),
+                  padding: EdgeInsets.symmetric(vertical: 30),
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.2),
+                        spreadRadius: 3,
+                        blurRadius: 7,
+                        offset: Offset(0, 1), // changes position of shadow
+                      ),
+                    ],
+                    color: Colors.white,
+                    border: Border.all(color: kPrimaryLightColor),
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                  ),
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color.fromRGBO(0, 87, 231, 1),
+                        ),
+                        child: Icon(
+                          Icons.eco,
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Sport",
+                        style: TextStyle(fontSize: 16.0),
+                      ),
+                      Text(
+                        map['sport'],
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(10, 5, 5, 5),
+                  padding: EdgeInsets.symmetric(vertical: 30),
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.2),
+                        spreadRadius: 3,
+                        blurRadius: 7,
+                        offset: Offset(0, 1), // changes position of shadow
+                      ),
+                    ],
+                    color: Colors.white,
+                    border: Border.all(color: kPrimaryLightColor),
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                  ),
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color.fromRGBO(4, 132, 68, 1),
+                        ),
+                        child: Icon(
+                          Icons.timer_sharp,
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Temps",
+                        style: TextStyle(fontSize: 16.0),
+                      ),
+                      Text(
+                        (map['duree'] / 1000).toStringAsFixed(0),
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      Text(
+                        "minutes",
+                        style: TextStyle(fontSize: 12.0),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(5, 5, 10, 5),
+                  padding: EdgeInsets.symmetric(vertical: 30),
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.2),
+                        spreadRadius: 3,
+                        blurRadius: 7,
+                        offset: Offset(0, 1), // changes position of shadow
+                      ),
+                    ],
+                    color: Colors.white,
+                    border: Border.all(color: kPrimaryLightColor),
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                  ),
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.red,
+                        ),
+                        child: Icon(
+                          Icons.local_fire_department_sharp,
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Distance",
+                        style: TextStyle(fontSize: 16.0),
+                      ),
+                      Text(
+                        distance,
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      Text(
+                        "Km",
+                        style: TextStyle(fontSize: 12.0),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(5, 5, 10, 0),
+                  padding: EdgeInsets.symmetric(vertical: 30),
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.2),
+                        spreadRadius: 3,
+                        blurRadius: 7,
+                        offset: Offset(0, 1), // changes position of shadow
+                      ),
+                    ],
+                    color: Colors.white,
+                    border: Border.all(color: kPrimaryLightColor),
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                  ),
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color.fromRGBO(252, 186, 3, 1),
+                        ),
+                        child: Icon(
+                          Icons.speed_outlined,
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Vitesse moyenne",
+                        style: TextStyle(fontSize: 16.0),
+                      ),
+                      Text(
+                        vitesseMoyenne,
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      Text(
+                        "m/s",
+                        style: TextStyle(fontSize: 12.0),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
