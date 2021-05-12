@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:runex/constants.dart';
-
-import 'package:runex/components/rounded_text_button.dart';
-
-//-----------------------------
 import 'package:runex/Screens/Carte/components/address_search.dart';
 import 'package:runex/Screens/Carte/components/place_service.dart';
 import 'package:uuid/uuid.dart';
@@ -23,6 +19,7 @@ class _CarteState extends State<Carte> {
 
   final _destinationController = TextEditingController();
 
+//sert a supprimer les ressources utilisées par l'objet TextEditingController lorsqu'il n'est plus utile
   @override
   void dispose() {
     _destinationController.dispose();
@@ -52,8 +49,7 @@ class _CarteState extends State<Carte> {
 
   bool widgetVisible = true;
 
-  //int _visibleDestinations = 1;
-
+//methode qui construit la carte
   @override
   Widget build(BuildContext context) {
     List<String> destinations = [
@@ -62,7 +58,6 @@ class _CarteState extends State<Carte> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      // resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text('Carte'),
         backgroundColor: kPrimaryColor,
@@ -118,6 +113,7 @@ class _CarteState extends State<Carte> {
                       visible: widgetVisible,
                       child: Row(
                         children: [
+                          //boite pour chercher l'itineraire
                           AddressInput(
                             controller: _destinationController,
                             iconData: Icons.place_sharp,
@@ -144,6 +140,7 @@ class _CarteState extends State<Carte> {
                     SizedBox(
                       height: 20.0,
                     ),
+                    //bouton pour ajouter des itinieraires. Dans cette version, il n'y a qu'une seule itineraire
                     FloatingActionButton(
                       backgroundColor: kPrimaryColor,
                       onPressed: () {
@@ -179,10 +176,6 @@ class _CarteState extends State<Carte> {
                 flex: 1,
                 child: Container(),
               ),
-              // startButton(),
-              // SizedBox(
-              //   width: 20,
-              // ),
               recenterButton(),
               SizedBox(
                 width: 10,
@@ -197,19 +190,22 @@ class _CarteState extends State<Carte> {
     );
   }
 
+// cette methode genere des suggestions de places lorsqu'on tape une lettre au clavier
   _search() async {
     final sessionToken = Uuid().v4();
     final Suggestion result = await showSearch(
         context: context, delegate: AddressSearch(sessionToken));
+    // ca va changer le texte affiché dans la boîte itinéraire
     if (result != null) {
       setState(() {
         _destinationController.text = result.description;
-        //destinations.add(_destinationController.text);
+        //destinations.add(_destinationController.text); //a ajouter s'il y a une liste d'itineraire dans la prochaine version
         editEnabled = false;
       });
     }
   }
 
+//ouvre ou ferme la liste d'itinéraires sur la map
   void _onModifyItiniraryPressed() {
     setState(() {
       if (itineraryIsVisible == false) {
@@ -220,6 +216,7 @@ class _CarteState extends State<Carte> {
     });
   }
 
+//dans la prochaine version, s'il y a l'option d'afficher notre localisation privée ou publique
   Widget visibilityButton() {
     return Padding(
       padding: const EdgeInsets.all(10.0),
@@ -239,13 +236,8 @@ class _CarteState extends State<Carte> {
     );
   }
 
+//bouton de commencement
   Widget startButton() {
-    // return RoundedButton(
-    //   text: "Start",
-    //   press: () {
-    //     setState(() {});
-    //   },
-    // );
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.all(0.0),
@@ -266,24 +258,8 @@ class _CarteState extends State<Carte> {
     );
   }
 
+//bouton pour changer le sport
   Widget sportsButton() {
-    // return Padding(
-    //   padding: const EdgeInsets.all(10.0),
-    //   child: Ink(
-    //     decoration: const ShapeDecoration(
-    //       color: kPrimaryColor,
-    //       shape: CircleBorder(),
-    //     ),
-    //     child: IconButton(
-    //       onPressed: () {
-    //         changeSport();
-    //       },
-    //       icon: _sportType,
-    //       color: Colors.black,
-    //     ),
-    //   ),
-    // );
-
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: RawMaterialButton(
@@ -299,6 +275,7 @@ class _CarteState extends State<Carte> {
     );
   }
 
+// bouton pour recentrer la localisation de l'utilisateur
   Widget recenterButton() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -311,23 +288,9 @@ class _CarteState extends State<Carte> {
         shape: CircleBorder(),
       ),
     );
-
-    // return Padding(
-    //   padding: const EdgeInsets.all(10.0),
-    //   child: Ink(
-    //     decoration: const ShapeDecoration(
-    //       color: kPrimaryColor,
-    //       shape: CircleBorder(),
-    //     ),
-    //     child: IconButton(
-    //       onPressed: () {},
-    //       icon: Icon(Icons.location_searching),
-    //       color: Colors.black,
-    //     ),
-    //   ),
-    // );
   }
 
+//rend la liste d'itineraire visible
   bool setItineraryVisible(bool itineraryIsVisible) {
     if (itineraryIsVisible) {
       return true;
@@ -336,6 +299,7 @@ class _CarteState extends State<Carte> {
     }
   }
 
+//dans la prochaine version de l'app, s'il y a plusieurs destinations
   bool setVisibleDestination(int _visibleDestinations, int _destinationNumber) {
     if (_visibleDestinations >= _destinationNumber) {
       return true;
@@ -344,6 +308,7 @@ class _CarteState extends State<Carte> {
     }
   }
 
+//dans la prochaine version de l'app, publique/privé
   void changeVisibility() {
     setState(() {
       if (_isVisible) {
@@ -356,6 +321,7 @@ class _CarteState extends State<Carte> {
     });
   }
 
+//change l'icone du type de sport (velo,marche,course)
   void changeSport() {
     setState(() {
       _sportType = _sportTypes[_index % 3];
@@ -364,6 +330,7 @@ class _CarteState extends State<Carte> {
   }
 }
 
+//boîte d'un itinéraire
 class AddressInput extends StatelessWidget {
   final IconData iconData;
   final TextEditingController controller;
@@ -380,6 +347,7 @@ class AddressInput extends StatelessWidget {
     this.enabled,
   }) : super(key: key);
 
+  //methode qui construit la boîte d'itinéraire
   @override
   Widget build(BuildContext context) {
     return Row(
