@@ -23,21 +23,16 @@ class _BodyState extends State<Body> {
     double defaultSize = SizeConfig.defaultSize;
     final tabChanger = DefaultTabController.of(context);
     final theme = Provider.of<ThemeChanger>(context);
-    String imageUrl;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      getImage(utilisateur);
+    });
 
     return StreamBuilder<Utilisateur>(
         stream: DatabaseService(uid: utilisateur.uid).userData,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             utilisateur = snapshot.data;
-
-            if (utilisateur.profilePicURL == null ||
-                utilisateur.profilePicURL == "") {
-              // imageUrl =
-              //     "https://firebasestorage.googleapis.com/v0/b/runex-5f43d.appspot.com/o/Profile%20pictures%2Fdefault-avatar?alt=media&token=95aeda3d-bd70-4c9c-876c-655ea10b66d2";
-            } else {
-              imageUrl = utilisateur.profilePicURL;
-            }
 
             return SingleChildScrollView(
               child: Column(
@@ -72,7 +67,7 @@ class _BodyState extends State<Body> {
                                           : Colors.white),
                                   image: DecorationImage(
                                     fit: BoxFit.cover,
-                                    image: NetworkImage(imageUrl),
+                                    image: image,
                                   ),
                                 ),
                               ),

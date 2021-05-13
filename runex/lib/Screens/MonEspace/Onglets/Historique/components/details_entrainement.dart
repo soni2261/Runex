@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:runex/components/theme.dart';
 import 'package:runex/constants.dart';
 
 //this class if for home screen
@@ -12,6 +14,7 @@ class DetailsEntrainement extends StatefulWidget {
 class _DetailsEntrainementState extends State<DetailsEntrainement> {
   @override
   Widget build(BuildContext context) {
+    ThemeChanger theme = Provider.of<ThemeChanger>(context);
     Map map = {
       "nom": "Ali",
       'distance': 21403,
@@ -28,9 +31,14 @@ class _DetailsEntrainementState extends State<DetailsEntrainement> {
 
     String distance = (map['distance'] / 1000).toStringAsFixed(2);
 
+    Color couleurDeCard =
+        theme.isDark() ? Color.fromRGBO(65, 55, 85, 1) : Colors.white;
+
+    Color couleurDeShadow =
+        theme.isDark() ? Color.fromRGBO(25, 20, 35, 1) : Colors.grey;
+
     return Scaffold(
       appBar: AppBar(
-        // backgroundColor: Colors.white,
         title: Text(map['nom']),
         centerTitle: true,
         elevation: 0.0,
@@ -50,7 +58,6 @@ class _DetailsEntrainementState extends State<DetailsEntrainement> {
                 Text(
                   "February 07, 2021",
                   style: TextStyle(
-                    color: Colors.black,
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
                   ),
@@ -70,14 +77,13 @@ class _DetailsEntrainementState extends State<DetailsEntrainement> {
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
+                        color: couleurDeShadow.withOpacity(0.2),
                         spreadRadius: 3,
                         blurRadius: 7,
                         offset: Offset(0, 1), // changes position of shadow
                       ),
                     ],
-                    color: Colors.white,
-                    border: Border.all(color: kPrimaryLightColor),
+                    color: couleurDeCard,
                     borderRadius: BorderRadius.all(Radius.circular(30)),
                   ),
                   child: Column(
@@ -103,7 +109,9 @@ class _DetailsEntrainementState extends State<DetailsEntrainement> {
                       Text(
                         map['sport'],
                         style: TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.w600),
+                          fontSize: 24,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ],
                   ),
@@ -120,14 +128,13 @@ class _DetailsEntrainementState extends State<DetailsEntrainement> {
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
+                        color: couleurDeShadow.withOpacity(0.2),
                         spreadRadius: 3,
                         blurRadius: 7,
                         offset: Offset(0, 1), // changes position of shadow
                       ),
                     ],
-                    color: Colors.white,
-                    border: Border.all(color: kPrimaryLightColor),
+                    color: couleurDeCard,
                     borderRadius: BorderRadius.all(Radius.circular(30)),
                   ),
                   child: Column(
@@ -169,14 +176,13 @@ class _DetailsEntrainementState extends State<DetailsEntrainement> {
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
+                        color: couleurDeShadow.withOpacity(0.2),
                         spreadRadius: 3,
                         blurRadius: 7,
                         offset: Offset(0, 1), // changes position of shadow
                       ),
                     ],
-                    color: Colors.white,
-                    border: Border.all(color: kPrimaryLightColor),
+                    color: couleurDeCard,
                     borderRadius: BorderRadius.all(Radius.circular(30)),
                   ),
                   child: Column(
@@ -222,14 +228,13 @@ class _DetailsEntrainementState extends State<DetailsEntrainement> {
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
+                        color: couleurDeShadow.withOpacity(0.2),
                         spreadRadius: 3,
                         blurRadius: 7,
                         offset: Offset(0, 1), // changes position of shadow
                       ),
                     ],
-                    color: Colors.white,
-                    border: Border.all(color: kPrimaryLightColor),
+                    color: couleurDeCard,
                     borderRadius: BorderRadius.all(Radius.circular(30)),
                   ),
                   child: Column(

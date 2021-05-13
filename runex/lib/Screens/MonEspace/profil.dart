@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:runex/Screens/MonEspace/Onglets/Parametres/Parametres.dart';
 import 'package:runex/Screens/MonEspace/Onglets/profile_page/profile_screen.dart';
+import 'Onglets/Statistiques/home_page.dart';
 import 'Onglets/Statistiques/statistiques.dart';
 import 'Onglets/Objectifs/objectifs.dart';
 import 'Onglets/Historique/historique.dart';
@@ -44,7 +45,7 @@ class Profil extends StatelessWidget {
         ),
         body: TabBarView(
           children: <Widget>[
-            Statistiques(),
+            HomePage(),
             Objectifs(),
             Historique(),
             ProfileScreen(),
