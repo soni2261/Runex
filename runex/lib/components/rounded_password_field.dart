@@ -22,7 +22,7 @@ class _RoundedPasswordFieldState extends State<RoundedPasswordField> {
   Widget build(BuildContext context) {
     Color textColor = Color.fromRGBO(96, 92, 102, 1);
     String hintText = widget.hintText == "" || widget.hintText == null
-        ? "Password"
+        ? "Mot de passe"
         : widget.hintText;
     return TextFieldContainer(
       child: TextFormField(

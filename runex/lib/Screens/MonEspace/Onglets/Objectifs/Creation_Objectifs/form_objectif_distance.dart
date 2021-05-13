@@ -46,7 +46,7 @@ class _FormObjectifDistanceState extends State<FormObjectifDistance> {
                 RaisedButton(
                     color: kPrimaryColor,
                     child: Text(
-                      'Update',
+                      'Sauvegarder',
                       style: TextStyle(color: Colors.white),
                     ),
                     onPressed: () async {

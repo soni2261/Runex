@@ -72,16 +72,17 @@ class _BodyState extends State<Body> {
                                 ),
                               ),
                               Text(
-                                "Van Gogh",
+                                utilisateur.name,
                                 style: TextStyle(fontSize: defaultSize * 2.2),
                               ),
                               SizedBox(
                                 height: defaultSize * 0.75,
                               ),
                               Text(
-                                "vangogh@bdeb.qc.ca",
+                                utilisateur.email,
                                 style: TextStyle(
                                   fontWeight: FontWeight.w400,
+                                  fontSize: 15,
                                 ),
                               ),
                             ],
