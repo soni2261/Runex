@@ -65,6 +65,12 @@ class _MapGoogleState extends State<MapGoogle> {
   final _destinationController = TextEditingController();
 
   @override
+  void dispose() {
+    _destinationController.dispose();
+    super.dispose();
+  }
+
+  @override
   initState() {
     super.initState();
     // instance = Itineraire();
