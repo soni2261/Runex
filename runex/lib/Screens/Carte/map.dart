@@ -4,11 +4,13 @@ import 'package:provider/provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:runex/components/text_field_container.dart';
 import 'package:runex/models/user.dart';
 import 'package:runex/services/database.dart';
 import 'dart:async';
 import 'package:geolocator/geolocator.dart';
 import 'package:runex/requests/google_maps_requests.dart';
+
 // import 'package:runex/Screens/Carte/carte.dart';
 
 class MapGoogle extends StatefulWidget {
@@ -54,6 +56,7 @@ class _MapGoogleState extends State<MapGoogle> {
   bool stopispressed = false;
   bool startispressed = false;
   final dur = const Duration(seconds: 5);
+  int nbDestinationsAjoutees = 0;
 
   @override
   initState() {
@@ -63,6 +66,7 @@ class _MapGoogleState extends State<MapGoogle> {
   }
 
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     utilisateur = Provider.of<Utilisateur>(context);
     if (initialPosition == null && polyLines == null) {
       updateValues();
@@ -71,7 +75,140 @@ class _MapGoogleState extends State<MapGoogle> {
         stream: DatabaseService(uid: utilisateur.uid).userData,
         // ignore: missing_return
         builder: (context, snapshot) {
-          if (!snapshot.hasData && initialPosition == null) {
+          if (snapshot.hasData && initialPosition != null) {
+            utilisateur = snapshot.data;
+            return Scaffold(
+              body: Stack(
+                children: <Widget>[
+                  GestureDetector(
+                    onTapDown: (info) {},
+                    child: GoogleMap(
+                      initialCameraPosition: CameraPosition(
+                          target: LatLng(initialPosition.latitude,
+                              initialPosition.longitude),
+                          zoom: 10.0),
+                      markers:
+                          markers != null ? Set<Marker>.from(markers) : null,
+                      myLocationEnabled: true,
+                      myLocationButtonEnabled: false,
+                      mapType: MapType.normal,
+                      zoomGesturesEnabled: true,
+                      zoomControlsEnabled: false,
+                      polylines: polyLines != null
+                          ? Set<Polyline>.from(polyLines)
+                          : null,
+
+                      // onCameraMove: onCameraMove,
+                    ),
+                  ),
+                  SafeArea(
+                    child: Container(
+                      // width: double.infinity,
+                      margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 3),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: TextField(
+                        style: TextStyle(color: Colors.black),
+                        decoration: InputDecoration(
+                            icon: IconButton(
+                                icon: Icon(
+                                  Icons.arrow_back,
+                                  color: Colors.grey[800],
+                                ),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                }),
+                            suffixIcon: Container(
+                              child: Icon(
+                                Icons.search,
+                                color: Colors.grey[800],
+                              ),
+                            ),
+                            border: InputBorder.none),
+                      ),
+                    ),
+                  ),
+
+                  // Positioned(
+                  //     left: 2,
+                  //     top: 15,
+                  //     child: RawMaterialButton(
+                  //       onPressed: () {
+                  //         Navigator.pop(context);
+                  //       },
+                  //       elevation: 2.0,
+                  //       fillColor: Colors.white,
+                  //       child: Icon(
+                  //         Icons.arrow_back,
+                  //         size: 30.0,
+                  //         color: Colors.grey[700],
+                  //       ),
+                  //       padding: EdgeInsets.all(7.0),
+                  //       shape: CircleBorder(),
+                  //     )),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 15),
+                    child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: RawMaterialButton(
+                          onPressed: () {
+                            if (!commence) {
+                              startTopWatch();
+                            } else {
+                              stopsTopWatch();
+                            }
+                          },
+                          elevation: 2.0,
+                          fillColor: buttonColor,
+                          child: Text(
+                            buttonText,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w900,
+                                fontSize: 16),
+                          ),
+                          padding: EdgeInsets.all(30.0),
+                          shape: CircleBorder(),
+                        )),
+                  ),
+                  Positioned(
+                    left: 20,
+                    bottom: 28,
+                    child: RawMaterialButton(
+                      onPressed: () {},
+                      elevation: 2.0,
+                      fillColor: Colors.white,
+                      child: Icon(
+                        Icons.gps_fixed,
+                        color: Colors.black,
+                      ),
+                      padding: EdgeInsets.all(12.0),
+                      shape: CircleBorder(),
+                    ),
+                  ),
+                  Positioned(
+                    right: 20,
+                    bottom: 28,
+                    child: RawMaterialButton(
+                      onPressed: () {},
+                      elevation: 2.0,
+                      fillColor: Colors.white,
+                      child: Icon(
+                        Icons.directions_bike,
+                        color: Colors.black,
+                      ),
+                      padding: EdgeInsets.all(12.0),
+                      shape: CircleBorder(),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          } else {
             return Scaffold(
               backgroundColor: Colors.blue,
               body: Center(
@@ -80,71 +217,6 @@ class _MapGoogleState extends State<MapGoogle> {
                   size: 50.0,
                 ),
               ),
-            );
-          } else {
-            utilisateur = snapshot.data;
-            return Stack(
-              children: <Widget>[
-                GoogleMap(
-                  initialCameraPosition: CameraPosition(
-                      target: LatLng(
-                          initialPosition.latitude, initialPosition.longitude),
-                      zoom: 10.0),
-                  markers: markers != null ? Set<Marker>.from(markers) : null,
-                  myLocationEnabled: true,
-                  myLocationButtonEnabled: false,
-                  mapType: MapType.normal,
-                  zoomGesturesEnabled: true,
-                  zoomControlsEnabled: false,
-                  polylines:
-                      polyLines != null ? Set<Polyline>.from(polyLines) : null,
-
-                  // onCameraMove: onCameraMove,
-                ),
-                Positioned(
-                    left: 2,
-                    top: 15,
-                    child: RawMaterialButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      elevation: 2.0,
-                      fillColor: Colors.white,
-                      child: Icon(
-                        Icons.arrow_back,
-                        size: 30.0,
-                        color: Colors.grey[700],
-                      ),
-                      padding: EdgeInsets.all(7.0),
-                      shape: CircleBorder(),
-                    )),
-                // Carte(),
-                Container(
-                  margin: EdgeInsets.only(bottom: 15),
-                  child: Align(
-                      alignment: Alignment.bottomCenter,
-                      child: RawMaterialButton(
-                        onPressed: () {
-                          if (!commence) {
-                            startTopWatch();
-                          } else {
-                            stopsTopWatch();
-                          }
-                        },
-                        elevation: 2.0,
-                        fillColor: buttonColor,
-                        child: Text(
-                          buttonText,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w900,
-                              fontSize: 16),
-                        ),
-                        padding: EdgeInsets.all(30.0),
-                        shape: CircleBorder(),
-                      )),
-                ),
-              ],
             );
           }
         });

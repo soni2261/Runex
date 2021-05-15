@@ -61,14 +61,14 @@ class _CarteState extends State<Carte> {
       appBar: AppBar(
         title: Text('Carte'),
         backgroundColor: kPrimaryColor,
-        actions: [
-          IconButton(
-              icon: Icon(Icons.close),
-              color: Colors.white,
-              onPressed: () {
-                Navigator.pop(context);
-              })
-        ],
+        // actions: [
+        //   IconButton(
+        //       icon: Icon(Icons.close),
+        //       color: Colors.white,
+        //       onPressed: () {
+        //         Navigator.pop(context);
+        //       })
+        // ],
       ),
       body: Column(
         children: [
