@@ -1,5 +1,6 @@
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoder/geocoder.dart';
 import 'package:provider/provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/widgets.dart';
@@ -63,6 +64,9 @@ class _MapGoogleState extends State<MapGoogle> {
   int nbDestinationsAjoutees = 0;
 
   final _destinationController = TextEditingController();
+  List<String> destinations = [];
+
+  List<Coordinates> coordonneesEndroits = [];
 
   @override
   void dispose() {
@@ -241,6 +245,15 @@ class _MapGoogleState extends State<MapGoogle> {
         });
   }
 
+  Future<void> convertirAdresseLatLng() async {
+    for (int i = 0; i < destinations.length; i++) {
+      final query = destinations[i];
+      var addresses = await Geocoder.local.findAddressesFromQuery(query);
+      var first = addresses.first;
+      coordonneesEndroits.add(first.coordinates);
+      print(coordonneesEndroits[0]);
+    }
+  }
 
   _search() async {
     final sessionToken = Uuid().v4();
@@ -250,8 +263,7 @@ class _MapGoogleState extends State<MapGoogle> {
     if (result != null) {
       setState(() {
         _destinationController.text = result.description;
-        //destinations.add(_destinationController.text); //a ajouter s'il y a une liste d'itineraire dans la prochaine version
-        //editEnabled = false;
+        destinations.add(_destinationController.text); //a ajouter s'il y a une liste d'itineraire dans la prochaine version
       });
     }
   }
