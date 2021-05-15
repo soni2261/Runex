@@ -4,12 +4,16 @@ import 'package:provider/provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:runex/Screens/Carte/components/address_search.dart';
+import 'package:runex/Screens/Carte/components/place_service.dart';
 import 'package:runex/components/text_field_container.dart';
 import 'package:runex/models/user.dart';
 import 'package:runex/services/database.dart';
 import 'dart:async';
 import 'package:geolocator/geolocator.dart';
 import 'package:runex/requests/google_maps_requests.dart';
+import 'package:runex/Screens/Carte/components/addressInput.dart';
+import 'package:uuid/uuid.dart';
 
 // import 'package:runex/Screens/Carte/carte.dart';
 
@@ -57,6 +61,8 @@ class _MapGoogleState extends State<MapGoogle> {
   bool startispressed = false;
   final dur = const Duration(seconds: 5);
   int nbDestinationsAjoutees = 0;
+
+  final _destinationController = TextEditingController();
 
   @override
   initState() {
@@ -111,25 +117,32 @@ class _MapGoogleState extends State<MapGoogle> {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(30),
                       ),
-                      child: TextField(
-                        style: TextStyle(color: Colors.black),
-                        decoration: InputDecoration(
-                            icon: IconButton(
-                                icon: Icon(
-                                  Icons.arrow_back,
-                                  color: Colors.grey[800],
-                                ),
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                }),
-                            suffixIcon: Container(
-                              child: Icon(
-                                Icons.search,
-                                color: Colors.grey[800],
-                              ),
-                            ),
-                            border: InputBorder.none),
+                      child: AddressInput(
+                        controller: _destinationController,
+                            iconData: Icons.place_sharp,
+                            hintText: "Entrez une destination",
+                            onTap: _search,
+                            enabled: true,
                       ),
+                      // child: TextField(
+                      //   style: TextStyle(color: Colors.black),
+                      //   decoration: InputDecoration(
+                      //       icon: IconButton(
+                      //           icon: Icon(
+                      //             Icons.arrow_back,
+                      //             color: Colors.grey[800],
+                      //           ),
+                      //           onPressed: () {
+                      //             Navigator.pop(context);
+                      //           }),
+                      //       suffixIcon: Container(
+                      //         child: Icon(
+                      //           Icons.search,
+                      //           color: Colors.grey[800],
+                      //         ),
+                      //       ),
+                      //       border: InputBorder.none),
+                      // ),
                     ),
                   ),
 
@@ -220,6 +233,21 @@ class _MapGoogleState extends State<MapGoogle> {
             );
           }
         });
+  }
+
+
+  _search() async {
+    final sessionToken = Uuid().v4();
+    final Suggestion result = await showSearch(
+        context: context, delegate: AddressSearch(sessionToken));
+    // ca va changer le texte affiché dans la boîte itinéraire
+    if (result != null) {
+      setState(() {
+        _destinationController.text = result.description;
+        //destinations.add(_destinationController.text); //a ajouter s'il y a une liste d'itineraire dans la prochaine version
+        //editEnabled = false;
+      });
+    }
   }
 
   setupItinerary() async {
