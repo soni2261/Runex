@@ -7,7 +7,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:runex/Screens/Carte/components/address_search.dart';
 import 'package:runex/Screens/Carte/components/place_service.dart';
-import 'package:runex/components/text_field_container.dart';
 import 'package:runex/models/user.dart';
 import 'package:runex/services/database.dart';
 import 'dart:async';
@@ -48,8 +47,14 @@ class _MapGoogleState extends State<MapGoogle> {
   final Set<Polyline> polyLines = {};
   TextEditingController locationController = TextEditingController();
   TextEditingController destinationController = TextEditingController();
-
+  Timer timer;
   List<String> adresses;
+  List<IconData> typeSport = [
+    Icons.directions_run,
+    Icons.directions_walk,
+    Icons.directions_bike
+  ];
+  int sportChoisi = 0;
 
   //liste fictive d'endroits à connecter avec la vraie
   List<LatLng> endroits = [
@@ -129,10 +134,10 @@ class _MapGoogleState extends State<MapGoogle> {
                       ),
                       child: AddressInput(
                         controller: _destinationController,
-                            iconData: Icons.place_sharp,
-                            hintText: "Entrez une destination",
-                            onTap: _search,
-                            enabled: true,
+                        iconData: Icons.place_sharp,
+                        hintText: "Entrez une destination",
+                        onTap: _search,
+                        enabled: true,
                       ),
                       // child: TextField(
                       //   style: TextStyle(color: Colors.black),
@@ -217,11 +222,16 @@ class _MapGoogleState extends State<MapGoogle> {
                     right: 20,
                     bottom: 28,
                     child: RawMaterialButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          sportChoisi++;
+                          sportChoisi = sportChoisi % 3;
+                        });
+                      },
                       elevation: 2.0,
                       fillColor: Colors.white,
                       child: Icon(
-                        Icons.directions_bike,
+                        typeSport[sportChoisi],
                         color: Colors.black,
                       ),
                       padding: EdgeInsets.all(12.0),
@@ -263,7 +273,8 @@ class _MapGoogleState extends State<MapGoogle> {
     if (result != null) {
       setState(() {
         _destinationController.text = result.description;
-        destinations.add(_destinationController.text); //a ajouter s'il y a une liste d'itineraire dans la prochaine version
+        destinations.add(_destinationController
+            .text); //a ajouter s'il y a une liste d'itineraire dans la prochaine version
       });
     }
   }
@@ -451,18 +462,21 @@ class _MapGoogleState extends State<MapGoogle> {
     if (_currentPosition == _lastPosition) {
       termine = true;
     }
-    Timer(dur, keepRunning());
+    timer = null;
+    timer = Timer.periodic(dur, (Timer t) => keepRunning());
+    // Timer(dur, keepRunning());
   }
 
   keepRunning() {
-    if (swatch.isRunning && !termine) {
-      getCurrentSpeed();
-      getCurrentElevation();
-      getCurrentLocation();
-      startTimer();
-    } else {
-      stopsTopWatch();
-    }
+    // if (swatch.isRunning && !termine && commence) {
+    print('your mom');
+    getCurrentSpeed();
+    getCurrentElevation();
+    getCurrentLocation();
+    // }
+    // else {
+    //   stopsTopWatch();
+    // }
   }
 
   //lorsque l'on appuie sur le bouton START
@@ -475,19 +489,23 @@ class _MapGoogleState extends State<MapGoogle> {
       buttonText = "STOP";
       buttonColor = Colors.red;
     });
+    // const oneSec = const Duration(seconds: 1);
+    // new Timer.periodic(oneSec, (Timer t) => print('hi!'));
     startTimer();
   }
 
 //lorsque l'on appuie sur le bouton STOP
-  Future stopsTopWatch() async {
+  void stopsTopWatch() {
+    timer.cancel();
+    swatch.stop();
+
+    duree = swatch.elapsedMilliseconds;
+    swatch.reset();
     commence = false;
     termine = true;
     endTime = DateTime.now();
-    swatch.stop();
-    duree = swatch.elapsedMilliseconds;
     Map historiqueItem = archiverEntrainement();
     saveData(utilisateur, historiqueItem);
-    // swatch.reset();
 
     setState(() {
       buttonText = "START";
@@ -525,9 +543,19 @@ class _MapGoogleState extends State<MapGoogle> {
           .toString();
     }
 
+    String sport;
+
+    if (sportChoisi == 0) {
+      sport = 'course';
+    } else if (sportChoisi == 1) {
+      sport = 'marche';
+    } else {
+      sport = 'velo';
+    }
+
     Map historiqueItem = {
       'name': name,
-      'sport': 'velo',
+      'sport': sport,
       'duree': duree,
       'startTime': formatDate(
           startTime, [yyyy, '-', mm, '-', dd, ' à ', HH, ':', nn, ':', ss]),

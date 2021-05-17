@@ -7,6 +7,11 @@ import 'package:runex/constants.dart';
 //lets continue
 
 class DetailsEntrainement extends StatefulWidget {
+  final Map map;
+  const DetailsEntrainement(
+    this.map, {
+    Key key,
+  }) : super(key: key);
   @override
   _DetailsEntrainementState createState() => _DetailsEntrainementState();
 }
@@ -15,19 +20,14 @@ class _DetailsEntrainementState extends State<DetailsEntrainement> {
   @override
   Widget build(BuildContext context) {
     ThemeChanger theme = Provider.of<ThemeChanger>(context);
-    Map map = {
-      "nom": "Ali",
-      'distance': 21403,
-      'duree': 18473,
-      'sport': 'velo',
-      'vitesse': [18, 3, 24, 16],
-    };
-    double sum = 0;
+    Map map = widget.map;
+
+    double somme = 0;
 
     for (int i = 0; i < map['vitesse'].length; i++) {
-      sum = sum + map['vitesse'][i];
+      somme = somme + map['vitesse'][i];
     }
-    String vitesseMoyenne = (sum / map['vitesse'].length).toStringAsFixed(1);
+    String vitesseMoyenne = (somme / map['vitesse'].length).toStringAsFixed(1);
 
     String distance = (map['distance'] / 1000).toStringAsFixed(2);
 
@@ -39,7 +39,7 @@ class _DetailsEntrainementState extends State<DetailsEntrainement> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(map['nom']),
+        title: Text(map['name']),
         centerTitle: true,
         elevation: 0.0,
       ),

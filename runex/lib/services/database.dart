@@ -10,6 +10,18 @@ class DatabaseService {
   final CollectionReference userCollection =
       FirebaseFirestore.instance.collection('users');
 
+  final CollectionReference defiCollection =
+      FirebaseFirestore.instance.collection('defis');
+
+  void supprimerUtilisateur() {
+    userCollection.get().then((value) {
+      print('===============> $value');
+    });
+    // try {
+    //   userCollection.doc(uid).delete();
+    // } catch (e) {}
+  }
+
   Future updateUser({
     @required Utilisateur utilisateur,
     String email,
@@ -34,13 +46,11 @@ class DatabaseService {
       }
 
       if (statistiques == null || statistiques == {}) {
-        
         statistiques = utilisateur.statistiques;
       }
 
       if (historique == null) {
         historique = utilisateur.historique;
-        
       }
 
       if (usesDarkTheme == null) {

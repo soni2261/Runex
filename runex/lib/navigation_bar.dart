@@ -30,7 +30,7 @@ class _NavState extends State<Nav> {
 
   @override
   Widget build(BuildContext context) {
-    List listePages = [Carte(), MapGoogle(), Profil()];
+    List listePages = [Challenges(), MapGoogle(), Profil()];
 
     final theme = Provider.of<ThemeChanger>(context);
     Color selectedItemColor =

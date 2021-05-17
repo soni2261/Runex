@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:runex/Screens/MonEspace/Onglets/Historique/components/event_card.dart';
-import 'package:runex/Screens/MonEspace/Onglets/Historique/components/solo_run_card.dart';
+import 'package:provider/provider.dart';
+import 'package:runex/Screens/MonEspace/Onglets/Historique/components/entrainement_card.dart';
+import 'package:runex/components/loading.dart';
+import 'package:runex/models/user.dart';
+import 'package:runex/services/database.dart';
 
 class Historique extends StatefulWidget {
   Historique({Key key}) : super(key: key);
@@ -11,46 +14,64 @@ class Historique extends StatefulWidget {
 
 class _HistoriqueState extends State<Historique> {
   Widget idToCard(map) {
-    if (map['isEvent']) {
-      return EventCard(map);
-    } else {
-      return SoloRunCard(map);
-    }
+    return EntrainementCard(map);
   }
 
   @override
   Widget build(BuildContext context) {
-    List<Map> listeMap = [
-      {
-        'id': '123456',
-        'name': 'First Workout',
-        'isEvent': true,
-        'isFinished': false,
-        'sport': 'run'
-      },
-      {
-        'id': '654321',
-        'name': 'Second Workout',
-        'isEvent': false,
-        'sport': 'walk'
-      },
-      {
-        'id': 'aliisthebest',
-        'name': 'Third Workout',
-        'isEvent': true,
-        'isFinished': true,
-        'sport': 'cycling'
-      },
-    ];
+    Utilisateur utilisateur = Provider.of<Utilisateur>(context);
+    List listeMap = [];
+    // [
+    //   {
+    //     'id': '123456',
+    //     'name': 'First Workout',
+    //     'isEvent': true,
+    //     'isFinished': false,
+    //     'sport': 'run'
+    //   },
+    //   {
+    //     'id': '654321',
+    //     'name': 'Second Workout',
+    //     'isEvent': false,
+    //     'sport': 'walk'
+    //   },
+    //   {
+    //     'id': 'aliisthebest',
+    //     'name': 'Third Workout',
+    //     'isEvent': true,
+    //     'isFinished': true,
+    //     'sport': 'cycling'
+    //   },
+    // ];
 
-    return SingleChildScrollView(
-      child: Container(
-        child: SingleChildScrollView(
-          child: Column(
-            children: listeMap.map((id) => idToCard(id)).toList(),
-          ),
-        ),
-      ),
-    );
+    return StreamBuilder<Utilisateur>(
+        stream: DatabaseService(uid: utilisateur.uid).userData,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            utilisateur = snapshot.data;
+            listeMap = utilisateur.historique;
+          } else {
+            return Loading();
+          }
+          if (listeMap.isEmpty) {
+            return Center(
+              child: Text(
+                "Pas d'entrainements à afficher!",
+                style: TextStyle(fontSize: 22, color: Colors.grey[600]),
+              ),
+            );
+          }
+          return SingleChildScrollView(
+            child: Container(
+              child: Column(
+                children: listeMap
+                    .map((map) => idToCard(map))
+                    .toList()
+                    .reversed
+                    .toList(),
+              ),
+            ),
+          );
+        });
   }
 }
