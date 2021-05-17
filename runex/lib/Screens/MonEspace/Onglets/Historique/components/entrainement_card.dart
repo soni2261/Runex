@@ -83,8 +83,10 @@ class EntrainementCard extends StatelessWidget {
                   Text(
                     'Distance: ${map["distance"]} km',
                     style: TextStyle(
-                        /*color: Colors.grey[850],*/ fontSize: 18,
-                        color: Colors.grey[600]),
+                        fontSize: 18,
+                        color: theme.isDark()
+                            ? Colors.grey[400]
+                            : Colors.grey[600]),
                   ),
                   SizedBox(
                     height: 15,
@@ -93,8 +95,10 @@ class EntrainementCard extends StatelessWidget {
                     child: Text(
                       'Durée: $temps heures',
                       style: TextStyle(
-                          /*color: Colors.grey[850],*/ fontSize: 17,
-                          color: Colors.deepPurpleAccent[700],
+                          fontSize: 17,
+                          color: theme.isDark()
+                              ? Colors.indigoAccent[100]
+                              : Colors.indigoAccent[700],
                           fontWeight: FontWeight.w500),
                     ),
                   ),
