@@ -3,10 +3,12 @@
 L'application Runex a été conçue et fabriquée dans le contexte du projet d'intégration de fin de programme Sciences, informatiques et mathématiques (SIM) au cégep Bois-de-Boulogne.
 
 
+
 Titre 
 
 Runex 
 
+ 
  
 
 Description du projet 
@@ -15,17 +17,20 @@ Le projet est une application sportive qui permet de faire un suivi d'entraînem
 
  
 
+
 L’équipe 
 
 Les membres de l’équipe de notre projet sont Ali Taladar, Serguei Markov, Sonia Rahal et Sarah Al Taleb. 
 
  
 
+
 L’idée 
 
 Notre projet est une application qui permet de faire un suivi de son entraînement sportif. Les utilisateurs pourront suivre leur progrès pendant et après les randonnées, selon des statistiques enregistrés sur leur profil. Les options de sport offertes aux utilisateurs sont de la randonnée pédestre, de la course et du vélo. 
 
 Deux options sont offertes : soit faire un entraînement seul ou en groupe. Un espace communauté servira à ceux qui désirent créer des événements, afin de rencontrer d’autres utilisateurs pendant leur sport. L’application offrira des endroits pratiques aux utilisateurs tels que des fontaines d’eau, des places pour réparer les vélos, des vues magnifiques, et toute autre place pour laquelle l’utilisateur (ou les utilisateurs) a/ont un intérêt. 
+
 
  
 
@@ -37,6 +42,7 @@ L’innovation
 
 Ce qui démarque Runex des autres applications est notamment la création d’événements qui permet de regrouper les utilisateurs. De plus, la visibilité des autres utilisateurs à proximité est utile afin de motiver les utilisateurs et d’encourager la création de contacts. Finalement, les intérêts des utilisateurs sont une priorité, et c’est pourquoi l’ajout de vues magnifiques, de coins de réparation de vélos, de fontaines d’eau, etc… sur la carte de route est une option importante et innovatrice. 
 
+ 
  
 
 Cas d’utilisation (scénario, acteurs) 
@@ -55,9 +61,11 @@ Une personne active doit aller au travail à la marche, et elle décide d’util
 
  
 
+
 Acteur 
 
 Il y a un unique acteur du cas d’utilisation. Il est responsable de commencer et terminer un entraînement. 
+
 
 
 Public cible 
@@ -67,11 +75,22 @@ Runex s’adresse aux personnes qui désirent enregistrer leurs rapports d'entra
 
 
 
+
 Technologies 
 
 En ce qui concerne les technologies à utiliser, nous prévoyons recourir aux ressources telles que Git, Visual Studio Code, Dart, Flutter, Firebase, l’API de Google Maps et l’émulateur Android avec Android Studio. En effet, ces outils nous ont permis de développer une application à la hauteur de nos objectifs. Git a servi à travailler en équipe pour planifier et organiser notre code. Visual Studio Code était la plateforme où nous avons programmé et testé notre application, alors que Dart est la langue de programmation que nous avions eu à apprendre. Flutter est notre logiciel d’interface de l’utilisateur pour une utilisation instinctive. Nous avons utilisé une base de données pour certaines statistiques que nous avons entreposées sur Firebase. Dans notre application, qui vise en premier lieu à tracer un itinéraire pour les utilisateurs lors de leur sport, nous avions eu besoin d’implémenter la carte des routes, que nous accédons par l’API de Google Maps. Finalement, afin de simuler des itinéraires sur l’application durant la création de Runex, nous avons eu recours à un émulateur de téléphone cellulaire sur Android Studio. 
 
 Ces nombreux outils, bien qu'utiles, présentait certains défis et difficultés. En effet, puisqu'aucun des membres de l’équipe avait déjà travaillé avec ces outils, nous devions entre autres apprendre comment fonctionnent les bases de données, comment intégrer Google Maps dans l’application et repérer les localisations des utilisateurs et de certaines places. 
+
+
+
+
+
+Problèmes à régler
+
+La gestion des différents cas et scénarios n'a pas été complétée. Il y a certaines exceptions à corriger.
+
+
 
 
 
@@ -94,7 +113,11 @@ Une optimisation globale de l’application pour faciliter la navigation dans le
 
 
 
-Bibliographie 
+
+
+
+
+Bibliographie, installation et configuration
 
  
 
