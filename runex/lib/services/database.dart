@@ -10,6 +10,15 @@ class DatabaseService {
   final CollectionReference userCollection =
       FirebaseFirestore.instance.collection('users');
 
+  final CollectionReference defiCollection =
+      FirebaseFirestore.instance.collection('defis');
+
+  void supprimerUtilisateur() {
+    try {
+      userCollection.doc(uid).delete();
+    } catch (e) {}
+  }
+
   Future updateUser({
     @required Utilisateur utilisateur,
     String email,
@@ -19,6 +28,7 @@ class DatabaseService {
     List historique,
     bool usesDarkTheme,
     String profilePicURL,
+    List defis,
   }) async {
     print(historique);
     if (utilisateur != null) {
@@ -34,13 +44,11 @@ class DatabaseService {
       }
 
       if (statistiques == null || statistiques == {}) {
-        
         statistiques = utilisateur.statistiques;
       }
 
       if (historique == null) {
         historique = utilisateur.historique;
-        
       }
 
       if (usesDarkTheme == null) {
@@ -49,6 +57,10 @@ class DatabaseService {
 
       if (profilePicURL == null || profilePicURL == '') {
         profilePicURL = utilisateur.profilePicURL;
+      }
+
+      if (defis == null) {
+        defis = utilisateur.defis;
       }
     }
 
@@ -59,7 +71,8 @@ class DatabaseService {
       'statistiques': statistiques,
       'historique': historique,
       'usesDarkTheme': usesDarkTheme,
-      'profilePicURL': profilePicURL
+      'profilePicURL': profilePicURL,
+      'defis': defis,
     });
   }
 
@@ -78,6 +91,24 @@ class DatabaseService {
     await updateUser(utilisateur: utilisateur, historique: historique);
   }
 
+  Future addDefi({
+    @required String defiId,
+    @required Utilisateur utilisateur,
+  }) async {
+    if (utilisateur == null) return;
+    List defis = [];
+    if (utilisateur.defis != null && utilisateur.defis != []) {
+      utilisateur.defis.forEach((element) {
+        defis.add(element);
+      });
+    }
+    if (!defis.contains(defiId))
+      defis.add(defiId);
+    else
+      return;
+    await updateUser(utilisateur: utilisateur, defis: defis);
+  }
+
   Future checkStatsWeek(Utilisateur utilisateur) async {
     dynamic now = new DateTime.now();
     now = new DateTime(now.year, now.month, now.day, 0, 0, 0);
@@ -93,9 +124,8 @@ class DatabaseService {
         utilisateur.statistiques['debut'].microsecondsSinceEpoch);
 
     Map newStats;
-    if (currentDebut.isAtSameMomentAs(databaseDebut)) {
-      return;
-    }
+    if (currentDebut.isAtSameMomentAs(databaseDebut)) return;
+
     newStats = {
       'debut': currentDebut,
       'hasstatistiques': false,
@@ -119,6 +149,7 @@ class DatabaseService {
       historique: snapshot.data()['historique'],
       usesDarkTheme: snapshot.data()['usesDarkTheme'],
       profilePicURL: snapshot.data()['profilePicURL'],
+      defis: snapshot.data()['defis'],
     );
   }
 
