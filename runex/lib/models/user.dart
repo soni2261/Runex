@@ -8,6 +8,7 @@ class Utilisateur {
   final Map statistiques;
   final bool usesDarkTheme;
   final String profilePicURL;
+  final List defis;
 
   Utilisateur({
     this.usesDarkTheme,
@@ -19,5 +20,6 @@ class Utilisateur {
     this.objectifs,
     this.statistiques,
     this.profilePicURL,
+    this.defis,
   });
 }

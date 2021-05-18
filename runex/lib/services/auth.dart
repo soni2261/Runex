@@ -105,6 +105,7 @@ class AuthService {
         historique: historique,
         usesDarkTheme: false,
         profilePicURL: "",
+        defis: [],
       );
       return _userFromFirebaseUser(user);
     } catch (e) {
