@@ -89,6 +89,25 @@ class DatabaseService {
     }
     historique.add(historiqueItem);
     await updateUser(utilisateur: utilisateur, historique: historique);
+
+    addStat(historiqueItem: historiqueItem, utilisateur: utilisateur);
+  }
+
+  Future addStat({
+    @required Map historiqueItem,
+    @required Utilisateur utilisateur,
+  }) async {
+    if (utilisateur == null) return;
+    Map statistiques = utilisateur.statistiques;
+
+    statistiques['hasstatistiques'] = true;
+    statistiques['statsDistance'][historiqueItem['sport']] +=
+        historiqueItem['distanceTot'];
+
+    statistiques['statsTemps'][historiqueItem['sport']] +=
+        historiqueItem['duree'];
+    print('hello how are u');
+    await updateUser(utilisateur: utilisateur, statistiques: statistiques);
   }
 
   Future addDefi({
