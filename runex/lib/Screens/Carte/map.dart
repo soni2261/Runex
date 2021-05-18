@@ -129,10 +129,10 @@ class _MapGoogleState extends State<MapGoogle> {
                       ),
                       child: AddressInput(
                         controller: _destinationController,
-                            iconData: Icons.place_sharp,
-                            hintText: "Entrez une destination",
-                            onTap: _search,
-                            enabled: true,
+                        iconData: Icons.place_sharp,
+                        hintText: "Entrez une destination",
+                        onTap: _search,
+                        enabled: true,
                       ),
                       // child: TextField(
                       //   style: TextStyle(color: Colors.black),
@@ -263,11 +263,13 @@ class _MapGoogleState extends State<MapGoogle> {
     if (result != null) {
       setState(() {
         _destinationController.text = result.description;
-        destinations.add(_destinationController.text); //a ajouter s'il y a une liste d'itineraire dans la prochaine version
+        destinations.add(_destinationController
+            .text); //a ajouter s'il y a une liste d'itineraire dans la prochaine version
       });
     }
   }
 
+  //va chercher la position actuelle de l'utilisateur et créer un itinéraire
   setupItinerary() async {
     await getCurrentLocation();
     //print('INITIAL POSITION');
@@ -279,7 +281,7 @@ class _MapGoogleState extends State<MapGoogle> {
     updateValues();
   }
 
-  //lorsque l'on a terminé de choisir les endroits à visiter
+  //lorsque l'on a terminé de choisir les endroits à visiter, on met à jour les données de la map
   void updateValues() {
     setState(() {});
   }
@@ -298,11 +300,6 @@ class _MapGoogleState extends State<MapGoogle> {
     return _initialPosition;
   }
 
-  LatLng get initialPositionCity {
-    // do {} while (_initialPosition == null);
-    return _city;
-  }
-
   LatLng get lastPosition => _lastPosition;
 
   GoogleMapsServices get ggoogleMapsServices => googleMapsServices;
@@ -313,6 +310,7 @@ class _MapGoogleState extends State<MapGoogle> {
     // getCurrentCity();
   }
 
+  //converti la liste de points en une liste de coordonnées
   List<LatLng> convertToLatLng(List points) {
     print('ON CONVERTI EN LATLNG');
     List<LatLng> result = <LatLng>[];
@@ -327,7 +325,7 @@ class _MapGoogleState extends State<MapGoogle> {
     return result;
   }
 
-  // !DECODE POLY
+  // décode le polyline
   List decodePoly(String poly) {
     print('ON DÉCODE LE POLY');
     var list = poly.codeUnits;
@@ -355,7 +353,7 @@ class _MapGoogleState extends State<MapGoogle> {
     return lList;
   }
 
-  //send request of itinary between two points
+  //fait une demande pour créer un itinéraire entre deux points
   Future<void> sendRequest() async {
     for (int i = 0; i < endroits.length && _initialPosition != null; i++) {
       print('LE I EST $i');
@@ -383,7 +381,7 @@ class _MapGoogleState extends State<MapGoogle> {
     }
   }
 
-  // create markers for the important positions
+  // crée un marker à la position
   void _addMarker(LatLng location) {
     markers.add(Marker(
         markerId: MarkerId(_lastPosition.toString()),
@@ -392,7 +390,7 @@ class _MapGoogleState extends State<MapGoogle> {
         icon: BitmapDescriptor.defaultMarker));
   }
 
-  // create an itinary with a combination of points
+  // crée un itinéraire à partir d'une liste de points
   void createRoute(String encondedPoly) async {
     print('ON CRÉER LE POLYLINE');
     polyLines.add(Polyline(
@@ -406,7 +404,7 @@ class _MapGoogleState extends State<MapGoogle> {
     print('lélevation init est $elevation');
   }
 
-  // get the current location of the user
+  // cherche la position actuelle de l'utilisateur
   Future<void> getCurrentLocation() async {
     print("GET USER METHOD RUNNING =========");
 
@@ -424,16 +422,17 @@ class _MapGoogleState extends State<MapGoogle> {
     locationController.text = placemark[0].name;
   }
 
-  // ! ON CAMERA MOVE
+  // camera mouvement
   void onCameraMove(CameraPosition position) {
     _lastPosition = position.target;
   }
 
-  // ! ON CREATE
+  // google map contrôle
   void onCreated(GoogleMapController controller) {
     mapController = controller;
   }
 
+  //cherche la vitesse de l'utilisateur
   void getCurrentSpeed() {
     double speedTemp = 0;
     var options =
@@ -447,6 +446,7 @@ class _MapGoogleState extends State<MapGoogle> {
     speedInMps.add(speedTemp);
   }
 
+  //méthodes en boucle pour mesurer les données durant l'entrainement en cours
   void startTimer() {
     if (_currentPosition == _lastPosition) {
       termine = true;
@@ -465,7 +465,7 @@ class _MapGoogleState extends State<MapGoogle> {
     }
   }
 
-  //lorsque l'on appuie sur le bouton START
+  //lorsque l'on appuie sur le bouton START pour commencer l'entrainement
   void startTopWatch() {
     commence = true;
     termine = false;
@@ -478,7 +478,7 @@ class _MapGoogleState extends State<MapGoogle> {
     startTimer();
   }
 
-//lorsque l'on appuie sur le bouton STOP
+//lorsque l'on appuie sur le bouton STOP pour arrêter l'entrainement
   Future stopsTopWatch() async {
     commence = false;
     termine = true;
@@ -497,6 +497,7 @@ class _MapGoogleState extends State<MapGoogle> {
     // await archiverEntrainement();
   }
 
+  //demande l'élevation de la position actuelle
   Future<void> getCurrentElevation() async {
     double elevationTemps;
 
