@@ -31,7 +31,7 @@ class _DetailsEntrainementState extends State<DetailsEntrainement> {
     if (map['vitesse'].length != 0)
       vitesseMoyenne = (somme / map['vitesse'].length).toStringAsFixed(1);
 
-    String distance = (map['distance'] / 1000).toStringAsFixed(2);
+    String distance = (map['distance']).toStringAsFixed(2);
 
     Color couleurDeCard =
         theme.isDark() ? Color.fromRGBO(65, 55, 85, 1) : Colors.white;

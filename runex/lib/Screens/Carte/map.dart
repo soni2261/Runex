@@ -1,4 +1,5 @@
 import 'package:date_format/date_format.dart';
+import 'dart:math' show cos, sqrt, asin;
 import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:provider/provider.dart';
@@ -38,6 +39,7 @@ class _MapGoogleState extends State<MapGoogle> {
   LatLng _city = LatLng(45.5048, -73.5772);
   LatLng _initialPosition;
   LatLng _currentPosition;
+  List<LatLng> positions = [];
   LatLng _lastPosition = LatLng(45.5048,
       -73.5772); // dummy data, should be activated when we press the start button
   bool locationServiceActive = true;
@@ -382,8 +384,8 @@ class _MapGoogleState extends State<MapGoogle> {
         print('POSITION $i = ${endroits[i - 1]}');
       }
 
-      distanceTot =
-          distanceTot + values["routes"][0]["legs"][0]["distance"]["value"];
+      // distanceTot =
+      //     distanceTot + values["routes"][0]["legs"][0]["distance"]["value"];
 
       route = values["routes"][0]["overview_polyline"]["points"];
 
@@ -428,6 +430,7 @@ class _MapGoogleState extends State<MapGoogle> {
     }
     if (commence) {
       this._currentPosition = LatLng(position.latitude, position.longitude);
+      positions.add(_currentPosition);
     }
     locationController.text = placemark[0].name;
   }
@@ -468,7 +471,6 @@ class _MapGoogleState extends State<MapGoogle> {
 
   keepRunning() {
     // if (swatch.isRunning && !termine && commence) {
-    print('your mom');
     getCurrentSpeed();
     getCurrentElevation();
     getCurrentLocation();
@@ -554,6 +556,14 @@ class _MapGoogleState extends State<MapGoogle> {
       sport = 'velo';
     }
 
+    for (int i = 0; i < positions.length - 1; i++) {
+      distanceTot += calculerDistance(
+          positions[i].latitude,
+          positions[i].longitude,
+          positions[i + 1].latitude,
+          positions[i + 1].longitude);
+    }
+
     Map historiqueItem = {
       'name': name,
       'sport': sport,
@@ -567,6 +577,15 @@ class _MapGoogleState extends State<MapGoogle> {
       'vitesse': speedInMps,
     };
     return historiqueItem;
+  }
+
+  double calculerDistance(lat1, lon1, lat2, lon2) {
+    var p = 0.017453292519943295;
+    var c = cos;
+    var a = 0.5 -
+        c((lat2 - lat1) * p) / 2 +
+        c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p)) / 2;
+    return 12742 * asin(sqrt(a));
   }
 
   void saveData(Utilisateur utilisateur, Map historiqueItem) {

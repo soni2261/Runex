@@ -81,7 +81,7 @@ class EntrainementCard extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    'Distance: ${map["distance"]} km',
+                    'Distance: ${map["distance"].toStringAsFixed(2)} km',
                     style: TextStyle(
                         fontSize: 18,
                         color: theme.isDark()
