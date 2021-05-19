@@ -39,11 +39,11 @@ class DatabaseService {
         name = utilisateur.name;
       }
 
-      if (objectifs == null || objectifs == {}) {
+      if (objectifs == null) {
         objectifs = utilisateur.objectifs;
       }
 
-      if (statistiques == null || statistiques == {}) {
+      if (statistiques == null) {
         statistiques = utilisateur.statistiques;
       }
 
@@ -76,21 +76,44 @@ class DatabaseService {
     });
   }
 
-  Future addHistorique({
+  Future addHistoriqueEtStats({
     @required Map historiqueItem,
     @required Utilisateur utilisateur,
   }) async {
     if (utilisateur == null) return;
-    List<Map> historique = [];
+    List historique = [];
     if (utilisateur.historique != null && utilisateur.historique != []) {
       utilisateur.historique.forEach((element) {
         historique.add(element);
       });
     }
     historique.add(historiqueItem);
-    await updateUser(utilisateur: utilisateur, historique: historique);
 
-    addStat(historiqueItem: historiqueItem, utilisateur: utilisateur);
+    // await addStat(historiqueItem: historiqueItem, utilisateur: utilisateur);
+    Map statistiques = utilisateur.statistiques;
+
+    if (historiqueItem['duree'] != 0) {
+      statistiques['hasStatistiquesTemps'] = true;
+      statistiques['statsTemps'][historiqueItem['sport']]['totale'] +=
+          historiqueItem['duree'];
+      DateTime maintenant = DateTime.now();
+      statistiques['statsTemps'][historiqueItem['sport']]['statsSemaine']
+          [maintenant.weekday - 1] += historiqueItem['duree'];
+    }
+
+    if (historiqueItem['distance'] != 0) {
+      statistiques['hasStatistiquesDistance'] = true;
+      statistiques['statsDistance'][historiqueItem['sport']]['totale'] +=
+          historiqueItem['distance'];
+      DateTime maintenant = DateTime.now();
+      statistiques['statsDistance'][historiqueItem['sport']]['statsSemaine']
+          [maintenant.weekday - 1] += historiqueItem['distance'];
+    }
+
+    await updateUser(
+        utilisateur: utilisateur,
+        historique: historique,
+        statistiques: statistiques);
   }
 
   Future addStat({
@@ -100,13 +123,24 @@ class DatabaseService {
     if (utilisateur == null) return;
     Map statistiques = utilisateur.statistiques;
 
-    statistiques['hasstatistiques'] = true;
-    statistiques['statsDistance'][historiqueItem['sport']] +=
-        historiqueItem['distanceTot'];
+    if (historiqueItem['duree'] != 0) {
+      statistiques['hasStatistiquesTemps'] = true;
+      statistiques['statsTemps'][historiqueItem['sport']]['totale'] +=
+          historiqueItem['duree'];
+      DateTime maintenant = DateTime.now();
+      statistiques['statsTemps'][historiqueItem['sport']]['statsSemaine']
+          [maintenant.weekday - 1] += historiqueItem['duree'];
+    }
 
-    statistiques['statsTemps'][historiqueItem['sport']] +=
-        historiqueItem['duree'];
-    print('hello how are u');
+    if (historiqueItem['distance'] != 0) {
+      statistiques['hasStatistiquesDistance'] = true;
+      statistiques['statsDistance'][historiqueItem['sport']]['totale'] +=
+          historiqueItem['distance'];
+      DateTime maintenant = DateTime.now();
+      statistiques['statsDistance'][historiqueItem['sport']]['statsSemaine']
+          [maintenant.weekday - 1] += historiqueItem['distance'];
+    }
+
     await updateUser(utilisateur: utilisateur, statistiques: statistiques);
   }
 
@@ -142,14 +176,43 @@ class DatabaseService {
     dynamic databaseDebut = DateTime.fromMicrosecondsSinceEpoch(
         utilisateur.statistiques['debut'].microsecondsSinceEpoch);
 
-    Map newStats;
     if (currentDebut.isAtSameMomentAs(databaseDebut)) return;
 
-    newStats = {
+    DateTime end = currentDebut.add(Duration(days: 6));
+
+    Map newStats = {
       'debut': currentDebut,
-      'hasstatistiques': false,
-      'statsDistance': {'marche': 0, 'course': 0, 'velo': 0},
-      'statsTemps': {'marche': 0, 'course': 0, 'velo': 0},
+      'end': end,
+      'hasStatistiquesDistance': false,
+      'hasStatistiquesTemps': false,
+      'statsDistance': {
+        'marche': {
+          'totale': 0,
+          'statsSemaine': [0, 0, 0, 0, 0, 0, 0]
+        },
+        'course': {
+          'totale': 0,
+          'statsSemaine': [0, 0, 0, 0, 0, 0, 0]
+        },
+        'velo': {
+          'totale': 0,
+          'statsSemaine': [0, 0, 0, 0, 0, 0, 0]
+        },
+      },
+      'statsTemps': {
+        'marche': {
+          'totale': 0,
+          'statsSemaine': [0, 0, 0, 0, 0, 0, 0]
+        },
+        'course': {
+          'totale': 0,
+          'statsSemaine': [0, 0, 0, 0, 0, 0, 0]
+        },
+        'velo': {
+          'totale': 0,
+          'statsSemaine': [0, 0, 0, 0, 0, 0, 0]
+        },
+      },
     };
     await updateUser(
       utilisateur: utilisateur,

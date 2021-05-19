@@ -588,8 +588,10 @@ class _MapGoogleState extends State<MapGoogle> {
     return 12742 * asin(sqrt(a));
   }
 
-  void saveData(Utilisateur utilisateur, Map historiqueItem) {
-    DatabaseService(uid: utilisateur.uid).addHistorique(
+  Future saveData(Utilisateur utilisateur, Map historiqueItem) async {
+    await DatabaseService(uid: utilisateur.uid).addHistoriqueEtStats(
         historiqueItem: historiqueItem, utilisateur: utilisateur);
+    // await DatabaseService(uid: utilisateur.uid)
+    //     .addStat(historiqueItem: historiqueItem, utilisateur: utilisateur);
   }
 }

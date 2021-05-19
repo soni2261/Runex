@@ -71,20 +71,23 @@ class AuthService {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       User user = result.user;
+      print('le id est ----------> ${user.uid}');
       int index = email.indexOf('@');
       String name = email.substring(0, index);
       var now = new DateTime.now();
       now = new DateTime(now.year, now.month, now.day, 0, 0, 0);
       var debut;
-
+      var end;
       if (now.weekday == DateTime.monday) {
         debut = now;
+        end = debut.add(Duration(days: 6));
       } else {
         int daysSinceMonday = now.weekday - 1;
         debut = now.subtract(new Duration(days: daysSinceMonday));
+        end = debut.add(Duration(days: 6));
       }
 
-      List<Map> historique = [];
+      List historique = [];
       // create a new document for the user with the uid
       await DatabaseService(uid: user.uid).updateUser(
         utilisateur: null,
@@ -98,9 +101,37 @@ class AuthService {
         },
         statistiques: {
           'debut': debut,
-          'hasstatistiques': false,
-          'statsDistance': {'marche': 0, 'course': 0, 'velo': 0},
-          'statsTemps': {'marche': 0, 'course': 0, 'velo': 0},
+          'end': end,
+          'hasStatistiquesDistance': false,
+          'hasStatistiquesTemps': false,
+          'statsDistance': {
+            'marche': {
+              'totale': 0,
+              'statsSemaine': [0, 0, 0, 0, 0, 0, 0]
+            },
+            'course': {
+              'totale': 0,
+              'statsSemaine': [0, 0, 0, 0, 0, 0, 0]
+            },
+            'velo': {
+              'totale': 0,
+              'statsSemaine': [0, 0, 0, 0, 0, 0, 0]
+            },
+          },
+          'statsTemps': {
+            'marche': {
+              'totale': 0,
+              'statsSemaine': [0, 0, 0, 0, 0, 0, 0]
+            },
+            'course': {
+              'totale': 0,
+              'statsSemaine': [0, 0, 0, 0, 0, 0, 0]
+            },
+            'velo': {
+              'totale': 0,
+              'statsSemaine': [0, 0, 0, 0, 0, 0, 0]
+            },
+          },
         },
         historique: historique,
         usesDarkTheme: false,

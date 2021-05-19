@@ -2,7 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import 'package:bezier_chart/bezier_chart.dart';
-
+import 'components/progresCard.dart';
 import 'widget/indicators_widget.dart';
 import 'widget/pie_chart_sections.dart';
 
@@ -84,47 +84,19 @@ class PieChartPageState extends State {
                 ),
                 Center(
                   // Graphique indiquant l'activité totale effectué sur le mois.
-                  child: Card(
-                    elevation: 12,
-                    clipBehavior: Clip.hardEdge,
-                    child: Container(
-                      height: MediaQuery.of(context).size.height / 2,
-                      width: MediaQuery.of(context).size.width,
-                      child: BezierChart(
-                        fromDate: fromDate,
-                        bezierChartScale: BezierChartScale.WEEKLY,
-                        toDate: toDate,
-                        selectedDate: toDate,
-                        series: [
-                          BezierLine(
-                            label: "km",
-                            onMissingValue: (dateTime) {
-                              if (dateTime.day.isEven) {
-                                return 0;
-                              }
-                              return 0;
-                            },
-                            data: [
-                              //durant le dernier mois.
-                              DataPoint<DateTime>(value: 10, xAxis: date1),
-                              DataPoint<DateTime>(value: 50, xAxis: date2),
-                              DataPoint<DateTime>(value: 0, xAxis: date3),
-                              DataPoint<DateTime>(value: 60, xAxis: date4),
-                              DataPoint<DateTime>(value: 60, xAxis: date5),
-                              DataPoint<DateTime>(value: 60, xAxis: date6),
-                            ],
-                          ),
-                        ],
-                        config: BezierChartConfig(
-                          verticalIndicatorStrokeWidth: 3.0,
-                          verticalIndicatorColor: Colors.black26,
-                          showVerticalIndicator: true,
-                          verticalIndicatorFixedPosition: false,
-                          backgroundColor: Colors.purple,
-                          footerHeight: 30.0,
-                        ),
-                      ),
-                    ),
+                  child: ProgresCard(
+                    color: Color.fromRGBO(253, 90, 90, 1),
+                    data: [
+                      //durant le dernier mois.
+                      DataPoint<DateTime>(value: 10, xAxis: date1),
+                      DataPoint<DateTime>(value: 50, xAxis: date2),
+                      DataPoint<DateTime>(value: 0, xAxis: date3),
+                      DataPoint<DateTime>(value: 60, xAxis: date4),
+                      DataPoint<DateTime>(value: 60, xAxis: date5),
+                      DataPoint<DateTime>(value: 60, xAxis: date6),
+                    ] as List<DataPoint<dynamic>>,
+                    fromDate: fromDate,
+                    toDate: toDate,
                   ),
                 ),
                 Text(
