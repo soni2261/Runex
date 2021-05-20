@@ -18,7 +18,7 @@ class ProgresCard extends StatelessWidget {
       elevation: 12,
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(24),
       ),
       color: color,
       child: Container(
@@ -32,7 +32,7 @@ class ProgresCard extends StatelessWidget {
           selectedDate: toDate,
           series: [
             BezierLine(
-              label: "km",
+              label: "ms",
               onMissingValue: (dateTime) {
                 if (dateTime.day.isEven) {
                   return 0;
@@ -47,7 +47,7 @@ class ProgresCard extends StatelessWidget {
             verticalIndicatorColor: Colors.black26,
             showVerticalIndicator: true,
             verticalIndicatorFixedPosition: false,
-            backgroundColor: Color.fromRGBO(253, 90, 90, 1),
+            backgroundColor: color,
             footerHeight: 30.0,
           ),
         ),

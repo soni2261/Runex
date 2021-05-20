@@ -529,22 +529,39 @@ class _MapGoogleState extends State<MapGoogle> {
   //Pour faire la transition à l'historique et mettre les données dans la firebase
   Map archiverEntrainement() {
     String name;
-    if (endTime.day == 12 || endTime.day == 13) {
-      name = formatDate(endTime, [M, ' ', endTime.day.toString(), 'th, ', yyyy])
-          .toString();
-    } else if (endTime.day % 10 == 1) {
-      name = formatDate(endTime, [M, ' ', endTime.day.toString(), 'st, ', yyyy])
-          .toString();
-    } else if (endTime.day % 10 == 2) {
-      name = formatDate(endTime, [M, ' ', endTime.day.toString(), 'nd, ', yyyy])
-          .toString();
-    } else if (endTime.day % 10 == 3) {
-      name = formatDate(endTime, [M, ' ', endTime.day.toString(), 'rd, ', yyyy])
-          .toString();
-    } else {
-      name = formatDate(endTime, [M, ' ', endTime.day.toString(), 'th, ', yyyy])
-          .toString();
-    }
+    // if (endTime.day == 12 || endTime.day == 13) {
+    //   name = formatDate(endTime, [M, ' ', endTime.day.toString(), 'th, ', yyyy])
+    //       .toString();
+    // } else if (endTime.day % 10 == 1) {
+    //   name = formatDate(endTime, [M, ' ', endTime.day.toString(), 'st, ', yyyy])
+    //       .toString();
+    // } else if (endTime.day % 10 == 2) {
+    //   name = formatDate(endTime, [M, ' ', endTime.day.toString(), 'nd, ', yyyy])
+    //       .toString();
+    // } else if (endTime.day % 10 == 3) {
+    //   name = formatDate(endTime, [M, ' ', endTime.day.toString(), 'rd, ', yyyy])
+    //       .toString();
+    // } else {
+    //   name = formatDate(endTime, [M, ' ', endTime.day.toString(), 'th, ', yyyy])
+    //       .toString();
+    // }
+
+    List mois = [
+      'janvier',
+      'février',
+      'mars',
+      'avril',
+      'mai',
+      'juin',
+      'juillet',
+      'août',
+      'septembre',
+      'octobre',
+      'novembre',
+      'décembre',
+    ];
+
+    name = '${endTime.day} ${mois[endTime.month - 1]}, ${endTime.year}';
 
     String sport;
 
@@ -563,18 +580,21 @@ class _MapGoogleState extends State<MapGoogle> {
           positions[i + 1].latitude,
           positions[i + 1].longitude);
     }
-
+    // distanceTot = 0.001;
+    var vitesse = (distanceTot * 1000) / (duree / 1000);
     Map historiqueItem = {
       'name': name,
       'sport': sport,
       'duree': duree,
-      'startTime': formatDate(
-          startTime, [yyyy, '-', mm, '-', dd, ' à ', HH, ':', nn, ':', ss]),
-      'endTime': formatDate(
-          endTime, [yyyy, '-', mm, '-', dd, ' à ', HH, ':', nn, ':', ss]),
+      'startTime': startTime,
+      // formatDate(
+      //     startTime, [yyyy, '-', mm, '-', dd, ' à ', HH, ':', nn, ':', ss]),
+      'endTime': endTime,
+      // formatDate(
+      //     endTime, [yyyy, '-', mm, '-', dd, ' à ', HH, ':', nn, ':', ss]),
       'distance': distanceTot,
       'elevation': elevation,
-      'vitesse': speedInMps,
+      'vitesse': vitesse,
     };
     return historiqueItem;
   }

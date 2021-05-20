@@ -24,12 +24,12 @@ class _DetailsEntrainementState extends State<DetailsEntrainement> {
 
     double somme = 0;
 
-    for (int i = 0; i < map['vitesse'].length; i++) {
-      somme = somme + map['vitesse'][i];
-    }
-    String vitesseMoyenne = '0';
-    if (map['vitesse'].length != 0)
-      vitesseMoyenne = (somme / map['vitesse'].length).toStringAsFixed(1);
+    // for (int i = 0; i < map['vitesse'].length; i++) {
+    //   somme = somme + map['vitesse'][i];
+    // }
+    // String vitesseMoyenne = '0';
+    // if (map['vitesse'].length != 0)
+    //   vitesseMoyenne = (somme / map['vitesse'].length).toStringAsFixed(1);
 
     String distance = (map['distance']).toStringAsFixed(2);
 
@@ -79,7 +79,8 @@ class _DetailsEntrainementState extends State<DetailsEntrainement> {
               children: [
                 Text("Date et Temps"),
                 Text(
-                  "February 07, 2021",
+                  map['name'],
+                  // "February 07, 2021",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
@@ -282,7 +283,7 @@ class _DetailsEntrainementState extends State<DetailsEntrainement> {
                         style: TextStyle(fontSize: 16.0),
                       ),
                       Text(
-                        vitesseMoyenne,
+                        map['vitesse'].toStringAsFixed(1),
                         style: TextStyle(fontSize: 20),
                       ),
                       Text(

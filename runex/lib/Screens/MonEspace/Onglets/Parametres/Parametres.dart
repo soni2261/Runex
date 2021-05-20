@@ -3,9 +3,11 @@ import 'package:runex/Screens/MonEspace/Onglets/Parametres/pages/changeAvatar.da
 import 'package:runex/Screens/MonEspace/Onglets/Parametres/pages/changePassword.dart';
 import 'package:runex/Screens/MonEspace/Onglets/Parametres/pages/changeTheme.dart';
 import 'package:runex/Screens/MonEspace/Onglets/Parametres/parametreItem.dart';
+import 'package:runex/Screens/MonEspace/Onglets/Statistiques/stats_complet.dart';
 import 'package:runex/Screens/Welcome/welcome_screen.dart';
 import 'package:runex/constants.dart';
 import 'package:runex/services/auth.dart';
+import 'package:runex/services/database.dart';
 
 class Parametres extends StatefulWidget {
   @override

@@ -31,6 +31,7 @@ class _ChangeThemeState extends State<ChangeTheme> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   Card(
+                    elevation: 10,
                     child: InkWell(
                       onTap: () {
                         WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -41,8 +42,10 @@ class _ChangeThemeState extends State<ChangeTheme> {
                                   email: utilisateur.email,
                                   objectifs: utilisateur.objectifs,
                                   profilePicURL: utilisateur.profilePicURL,
-                                  usesDarkTheme: false);
-                          theme.setTheme(theme.lightTheme);
+                                  usesDarkTheme: !utilisateur.usesDarkTheme);
+                          theme.setTheme(theme.isDark()
+                              ? theme.lightTheme
+                              : theme.darkTheme);
                         });
                       },
                       child: Padding(
@@ -53,65 +56,20 @@ class _ChangeThemeState extends State<ChangeTheme> {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(100),
                                 border: Border.all(
-                                  width: 4,
+                                  width: 0,
                                   color: Color.fromRGBO(217, 205, 0, 1),
                                 ),
                               ),
                               child: SvgPicture.asset(
-                                "assets/icons/light_theme_icon.svg",
-                                width: 50,
+                                "assets/icons/daynight.svg",
+                                width: 100,
                               ),
                             ),
                             SizedBox(
                               width: 20,
                             ),
                             Text(
-                              "Light Theme",
-                              style: TextStyle(fontSize: 22),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Card(
-                    child: InkWell(
-                      onTap: () {
-                        WidgetsBinding.instance.addPostFrameCallback((_) async {
-                          await DatabaseService(uid: utilisateur.uid)
-                              .updateUser(
-                            utilisateur: utilisateur,
-                            name: utilisateur.name,
-                            email: utilisateur.email,
-                            objectifs: utilisateur.objectifs,
-                            profilePicURL: utilisateur.profilePicURL,
-                            usesDarkTheme: true,
-                          );
-                          theme.setTheme(theme.darkTheme);
-                        });
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Row(
-                          children: <Widget>[
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(100),
-                                border: Border.all(
-                                  width: 4,
-                                  color: Color.fromRGBO(217, 205, 0, 1),
-                                ),
-                              ),
-                              child: SvgPicture.asset(
-                                "assets/icons/light_theme_icon.svg",
-                                width: 50,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Text(
-                              "Dark Theme",
+                              "Changer le theme",
                               style: TextStyle(fontSize: 22),
                             )
                           ],
