@@ -52,11 +52,13 @@ class _DiagrammeState extends State<Diagramme> {
     if (widget.typeStats == "statsTemps" && data == null) {
       return Text(
         "Pas de statistique de temps à afficher!",
+        textAlign: TextAlign.center,
         style: TextStyle(fontSize: 22, color: Colors.grey),
       );
     } else if (widget.typeStats == "statsDistance" && data == null) {
       return Text(
         "Pas de statistique de distance à afficher!",
+        textAlign: TextAlign.center,
         style: TextStyle(fontSize: 22, color: Colors.grey),
       );
     }

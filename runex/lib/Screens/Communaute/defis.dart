@@ -18,7 +18,11 @@ class _DefisState extends State<Defis> {
 
     return Scaffold(
       appBar: AppBar(
+        leading: Container(
+          width: 0,
+        ),
         title: Text('Défis'),
+        centerTitle: true,
       ),
       body: StreamBuilder(
           stream:
@@ -26,12 +30,21 @@ class _DefisState extends State<Defis> {
           builder: (context, defiSnapshot) {
             if (defiSnapshot.hasData) {
               return SingleChildScrollView(
-                child: Column(
-                  children: defiSnapshot.data.docs
-                      .map<Widget>((element) => creeCarteDeDefi(
-                          element: element, utilisateur: utilisateur))
-                      .toList(),
-                ),
+                child: StreamBuilder<Utilisateur>(
+                    stream: DatabaseService(uid: utilisateur.uid).userData,
+                    builder: (context, snapshot) {
+                      utilisateur = snapshot.data;
+                      if (defiSnapshot.hasData) {
+                        return Column(
+                          children: defiSnapshot.data.docs
+                              .map<Widget>((element) => creeCarteDeDefi(
+                                  element: element, utilisateur: utilisateur))
+                              .toList(),
+                        );
+                      } else {
+                        return Loading();
+                      }
+                    }),
               );
             } else {
               return Loading();
@@ -47,6 +60,34 @@ class _DefisState extends State<Defis> {
     String imageName = element.data()['imageName'];
     String titre = element.data()['title'];
     String description = element.data()['description'];
+    bool joint = utilisateur.defis.contains(element.id);
+    bool complete = false;
+
+    if (element.data()['typeDefi'] == 'distance') {
+      if (utilisateur.statistiques['statsDistance'][element.id]['totale'] >=
+          element.data()['condition']) complete = true;
+    } else if (element.data()['typeDefi'] == 'temps') {
+      if (utilisateur.statistiques['statsTemps'][element.id]['totale'] >=
+          element.data()['condition']) complete = true;
+    }
+
+    Color couleurBouton;
+    String textBouton;
+    Color couleurText;
+
+    if (complete) {
+      couleurBouton = Colors.lightGreen[800];
+      textBouton = 'COMPLÉTÉ';
+      couleurText = Colors.white;
+    } else if (joint) {
+      couleurBouton = Colors.blueGrey[800];
+      textBouton = 'JOINT';
+      couleurText = Colors.white;
+    } else {
+      couleurBouton = Colors.amber[300];
+      textBouton = 'JOINDRE LE DÉFI';
+      couleurText = Colors.black;
+    }
 
     return StreamBuilder<Utilisateur>(
         stream: DatabaseService(uid: utilisateur.uid).userData,
@@ -97,14 +138,16 @@ class _DefisState extends State<Defis> {
                       borderRadius: BorderRadius.circular(5),
                     ),
                     child: Text(
-                      'JOINDRE LE DÉFI',
+                      textBouton,
                       style: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.w700),
+                          color: couleurText, fontWeight: FontWeight.w700),
                     ),
-                    color: Colors.amber[300],
+                    color: couleurBouton,
                     onPressed: () {
-                      DatabaseService(uid: utilisateur.uid).addDefi(
-                          defiId: element.id, utilisateur: utilisateur);
+                      if (!joint && !complete) {
+                        DatabaseService(uid: utilisateur.uid).addDefi(
+                            defiId: element.id, utilisateur: utilisateur);
+                      }
                     },
                   ),
                   SizedBox(

@@ -19,6 +19,7 @@ class Profil extends StatelessWidget {
       length: 4,
       child: Scaffold(
         appBar: AppBar(
+          leading: Container(),
           elevation: 0,
           bottom: TabBar(
             indicator: CircleTabIndicator(color: Colors.white, radius: 3),
@@ -30,6 +31,7 @@ class Profil extends StatelessWidget {
             ],
           ),
           title: Text('Profil'),
+          centerTitle: true,
           // backgroundColor: kPrimaryColor,
           actions: [
             IconButton(
