@@ -10,8 +10,6 @@ import 'package:runex/components/rounded_text_button.dart';
 import 'package:runex/services/database.dart';
 
 class PieChartPage extends StatefulWidget {
-  final String typeStats;
-  PieChartPage(this.typeStats);
   @override
   _PieChartPageState createState() => _PieChartPageState();
 }

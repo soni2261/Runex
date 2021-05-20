@@ -22,7 +22,7 @@ class HomePage extends StatelessWidget {
               // appBar: AppBar(title: Text(MyApp.title), centerTitle: true),
               body: Padding(
                 padding: const EdgeInsets.all(8),
-                child: PieChartPage('statsDistance'),
+                child: PieChartPage(),
               ),
             );
           } else {

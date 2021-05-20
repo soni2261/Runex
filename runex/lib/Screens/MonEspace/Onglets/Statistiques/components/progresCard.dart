@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:bezier_chart/bezier_chart.dart';
 
 class ProgresCard extends StatelessWidget {
+  String typeStats;
   DateTime fromDate;
   DateTime toDate;
   List data;
   Color color;
   ProgresCard({
+    this.typeStats,
     this.color,
     this.toDate,
     this.data,
@@ -32,7 +34,7 @@ class ProgresCard extends StatelessWidget {
           selectedDate: toDate,
           series: [
             BezierLine(
-              label: "ms",
+              label: typeStats == 'statsDistance' ? 'km' : "ms",
               onMissingValue: (dateTime) {
                 if (dateTime.day.isEven) {
                   return 0;

@@ -128,6 +128,7 @@ class _StatsCompletState extends State<StatsComplet> {
                 : Container(
                     margin: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
                     child: ProgresCard(
+                      typeStats: typeStats,
                       fromDate: DateTime.fromMicrosecondsSinceEpoch(utilisateur
                           .statistiques['debut'].microsecondsSinceEpoch),
                       toDate: DateTime.fromMicrosecondsSinceEpoch(utilisateur
@@ -158,6 +159,7 @@ class _StatsCompletState extends State<StatsComplet> {
                 : Container(
                     margin: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
                     child: ProgresCard(
+                      typeStats: typeStats,
                       fromDate: DateTime.fromMicrosecondsSinceEpoch(utilisateur
                           .statistiques['debut'].microsecondsSinceEpoch),
                       toDate: DateTime.fromMicrosecondsSinceEpoch(utilisateur
@@ -188,6 +190,7 @@ class _StatsCompletState extends State<StatsComplet> {
                 : Container(
                     margin: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
                     child: ProgresCard(
+                      typeStats: typeStats,
                       fromDate: DateTime.fromMicrosecondsSinceEpoch(utilisateur
                           .statistiques['debut'].microsecondsSinceEpoch),
                       toDate: DateTime.fromMicrosecondsSinceEpoch(utilisateur
@@ -205,9 +208,9 @@ class _StatsCompletState extends State<StatsComplet> {
     );
   }
 
-  int totaleSport(typeSport) {
+  double totaleSport(typeSport) {
     List list = utilisateur.statistiques[typeStats][typeSport]['statsSemaine'];
-    int somme = 0;
+    double somme = 0;
     for (int i = 0; i < list.length; i++) {
       somme += list[i];
     }
